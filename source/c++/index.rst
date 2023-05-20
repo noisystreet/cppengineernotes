@@ -3,7 +3,7 @@ C++
 =============
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
    :caption: 目录
 
    c++基础
