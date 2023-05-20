@@ -421,6 +421,7 @@ systemtap
 #. Linux Performance and Development Tools https://alephnull.com/perf.html
 #. Linux Performance Analysis in 60,000 Milliseconds https://netflixtechblog.com/linux-performance-analysis-in-60-000-milliseconds-accc10403c55
 #. https://access.redhat.com/documentation/en-us/red_hat_developer_toolset/7/html/user_guide/chap-binutils
+#. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/monitoring_and_managing_system_status_and_performance/recording-and-analyzing-performance-profiles-with-perf_monitoring-and-managing-system-status-and-performance
 #. https://blog.51cto.com/xiamachao/1857696
 #. http://manpages.ubuntu.com/manpages/jammy/man1/perf-stat.1.html
 #. https://sourceware.org/systemtap/wiki
