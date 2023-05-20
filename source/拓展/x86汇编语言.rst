@@ -1,0 +1,256 @@
+x86汇编语言
+=======================
+
+概述
+------------------------------------------------
+
+寄存器分类：
+
++ 通用寄存器：数据寄存器(rax rbx rcx rdx r8-r15)，指针寄存器(rbp rsp)，索引寄存器（rsi rdi）
++ 特殊寄存器(rip rflags)
++ 段寄存器(cs ds ss es fs gs)
++ 浮点和SIMD寄存器(x87,MMX,SSE (SSE2, SSE3, SSE4, SSE4, …),AVX (AVX2, AVX512),AMX)：xmm,ymm,zmm
++ 调试寄存器：dr0-dr3，dr6,dr7
++ 控制寄存器：cr0-cr15
+
+https://www.tutorialspoint.com/assembly_programming/index.htm
+
+lea：将地址赋值给寄存器，类似mov
+
+rax：存放syscall调用号和函数返回值
+
+Hello World
+------------------------------------------------
+
+源程序：
+
+.. code-block:: c++
+    :linenos:
+
+    #include <unistd.h>
+    #include <cstdlib>
+
+    int main () {
+        write(1,"hello world",11);
+        write(1,"\n",1);
+        exit(0);
+    }
+
+汇编后的程序：
+
+.. code-block:: asm
+    :linenos:
+
+    .LC0:
+            .string "hello world"
+    .LC1:
+            .string "\n"
+    main:
+            push    rbp
+            mov     rbp, rsp
+            mov     edx, 11
+            mov     esi, OFFSET FLAT:.LC0
+            mov     edi, 1
+            call    write
+            mov     edx, 1
+            mov     esi, OFFSET FLAT:.LC1
+            mov     edi, 1
+            call    write
+            mov     edi, 0
+            call    exit
+
+函数
+------------------------------------------------
+
+试验环境：https://gcc.godbolt.org/
+
+.. code-block:: c++
+    :linenos:
+
+    typedef int dtype;
+    dtype test(dtype a,dtype b,dtype c,dtype d,dtype e, dtype f, dtype g) {
+        return a;
+    }
+
+对应汇编：
+
+.. code-block:: asm
+    :linenos:
+
+    _Z4testiiiiiii:
+            push    rbp
+            mov     rbp, rsp
+            mov     DWORD PTR [rbp-4], edi
+            mov     DWORD PTR [rbp-8], esi
+            mov     DWORD PTR [rbp-12], edx
+            mov     DWORD PTR [rbp-16], ecx
+            mov     DWORD PTR [rbp-20], r8d
+            mov     DWORD PTR [rbp-24], r9d
+            mov     eax, DWORD PTR [rbp-4]
+            pop     rbp
+            ret
+
+可以看出，前六个参数使用寄存器传参，并且只使用了寄存器的低32位，顺序为rdi,rsi,rdx,rcx,r8,r9。返回值存放在rax中
+
+参数类型的影响
+
+将typedef中的int改成 long，则对应汇编变成：
+
+.. code-block:: asm
+    :linenos:
+
+    _Z4testlllllll:
+            push    rbp
+            mov     rbp, rsp
+            mov     QWORD PTR [rbp-8], rdi
+            mov     QWORD PTR [rbp-16], rsi
+            mov     QWORD PTR [rbp-24], rdx
+            mov     QWORD PTR [rbp-32], rcx
+            mov     QWORD PTR [rbp-40], r8
+            mov     QWORD PTR [rbp-48], r9
+            mov     rax, QWORD PTR [rbp-8]
+            pop     rbp
+            ret
+
+可以看出，这次使用的是64位的寄存器。
+
+改成float，则对应汇编变成：
+
+.. code-block:: asm
+    :linenos:
+
+    _Z4testfffffff:
+            push    rbp
+            mov     rbp, rsp
+            movss   DWORD PTR [rbp-4], xmm0
+            movss   DWORD PTR [rbp-8], xmm1
+            movss   DWORD PTR [rbp-12], xmm2
+            movss   DWORD PTR [rbp-16], xmm3
+            movss   DWORD PTR [rbp-20], xmm4
+            movss   DWORD PTR [rbp-24], xmm5
+            movss   DWORD PTR [rbp-28], xmm6
+            movss   xmm0, DWORD PTR [rbp-4]
+            pop     rbp
+            ret
+
+改成double：
+
+.. code-block:: asm
+    :linenos:
+
+    _Z4testddddddd:
+            push    rbp
+            mov     rbp, rsp
+            movsd   QWORD PTR [rbp-8], xmm0
+            movsd   QWORD PTR [rbp-16], xmm1
+            movsd   QWORD PTR [rbp-24], xmm2
+            movsd   QWORD PTR [rbp-32], xmm3
+            movsd   QWORD PTR [rbp-40], xmm4
+            movsd   QWORD PTR [rbp-48], xmm5
+            movsd   QWORD PTR [rbp-56], xmm6
+            movsd   xmm0, QWORD PTR [rbp-8]
+            movq    rax, xmm0
+            movq    xmm0, rax
+            pop     rbp
+            ret
+
+可以看出，浮点数使用的是xmm寄存器。返回值存放在xmm0中，float和double的占用大小不同。
+
+将前面三个参数改成int，后面改成double，即：
+
+.. code-block:: c++
+    :linenos:
+
+    typedef double dtype;
+
+    dtype test(int a,int b,int c,dtype d,dtype e, dtype f, dtype g) {
+        return a;
+    }
+
+对应汇编变成：
+
+.. code-block:: asm
+    :linenos:
+
+    _Z4testiiidddd:
+            push    rbp
+            mov     rbp, rsp
+            mov     DWORD PTR [rbp-4], edi
+            mov     DWORD PTR [rbp-8], esi
+            mov     DWORD PTR [rbp-12], edx
+            movsd   QWORD PTR [rbp-24], xmm0
+            movsd   QWORD PTR [rbp-32], xmm1
+            movsd   QWORD PTR [rbp-40], xmm2
+            movsd   QWORD PTR [rbp-48], xmm3
+            pxor    xmm0, xmm0
+            cvtsi2sd        xmm0, DWORD PTR [rbp-4]
+            movq    rax, xmm0
+            movq    xmm0, rax
+            pop     rbp
+            ret
+
+可以看出，int参数使用rdi,rsi,rdx……顺序传参，double类型的参数使用xmm传参。并且最后调用cvtsi2sd将返回值从int转换成double，存放在xmm0中.
+综合以上例子还可以看出gcc对于函数名称进行mangle的规则，前面加上_Z，4是函数名的长度，test后面的是参数类型，即i：int，d:double，l：long，f：float
+
+数据类型定义
+------------------------------------------------
+
++ BYTE 8位无符号整型   
++ SBYTE 8位有符号整型   
++ WORD 16位无符号整型   
++ SWORD 16位有符号整型   
++ DWORD 32位无符号整型   
++ SDWORD 32位有符号整型   
++ FWORD 48位整型（远程指针被保护的模式）   
++ QWORD 64位整型 
++ TBYTE 80位整型
++ REAL4 32位IEEE短浮点数 
++ REAL8 64位IEEE长浮点数 
++ REAL10 80位IEEE扩展浮点数
+
+使用数据指令定义变量
+
++ db - define byte，定义字节型变量                                                                                                                      
++ dw - define word，定义字型变量                                                                                                                        
++ dd - define doubleword，定义双字型变量                                                                                                                
++ dq - define quadword，定义四字型变量                                                                                                                  
++ dt - define ten bytes，定义十字节型变量
+
+x86汇编语言本身不支持BOOL类型。可以使用BYTE类型代替BOOL类型
+浮点型
+myDouble REAL<bytes> 3.14
+
+x64的浮点型：
++ xmmword：128位浮点数数据                                                                                                                              
++ ymmword：256位浮点数数据                                                                                                                              
++ zmmword：512位浮点数数据
+
+其中bytes可以是4或者8
+在gnu汇编器gas中可以使用.float伪操作符来定义32位的单精度浮点数，用.double伪操作符来定义64位的双精度浮点。
+x86 采用 IEEE-754 标准来表示浮点数。但 FPU采用了扩展精度格式，即采用80位浮点数格式。这种格式可以在数值计算时提供更高的精度，比较结果也更准确。然而，由于其体积大，处理速度慢，所以在现代计算机中， 常使用 SSE 指令集的128位浮点数格式或AVX指令集的256位浮点数格式。
+
+寻址
+------------------------------------------------
+
+三种基本寻址方式
+
++ 寄存器寻址 
++ 立即寻址，如mov rax, 1
++ 内存寻址 
+
+参考资料
+------------------------------------------------
+
+Intel® 64 and IA-32 Architectures Software Developer Manuals 
+https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
+https://cs0330-fall2022.github.io/
+x86-64 Assembly Language Programming with Ubuntu
+https://www.cs.uaf.edu/2017/fall/cs301/reference/x86_64.html
+https://www.conradk.com/2017/06/06/x86-64-assembly-from-scratch
+https://jameshfisher.com/2018/03/10/linux-assembly-hello-world/
+https://www.mourtada.se/calling-printf-from-the-c-standard-library-in-assembly/
+https://blog.51cto.com/u_15333820/category3
+Linux系统调用表：
+https://github.com/torvalds/linux/blob/master/arch/x86/entry/syscalls/syscall_64.tbl
+芯片微架构
+https://en.wikichip.org/wiki/WikiChip
