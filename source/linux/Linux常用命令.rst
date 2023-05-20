@@ -332,10 +332,15 @@ awk
 ------------------------------------------------
 
 #. `Linux Standard Base(LSB) <https://refspecs.linuxfoundation.org/lsb.shtml>`_
-#. https://linux.die.net/man/
-#. https://www.kernel.org/doc/man-pages/
-#. https://linoxide.com/
+#. `Linux man pages <https://linux.die.net/man/>`_
+#. `linux command library <https://linuxcommandlibrary.com/>`_
+#. `The Linux man-pages project <https://www.kernel.org/doc/man-pages/>`_
+#. `linux hint <https://linuxhint.com/>`_
+#. `linuxopsys <https://linuxopsys.com/>`_
+#. `linuxcapable <https://www.linuxcapable.com/>`_
+#. `linuxhandbook <ttps://linuxhandbook.com/>`_
 #. `debian-handbook <https://debian-handbook.info/browse/stable/>`_
-#. https://itsfoss.com/linux-man-page-guide/
-#. http://www.makelinux.net/reference/
+#. `debian-reference <https://www.debian.org/doc/manuals/debian-reference/ch01.zh-cn.html>`_
+#. `linux-man-page-guide <https://itsfoss.com/linux-man-page-guide/>`_
+#. `Linux® technology reference <http://www.makelinux.net/reference/>`_
 #. `tldr <https://manpages.ubuntu.com/manpages/jammy/man1/tldr-py.1.html>`_

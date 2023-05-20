@@ -1,7 +1,6 @@
 =============
 shell编程
 =============
-空
 
 常见的shell
 ------------------------------------------------
@@ -33,4 +32,5 @@ $@ 跟$*类似，但是可以当作数组用
 ls dirname|sort -R|parallel -j 8 -I% ./test.sh
 
 参考资料
-`<Shell 脚本常用调试方法 https://jiangliheng.github.io/2020/03/21/shell-debug/>`_
+
+#. `<Shell 脚本常用调试方法 https://jiangliheng.github.io/2020/03/21/shell-debug/>`_
