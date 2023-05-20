@@ -34,15 +34,15 @@ linux的目录结构
  ├── sys
  ├── tmp
  └── usr
- ├── bin
- ├── sbin
- ├── include
- ├── lib
- └── local
- ├── bin
- ├── etc
- ├── include
- └── lib
+      ├── bin
+      ├── sbin
+      ├── include
+      ├── lib
+      └── local
+            ├── bin
+            ├── etc
+            ├── include
+            └── lib
  └── var
 
 
