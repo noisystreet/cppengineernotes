@@ -398,7 +398,10 @@ perf
 .. code-block::  bash
     :linenos:
 
+    #ubuntu
     sudo apt install linux-tools-`uname -r`
+    #debian
+    sudo apt install linux-perf
 
 perf的常用命令：
 
