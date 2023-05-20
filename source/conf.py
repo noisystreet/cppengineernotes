@@ -11,6 +11,8 @@ import sphinx_rtd_theme
 from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
 
+latex_engine = 'xelatex'
+
 source_parsers = {
     '.md': CommonMarkParser,
 }
