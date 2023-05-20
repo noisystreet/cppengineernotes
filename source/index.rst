@@ -15,7 +15,7 @@
    }
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
    :numbered: 4
    :caption: 目录
 
