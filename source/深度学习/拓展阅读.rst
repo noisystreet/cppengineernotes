@@ -50,6 +50,7 @@ TPU
 ------------------------------------------------
 
 + `Google AI芯片TPU核心架构--脉动阵列Systolic Array <https://zhuanlan.zhihu.com/p/421737378>`_
++ `TPU System Architecture <https://cloud.google.com/tpu/docs/system-architecture-tpu-vm>`_
 + `脉动阵列 - 因Google TPU获得新生 <https://zhuanlan.zhihu.com/p/26522315>`_
 + `BFloat16: The secret to high performance on Cloud TPUs <https://cloud.google.com/blog/products/ai-machine-learning/bfloat16-the-secret-to-high-performance-on-cloud-tpus>`_
 
