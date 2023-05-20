@@ -1,0 +1,106 @@
+拓展阅读
+================
+
+总体设计
+------------------------------------------------
+
++ 四谈AI软件栈 https://zhuanlan.zhihu.com/p/424913344
++ AI框架算子层级的思考 https://zhuanlan.zhihu.com/p/388682140
++ AI 芯片的性能仿真：Roofline https://zhuanlan.zhihu.com/p/476238724
++ SoC设计与验证——大型IP——PCIE控制器 https://zhuanlan.zhihu.com/p/542778929
++ HBM理解与应用 https://zhuanlan.zhihu.com/p/509042778
++ 一些AI系统的技术随思 https://zhuanlan.zhihu.com/p/514448455
++ AI系统知识：从入门到放弃 https://zhuanlan.zhihu.com/p/453979535
++ AI芯片厂商应该如何选择深度学习编译框架？ https://www.zhihu.com/question/497892084/answer/2765802800
+
+硬件体系结构
+------------------------------------------------
+
++ AI芯片里的浮点(FloatPoint)格式 https://zhuanlan.zhihu.com/p/449857213
++ FP8 训练与AI 芯片 https://zhuanlan.zhihu.com/p/596035171
++ AI处理器单元中的矩阵乘法器电路设计 https://zhuanlan.zhihu.com/p/446456791
++ AI处理器架构设计 https://www.zhihu.com/column/c_1135148448771956736
++ 陈巍谈芯：最新发布的壁仞GPU BR100参数深度对比和优势分析 https://zhuanlan.zhihu.com/p/551888300
+
+GPU
+------------------------------------------------
+
++ 深入GPU硬件架构及运行机制 https://zhuanlan.zhihu.com/p/545056819
++ 陈巍谈芯：被列入禁运的英伟达最先进H100 GPU架构深入解读 https://zhuanlan.zhihu.com/p/487250706
++ Nvidia Grace Hopper 超级芯片架构解读（一） https://zhuanlan.zhihu.com/p/600638633
++ 从AI系统角度回顾GPU架构变迁--从Fermi到Ampere(V1.2) https://zhuanlan.zhihu.com/p/463629676
++ NVIDIA Ampere Architecture In-Depth https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/
++ GPU硬件的发展与特性分析---Tesla系列汇总 https://zhuanlan.zhihu.com/p/515584277
++ 理解Tensor Core https://zhuanlan.zhihu.com/p/75753718
++ NVIDIA Ampere架构初识 https://zhuanlan.zhihu.com/p/415795182
++ CUTLASS: Fast Linear Algebra in CUDA C++ https://zhuanlan.zhihu.com/p/461060382
++ 使用Nsight Compute构建roofline model https://zhuanlan.zhihu.com/p/567938328
++ NVIDIA H100 GPU - 深度学习性能分析 https://zhuanlan.zhihu.com/p/572745703
++ GPU 硬件层次和调度方式 https://zhuanlan.zhihu.com/p/337947104
++ GPU 的线程模型和内存模型的关系是什么 https://www.zhihu.com/question/548624583/answer/2638085759
++ 移动设备GPU架构知识汇总 https://zhuanlan.zhihu.com/p/112120206
++ 移动GPU体系结构 https://zhuanlan.zhihu.com/p/444083670
++ A卡和N卡的架构有什么区别？ https://www.zhihu.com/question/267104699/answer/320361801
++ 看完H100白皮书后的一些感想 https://zhuanlan.zhihu.com/p/485992286
++ NVCC 分步编译 https://www.zangcq.com/2020/08/13/nvcc-%e5%88%86%e6%ad%a5%e7%bc%96%e8%af%91/
+
+TPU
+------------------------------------------------
+
+Google AI芯片TPU核心架构--脉动阵列Systolic Array https://zhuanlan.zhihu.com/p/421737378
+脉动阵列 - 因Google TPU获得新生 https://zhuanlan.zhihu.com/p/26522315
+
+性能分析与优化
+------------------------------------------------
+
++ NVIDIA GPU 的深度学习性能分析基础 https://zhuanlan.zhihu.com/p/613179023
++ profiling 与性能优化总结 https://zhuanlan.zhihu.com/p/362575905
++ 深入浅出GPU优化系列：GEMM优化（二） https://zhuanlan.zhihu.com/p/442930482
++ 深入浅出GPU优化系列：elementwise优化及CUDA工具链介绍 https://zhuanlan.zhihu.com/p/488601925
++ profiling 与性能优化总结 https://zhuanlan.zhihu.com/p/362575905
++ ARM 算子性能优化上手指南 https://zhuanlan.zhihu.com/p/517371998
++ 全局图优化：提升 MegEngine 模型推理性能的又一神器 https://zhuanlan.zhihu.com/p/491037155
++ MegEngine 大 Kernel 卷积工程优化实践 https://zhuanlan.zhihu.com/p/491307328
++ 深入理解混合精度训练：从 Tensor Core 到 CUDA 编程 https://zhuanlan.zhihu.com/p/445054581
++ MegEngine 架构系列：静态内存分析 https://zhuanlan.zhihu.com/p/423688020
++ CUDA 矩阵乘法终极优化指南 https://zhuanlan.zhihu.com/p/410278370
++ 利用共享内存实现比 NCCL 更快的集合通信 https://zhuanlan.zhihu.com/p/396325284
++ MegEngine 中动态图显存优化（DTR）的实现与优化 https://zhuanlan.zhihu.com/p/375642263
++ Memory Optimization in Deep Learning https://zhuanlan.zhihu.com/p/398134230
++ Profiling Native Python Extensions https://www.benfrederickson.com/profiling-native-python-extensions-with-py-spy/
++ x64 CPU GEMM 优化 https://zhuanlan.zhihu.com/p/593537184
++ Roofline Model与深度学习模型的性能分析 https://zhuanlan.zhihu.com/p/34204282
+
+模型部署
+------------------------------------------------
+
++ 在英特尔 CPU 上加速 Stable Diffusion 推理 https://my.oschina.net/HuggingFace/blog/8659779
+
+图编译
+------------------------------------------------
+
++ 机器学习编译(MLC)基本思想 https://zhuanlan.zhihu.com/p/596718133
++ AI芯片厂商应该如何选择深度学习编译框架？ https://www.zhihu.com/question/497892084/answer/2765802800
++ 深度学习自动编译和优化技术调研 https://moqi.com.cn/blog/deeplearning/
++ 新一代深度学习编译技术变革和展望 https://zhuanlan.zhihu.com/p/446935289
++ AI编译优化--总纲 https://zhuanlan.zhihu.com/p/163717035
++ 从我开发的深度学习框架看深度学习这几年 https://zhuanlan.zhihu.com/p/363271864
++ AI框架中图层IR的分析 https://bbs.huaweicloud.com/blogs/281140
++ 【深度学习编译】算子编译 IR 转换 https://juejin.cn/post/7114120041435496462
++ AI 硬件公司接入框架与 AI 框架算子层级的思考 https://aijishu.com/a/1060000000222144
++ AI与传统编译器 https://zhuanlan.zhihu.com/p/412578327
++ 希姆计算：基于 TVM 的 DSA AI 编译器构建 https://zhuanlan.zhihu.com/p/617390505
++ DietCode：TVM中新的动态Shape解决方案 https://zhuanlan.zhihu.com/p/590531033
++ 深度学习编译器中的计算编译 https://zhuanlan.zhihu.com/p/111184795
++ ai深度学习编译器工程师需要哪些技术栈？ https://www.zhihu.com/question/532768471/answer/2692111925
++ MLIR: 多层级通用编译器 IR 简介 https://zhuanlan.zhihu.com/p/615212974
++ MLIR介绍（一）概览 https://zhuanlan.zhihu.com/p/465464378
++ Buddy-MLIR 项目详解（入门 MLIR 极佳选择） https://zhuanlan.zhihu.com/p/524443849
++ 图算融合编译优化（一）2022论文 https://zhuanlan.zhihu.com/p/562618943
++ 图算融合编译优化（二）AMD方案 https://zhuanlan.zhihu.com/p/583280140
++ 深度学习编译器 - 分布式并行训练 https://zhuanlan.zhihu.com/p/594079834
+
+分布式训练
+------------------------------------------------
+
++ AI大模型时代的RDMA网络杂谈 https://zhuanlan.zhihu.com/p/618357812
