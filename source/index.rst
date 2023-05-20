@@ -24,6 +24,10 @@
    深度学习/index
    拓展/index
 
+声明
+==================
+文档中所有资料来源于网络公开内容，如有侵权，请联系 `happyshepherd <happyshepherd1990s@163.com>`_ 删除。
+
 Indices and tables
 ==================
 
