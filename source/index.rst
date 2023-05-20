@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-欢迎来到 c++工程师的学习空间!
+欢迎走上C++工程师之路!
 =====================================
 
 .. code-block:: c++

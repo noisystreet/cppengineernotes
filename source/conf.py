@@ -16,7 +16,7 @@ source_parsers = {
 }
 source_suffix = ['.rst', '.md']
 
-project = 'c++工程师'
+project = 'C++工程师笔记'
 copyright = '2023, 快乐的Shepherd'
 author = '快乐的Shepherd'
 release = '0.0.1'
