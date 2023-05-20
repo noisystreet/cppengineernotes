@@ -3,3 +3,4 @@
 
 #. 解析内存中的高性能图结构 https://www.cnblogs.com/nebulagraph/p/17385501.html
 #. 如何进行高效会议 https://www.cnblogs.com/freephp/p/16948901.html
+#. JavaScript: 世界上最被误解的语言 https://www.crockford.com/javascript/zh/javascript.html
