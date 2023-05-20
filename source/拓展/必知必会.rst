@@ -1,0 +1,24 @@
+必知必会
+=========================
+
+标准和规范
+------------------------------------------------
+
++ json：http://www.json.org/json-zh.html
++ yaml：https://yaml.org/
++ 正则表达式：https://regexper.com/
++ open standard：https://www.open-std.org/
++ FHS标准：https://refspecs.linuxfoundation.org/fhs.shtml
+
+代码
+------------------------------------------------
+
++ https://searchcode.com/
+
+Devops
+------------------------------------------------
+
++ git-flow：https://danielkummer.github.io/git-flow-cheatsheet/
++ https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
++ gogs：https://gogs.io/
++ PMD：https://pmd.github.io/
