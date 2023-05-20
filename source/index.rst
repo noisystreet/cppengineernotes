@@ -6,14 +6,23 @@
 欢迎来到 c++工程师的学习空间!
 =====================================
 
+.. code-block:: c++
+
+   #include <iostream>
+
+   int main() {
+     std::cout<<"hello world!"<<std::endl;
+   }
+
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
+   :numbered: 4
    :caption: 目录
 
-   c++基础
-   c++工具
-   Linux开发
-   优秀c++库赏析
+   c++/index
+   linux/index
+   深度学习/index
+   拓展/index
 
 Indices and tables
 ==================
