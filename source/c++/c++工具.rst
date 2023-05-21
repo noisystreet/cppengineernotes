@@ -257,6 +257,7 @@ https://zhuanlan.zhihu.com/p/336922639
 #. https://www.sourceware.org/gdb/current/onlinedocs/gdb.html
 #. https://opensource.apple.com/source/gdb/gdb-325/doc/gdb.html/gdb_10.html
 #. https://hiberabyss.github.io/2018/04/04/gdb-internal/http://note.iawen.com/note/programming/gdb_ptrace
+#. `debugging with gdb <https://sourceware.org/gdb/current/onlinedocs/gdb/>`_
 
 
 程序执行流程分析：uftrace
@@ -372,6 +373,7 @@ elfutils
 
 #. https://linux-audit.com/elf-binaries-on-linux-understanding-and-analysis/
 #. https://github.com/ReFirmLabs/binwalk
+#. https://opensource.com/article/20/4/linux-binary-analysis
 
 性能分析
 ------------------------------------------------
