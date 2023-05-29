@@ -6,18 +6,30 @@ x86汇编语言
 
 寄存器分类：
 
-+ 通用寄存器：数据寄存器(rax rbx rcx rdx r8-r15)，指针寄存器(rbp rsp)，索引寄存器（rsi rdi）
-+ 特殊寄存器(rip rflags)
-+ 段寄存器(cs ds ss es fs gs)
-+ 浮点和SIMD寄存器(x87,MMX,SSE (SSE2, SSE3, SSE4, SSE4, …),AVX (AVX2, AVX512),AMX)：xmm,ymm,zmm
-+ 调试寄存器：dr0-dr3，dr6,dr7
-+ 控制寄存器：cr0-cr15
++ 通用寄存器
+  
+  + 数据寄存器: `rax rbx rcx rdx r8-r15`
+  + 指针寄存器: `rbp rsp`
+  + 索引寄存器: `rsi rdi`
+  
++ 特殊寄存器: `rip rflags`
++ 段寄存器: `cs ds ss es fs gs`
++ 浮点和SIMD寄存器
+
+  + `x87`
+  + `MMX`
+  + `SSE` : SSE2, SSE3, SSE4, SSE4, …
+  + `AVX` (AVX2, AVX512):xmm,ymm,zmm
+  + `AMX`
+
++ 调试寄存器： `dr0-dr3` ， `dr6` , `dr7`
++ 控制寄存器： `cr0-cr15`
 
 https://www.tutorialspoint.com/assembly_programming/index.htm
 
-lea：将地址赋值给寄存器，类似mov
-
-rax：存放syscall调用号和函数返回值
++ lea：将地址赋值给寄存器，类似mov
++ rax：存放syscall调用号和函数返回值
++ xor: 将寄存器清零
 
 Hello World
 ------------------------------------------------
@@ -90,11 +102,11 @@ Hello World
             pop     rbp
             ret
 
-可以看出，前六个参数使用寄存器传参，并且只使用了寄存器的低32位，顺序为rdi,rsi,rdx,rcx,r8,r9。返回值存放在rax中
+可以看出，前六个参数使用寄存器传参，并且只使用了寄存器的低32位，顺序为 `rdi,rsi,rdx,rcx,r8,r9` 。返回值存放在 `rax` 中
 
 参数类型的影响
 
-将typedef中的int改成 long，则对应汇编变成：
+将 `typedef` 中的 `int` 改成 `long` ，则对应汇编变成：
 
 .. code-block:: asm
     :linenos:
@@ -114,7 +126,7 @@ Hello World
 
 可以看出，这次使用的是64位的寄存器。
 
-改成float，则对应汇编变成：
+改成 `float` ，则对应汇编变成：
 
 .. code-block:: asm
     :linenos:
@@ -133,7 +145,7 @@ Hello World
             pop     rbp
             ret
 
-改成double：
+改成 `double` ：
 
 .. code-block:: asm
     :linenos:
@@ -154,9 +166,9 @@ Hello World
             pop     rbp
             ret
 
-可以看出，浮点数使用的是xmm寄存器。返回值存放在xmm0中，float和double的占用大小不同。
+可以看出，浮点数使用的是 `xmm` 寄存器。返回值存放在 `xmm0` 中， `float` 和 `double` 的占用大小不同。
 
-将前面三个参数改成int，后面改成double，即：
+将前面三个参数改成 `int` ，后面改成 `double` ，即：
 
 .. code-block:: c++
     :linenos:
@@ -217,10 +229,10 @@ Hello World
 + dt - define ten bytes，定义十字节型变量
 
 x86汇编语言本身不支持BOOL类型。可以使用BYTE类型代替BOOL类型
-浮点型
-myDouble REAL<bytes> 3.14
+浮点型: `myDouble REAL<bytes> 3.14`
 
 x64的浮点型：
+
 + xmmword：128位浮点数数据                                                                                                                              
 + ymmword：256位浮点数数据                                                                                                                              
 + zmmword：512位浮点数数据
