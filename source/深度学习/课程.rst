@@ -1,0 +1,11 @@
+=============
+课程
+=============
+
+
+#. `神经网络与深度学习 <https://nndl.github.io/>`_
+#. `动手学深度学习 <https://zh.d2l.ai/>`_
+#. `机器学习系统：设计和实现 <https://openmlsys.github.io/>`_
+#. `AI System <https://github.com/microsoft/AI-System>`_
+#. `deep learning book <https://www.deeplearningbook.org/>`_
+#. `智能计算系统 <https://novel.ict.ac.cn/aics/>`_
