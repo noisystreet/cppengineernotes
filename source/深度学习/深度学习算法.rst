@@ -26,6 +26,7 @@ loss=L(y,y_true)
 + SOTA：即state of art，现阶段最优秀的模型，从paper with code网站（https://paperswithcode.com/sota）可以了解到目前一些数据集上表现最好的深度学习模型。
 
 一些名词：
+
 + 过拟合：模型在训练集上表现很好，在测试集上表现差。
 + 正则化：改善过拟合的手段的统称。
 + 网络退化：网络增加到一定深度时，loss不降反升。
