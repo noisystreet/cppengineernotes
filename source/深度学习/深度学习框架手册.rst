@@ -79,8 +79,8 @@ CPU相关：
 
 + python	3.10	conda环境
 + gcc	11.3	
-+ CUDA Toolkit	11.8.0	使用runfile安装
-+ cuDNN	8.6.0.163	使用pip安装
++ CUDA Toolkit	11.8.0
++ cuDNN	8.6.0.163
 + pytorch	2.0	release/2.0分支
 + torchvision	0.15.1	tag：v0.15.1
   
@@ -117,11 +117,11 @@ CPU相关：
     conda install doxyrest -c conda-forge #可选
 
 重要的依赖包说明：
-名称	说明
-cmake	构建工具
-numpy	基础数据结构
-mkl和mkl-include	CPU的一些算子调用MKL实现
-sphinx	pytorch文档构建工具
+
++ cmake	构建工具
++ numpy	基础数据结构
++ mkl和mkl-include CPU的一些算子调用MKL实现
++ sphinx pytorch文档构建工具
 
 编译pytorch
 + 获取源码，并切换到指定版本（此处为2.0）：
@@ -130,15 +130,7 @@ sphinx	pytorch文档构建工具
     :linenos:
 
     git clone -b release/2.0 https://github.com/pytorch/pytorch
-
-+ 获取用到的第三方库：
-
-.. code-block:: bash
-    :linenos:
-
-    git submodule update --init --recursive
-
-以上过程完成后，源码目录大小约1.9G。
+    git submodule update --init --recursive #更新子模块代码
 
 + 设置编译的环境变量：
 
@@ -164,6 +156,7 @@ sphinx	pytorch文档构建工具
     python setup.py bdist_wheel
 
 编译成功后会在dist目录下生成wheel包，使用pip安装即可。
+
 + 也可以使用下面命令，安装时会直接将python源码软链接到安装目录下，方便debug
 
 .. code-block:: bash
@@ -284,11 +277,14 @@ tensor的属性有shape,dtype，device等等，device代表tensor数据的存储
     if torch.cuda.is_available():   
         tensor = tensor.to('cuda')
 
-此时打印tensor的device属性：
-print(tensor.device)   #结果为cuda:0
+    #打印tensor的device属性,结果为cuda:0
+    print(tensor.device)
 
 to方法可以将tensor在不同device之间或者不同数据类型进行拷贝和转换
+
 自动微分
+````````````````````````````````````````````````
+
 在训练过程中，对于梯度下降法，需要根据梯度和学习率来更新权重系数。可以采用自动微分的方法来计算损失函数的梯度。
 如下列代码：
 
@@ -326,8 +322,6 @@ pytorch中的算子
 ````````````````````````````````````````````````
 
 算子主要集中在以下模块：
-
-	说明	主要类别
 
 + torch	基础算子	tensor的创建/索引/切片/聚合/判断/数学函数/归约/逻辑/谱函数/BLAS和LAPACK接口等等
 + torch.nn	与神经网络相关的对象接口	卷积，池化，激活函数，RNN层，线性，dropout，损失函数，裁剪
@@ -383,9 +377,10 @@ PyTorch可复现/重复实验的相关设置 https://zhuanlan.zhihu.com/p/584208
 
 intel提供的pytorch扩展：
 https://github.com/intel/intel-extension-for-pytorch
+
 性能分析：
-+ torch.bottleneck
-https://zhuanlan.zhihu.com/p/435914083
+
++ torch.bottleneck https://zhuanlan.zhihu.com/p/435914083
 + pytorch profiler
 
 分布式训练
@@ -509,14 +504,15 @@ Tensorflow
 源码编译TF2
 ````````````````````````````````````````````````
 
-软件	版本	备注
-ubuntu	22.04	
-python	3.9.12	conda环境
-gcc	11.3	
-CUDA Toolkit	11.7.0	使用runfile安装
-cuDNN	8.6.0.163	使用pip安装
-tensorflow	2.9	源码
-bazel	5.0.0	
+软件版本
+
++ ubuntu	22.04	
++ python	3.9.12
++ gcc	11.3	
++ CUDA Toolkit	11.7.0
++ cuDNN	8.6.0.163
++ tensorflow	2.9	源码
++ bazel	5.0.0	
 
 参考：
 
@@ -525,7 +521,10 @@ bazel	5.0.0
 
 + 下载tf源码（https://github.com/tensorflow/tensorflow）
 
-git clone -b r2.11 git@github.com:tensorflow/tensorflow.git
+.. code-block:: bash
+    :linenos:
+
+    git clone -b r2.11 git@github.com:tensorflow/tensorflow.git
 
 + 安装bazel：查看并下载安装对应版本：https://mirrors.huaweicloud.com/bazel
 
@@ -535,8 +534,6 @@ git clone -b r2.11 git@github.com:tensorflow/tensorflow.git
     VER=$(cat .bazelversion)
     wget https://mirrors.huaweicloud.com/bazel/${VER}/bazel_${VER}-linux-x86_64.deb
     sudo dpkg -i bazel_${VER}-linux-x86_64.deb
-
-也可以用conda安装bazel
 
 + 运行./configure
 + 进行编译：
@@ -549,11 +546,15 @@ git clone -b r2.11 git@github.com:tensorflow/tensorflow.git
 
 在笔记本上编译时，要设置内存和cpu限制，如：--local_ram_resources=9012 -j 4 
 设置不编译一些模块：
---config=nonccl
---config=noaws
---config=nohdfs
---config=noignite
---config=nokafka
+
+.. code-block:: bash
+    :linenos:
+
+    --config=nonccl
+    --config=noaws
+    --config=nohdfs
+    --config=noignite
+    --config=nokafka
 
 + 生成wheel包：
 
@@ -574,8 +575,12 @@ bazel参考
 
 https://blog.csdn.net/ayqy42602/article/details/108378427
 + 可以使用conda直接安装bazel：
-conda search bazel
-conda install bazel
+
+.. code-block:: bash
+    :linenos:
+
+    conda search bazel
+    conda install bazel
 
 + bazel在构建过程中可能需要下载一些第三方库，有时会网络超时，可以设置让bazel从本地目录获取源码包：
 
@@ -594,7 +599,12 @@ conda install bazel
     --cxxopt="-mavx"
     --cxxopt="-mavx2"
 
-+ 显示编译时详细失败原因：--verbose_failures
++ 显示编译时详细失败原因：-
+
+.. code-block:: bash
+    :linenos:
+
+    -verbose_failures
 
 + 只构建c++库:
 
