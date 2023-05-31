@@ -1,0 +1,539 @@
+=============
+CUDA编程
+=============
+
+简介
+------------------------------------------------
+
+CUDA的软件栈：https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
+
+基础环境配置
+------------------------------------------------
+
+Linux下CUDA环境配置
+````````````````````````````````````````````````
+
+CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
+
+CUDA和driver的版本关系：
+https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
+
+首先查看是否有NVIDIA显卡：
+
+.. code-block:: bash
+    :linenos:
+
+    lspci | grep -i nvidia
+
+不同Linux环境的下CUDA的安装可以参考：https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html
+在ubuntu/debian环境中，可以使用下面的步骤安装CUDA:
+#添加contrib源，只有debian要执行
+
+.. code-block:: bash
+    :linenos:
+
+    sudo add-apt-repository contrib
+
+#添加GPG key
+
+.. code-block:: bash
+    :linenos:
+
+    distro=ubuntu2204 #或debian11
+    arch=x86_64
+    wget https://developer.download.nvidia.com/compute/cuda/repos/$distro/$arch/cuda-keyring_1.0-1_all.deb
+    sudo dpkg -i cuda-keyring_1.0-1_all.deb
+
+    #安装
+    sudo apt update
+    sudo apt -y install cuda  #安装软件源中最新版本的CUDA软件栈
+
+#软件源中也包含了cudnn，可以同时安装
+
+然后设置环境变量：
+
+.. code-block:: bash
+    :linenos:
+
+    export CUDA_PATH=/usr
+
+也可以下载独立安装包进行安装：
+
+.. code-block:: bash
+    :linenos:
+
+    wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/cuda_11.4.0_470.42.01_linux.run
+
+然后 sudo <CudaInstaller>.run 
+安装好了之后设置CUDA_HOME环境变量，指向cuda安装目录
+并设置PATH和LD_LIBRARY_PATH
+
+.. code-block:: bash
+    :linenos:
+
+    export PATH=$CUDA_HOME/bin:$PATH
+    export LD_LIBRARY_PATH=$CUDA_HOME/bin:$LD_LIBRARY_PATH
+
+然后nvcc --version查看是否安装成功，典型输出如下：
+
+.. code-block:: bash
+    :linenos:
+
+    nvcc: NVIDIA (R) Cuda compiler driver
+    Copyright (c) 2005-2023 NVIDIA Corporation
+    Built on Fri_Jan__6_16:45:21_PST_2023
+    Cuda compilation tools, release 12.0, V12.0.140
+    Build cuda_12.0.r12.0/compiler.32267302_0
+
+安装nvidia-smi，用nvidia-smi查看GPU信息，从下图可以看出GPU型号为GTX1650：
+
+.. code-block:: bash
+    :linenos:
+
+    +---------------------------------------------------------------------------------------+
+    | NVIDIA-SMI 530.30.02              Driver Version: 530.30.02    CUDA Version: 12.1     |
+    |-----------------------------------------+----------------------+----------------------+
+    | GPU  Name                  Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp  Perf            Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+    |                                         |                      |               MIG M. |
+    |=========================================+======================+======================|
+    |   0  NVIDIA GeForce GTX 1650         On | 00000000:01:00.0 Off |                  N/A |
+    | N/A   42C    P8                3W /  50W|      1MiB /  4096MiB |      0%      Default |
+    |                                         |                      |                  N/A |
+    +-----------------------------------------+----------------------+----------------------+
+                                                                                             
+    +---------------------------------------------------------------------------------------+
+    | Processes:                                                                            |
+    |  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+    |        ID   ID                                                             Usage      |
+    |=======================================================================================|
+    |  No running processes found                                                           |
+    +---------------------------------------------------------------------------------------+
+
+在linux开发CUDA程序可以使用eclipse+nvidia nsight，后者可从CUDA安装目录下找到。
+注意CUDA需要和特定版本的编译器结合使用，具体可参考NVIDIA官网文献，如CUDA11.4对应的ubuntu20.04中gcc的版本为9.3.0，版本不匹配可能会出问题，需要参考support matrix，以安装正确的gcc/CUDA/cuDNN版本组合：
+https://docs.nvidia.com/deeplearning/cudnn/archives/index.html
+
+windows下CUDA环境配置
+````````````````````````````````````````````````
+
+Windows：使用vs2017和cuda10
+安装完成后，在系统的环境变量里可以看到，CUDA自动添加了以下环境变量：
+
+.. code-block:: powershell
+    :linenos:
+
+    CUDA_PATH
+    CUDA_PATH_V10
+
+并且已经将以下路径添加到了PATH：
+
+.. code-block:: powershell
+    :linenos:
+
+    %CUDA_PATH%\bin
+    %CUDA_PATH%\libnvvp
+
+进入%CUDA_PATH%/extras/demo_suite目录，在终端分别运行deviceQuery.exe和bandwidthTest.exe，若输出结果均为PASS，表明CUDA已经安装成功。
+例子：
+在VS中新建一个CUDA项目，然后会自动产生一个kernel.cu文件，直接生成解决方案，然后运行，
+这是一个矢量加法的例子，在使用VS2010编译CUDA程序时，可能遇到如下所示的C4819警告：
+
+warning C4819:The file contains a character that cannot be represented in the current
+codepage (936). Save the file in Unicode format to prevent data loss；
+
+这个警告的意思是：在该文件中有一个或多个字符不是Unicode字符。要求把这个字符变成Unicode字符防止数据丢失。这个警告跟代码本身无关，不会影响代码运行，但刷屏的warning使得对程序debug变得困难起来。
+解决方法：在 项目->属性 -> 配置属性 -> CUDA C/C++ ->Command Line的“其他选项”中添加：
+
+.. code-block:: powershell
+    :linenos:
+
+    -Xcompiler "/wd 4819"
+
+从编译过程的命令行输出可以看出，编译CUDA程序时，使用的是nvcc来进行编译，而非vs内置的编译程序。
+
+
+cuDNN离线安装
+````````````````````````````````````````````````
+
+下载安装包(需要先注册登录nvidia账号）
+
+.. code-block:: bash
+    :linenos:
+
+    tar -xvf cudnn-linux-x86_64-8.x.x.x_cudaX.Y-archive.tar.xz
+    sudo cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda/include 
+    sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64 
+    sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+
+pip安装cuda python相关包
+
+https://pypi.org/search/?q=nvidia
+
+以CUDA11为例，常用的包有：
+
+.. code-block:: bash
+    :linenos:
+
+    nvidia-cublas-cu11
+    nvidia-cuda-nvrtc-cu11
+    nvidia-cuda-runtime-cu11
+    nvidia-cudnn-cu11
+
+常用工具命令
+````````````````````````````````````````````````
+
+nvidia-smi命令
+
++ nvidia-smi topo -m #查看GPU和CPU和拓扑连接方式
++ nvidia-smi -L #列出所有GPU设备
++ nvidia-smi --help-query-gpu #查看--query-gpu的所有可选参数
+
+多个查询：
+
+nvidia-smi --query-gpu=timestamp,name,pci.bus_id,driver_version,pstate,pcie.link.gen.max,pcie.link.gen.current,temperature.gpu,utilization.gpu,utilization.memory,memory.total,memory.free,memory.used --format=csv -l 1
+
+https://medium.com/analytics-vidhya/explained-output-of-nvidia-smi-utility-fc4fbee3b124
+
+nvidia-settings命令：
+
+.. code-block:: bash
+    :linenos:
+
+    nvidia-settings -q gpus -t #查询GPU的数目
+    nvidia-settings -q CUDACores -t #查询GPU中CUDA core的数目
+    nvidia-settings -q PCIEGen #查看PCIE接口
+    nvidia-settings -q GpuUUID -t #查看GPU的uuid
+
+入门例子
+------------------------------------------------
+
+从https://github.com/NVIDIA/cuda-samples可以下载cuda的一些例子,下载编译之后，可以先运行两个demo程序来检查一下CUDA是否可用。
+生成的可执行文件在bin/x86_64/linux/release目录下
+查询设备信息deviceQuery
+进入cuda-sample//Samples/deviceQuery目录，然后执行make，成功后会生成一个deviceQuery的可执行程序，运行之后，以RTX A4000为例，部分输出如下：
+
+.. code-block:: bash
+    :linenos:
+
+    Device 0: "NVIDIA RTX A4000"
+    CUDA Driver Version / Runtime Version          12.0 / 11.8
+    CUDA Capability Major/Minor version number:    8.6
+    Total amount of global memory:                 16106 MBytes (16888889344 bytes)
+    (048) Multiprocessors, (128) CUDA Cores/MP:    6144 CUDA Cores
+    GPU Max Clock rate:                            1560 MHz (1.56 GHz)
+
+可以看出该GPU有6144个CUDA core，最后的Result=PASS表明运行没有问题。
+带宽测试bandwidthTest
+进入cuda-sample//Samples/bandwidthTest目录，然后执行make，然后执行bandwidthTest程序，输出如下：
+可以看到带宽数据。
+
+CUDA API
+------------------------------------------------
+
+一些概念
+````````````````````````````````````````````````
+
+grid：一个kernel所启动的所有线程称为一个网格
+block：grid由三维结构的block组成
+thread：一个block由多个线程组成
+
+grid、block和thread都是软件逻辑层面的概念。CUDA的设备在实际执行过程中，会以block为单位。把一个个block分配给SM进行运算；而block中的thread又会以warp（线程束）为单位，对thread进行分组计算。目前CUDA的warp大小都是32，也就是说32个thread会被组成一个warp来一起执行。同一个warp中的thread执行的指令是相同的，只是处理的数据不同。
+基本上warp 分组的动作是由SM 自动进行的，会以连续的方式来做分组。比如说如果有一个block 里有128 个thread 的话，就会被分成四组warp，实际上，warp 也是CUDA 中每一个SM 执行的最小单位；
+kernel在调用时也必须通过<<<grid, block>>>来指定kernel所使用的线程数及结构。
+可以使用nvprof分析CUDA程序中的函数的执行开销
+CUDA程序和编译
+编译时一定要根据硬件的compute capability设置匹配的编译选项，否则可能计算结果错误。
+由于GPU是异构模型，需要区分host和device上的代码，在CUDA中是通过函数类型修饰符开区别host和device上的函数，主要的三个函数类型修饰符如下：
+
++ __global__：在device上执行，从host中调用（一些特定的GPU也可以从device上调用），返回类型必须是void，不支持可变参数参数，不能是类的成员函数。注意用__global__定义的kernel是异步的，这意味着host不会等待kernel执行完就执行下一步。
++ __device__：在device上执行，且只能从device中调用，不可以和__global__同时用。
++ __host__：在host上执行，仅可以从host上调用，一般省略不写，不可以和__global__同时用，但可和__device__同时用，此时函数会在device和host都编译。
+
+变量修饰符：
+
++ __shared__：用来定义共享内存变量
++ __constant__：用来定义常量内存
+  
+kernel函数内可以使用一些c++11语法，如auto
+内置dim3结构体和uint3结构体：
+
+.. code-block:: c++
+    :linenos:
+
+    struct __device_builtin__ uint3
+    {
+        unsigned int x, y, z;
+    };
+    struct __device_builtin__ dim3
+    {
+        unsigned int x, y, z;
+    #if defined(__cplusplus)
+    #if __cplusplus >= 201103L
+        __host__ __device__ constexpr dim3(unsigned int vx = 1, unsigned int vy = 1, unsigned int vz = 1) : x(vx), y(vy), z(vz) {}
+        __host__ __device__ constexpr dim3(uint3 v) : x(v.x), y(v.y), z(v.z) {}
+        __host__ __device__ constexpr operator uint3(void) const { return uint3{x, y, z}; }
+    #else
+        __host__ __device__ dim3(unsigned int vx = 1, unsigned int vy = 1, unsigned int vz = 1) : x(vx), y(vy), z(vz) {}
+        __host__ __device__ dim3(uint3 v) : x(v.x), y(v.y), z(v.z) {}
+        __host__ __device__ operator uint3(void) const { uint3 t; t.x = x; t.y = y; t.z = z; return t; }
+    #endif
+    #endif /* __cplusplus */
+    };
+
+一些内置变量
+````````````````````````````````````````````````
+
++ gridDim
++ blockDim
++ blockIdx：线程块的索引
++ threadIdx：线程块内线程的索引
++ warpSize
+
+这些内置变量常用于在kernel函数中获取线程和blockID。
+
+
+常用头文件：
+
+.. code-block:: c++
+    :linenos:
+
+    #include <cuda_runtime.h>
+    #include <device_launch_parameters.h>
+
+
+CUDA API可以分为driver API和runtime API，对应的函数分别以cu和cuda开头，driver API是更加偏底层的接口。一般使用runtime API即可。
+
+设备管理
+````````````````````````````````````````````````
+
+.. code-block:: bash
+    :linenos:
+
+    device查询函数
+    cudaGetDeviceProperties()
+    cudaGetDeviceCount(int* num)
+    cudaGetDevice(int* id)
+
+    cudaDeviceSynchronize
+    cudaDeviceReset
+
+内存管理
+````````````````````````````````````````````````
+
+.. code-block:: bash
+    :linenos:
+
+    cudaMalloc
+    cudaMallocManaged
+    cudaMemcpy
+    cudaMemPrefetchAsync
+    cudaDeviceSynchronize
+    cudaFree
+    共享内存：__shared__
+    常量内存
+    cudaMemcpyToSymbol：拷贝数据到常量内存
+
+流管理
+````````````````````````````````````````````````
+
+.. code-block:: bash
+    :linenos:
+
+    cudaStreamCreate
+    cudaStreamSynchronize
+    cudaStreamWaitEvent
+    cudaStreamDestroy
+
+错误处理
+````````````````````````````````````````````````
+.. code-block:: bash
+    :linenos:
+
+    cudaError_t枚举
+    cudaGetLastError
+    cudaGetErrorString
+
+更多例子
+------------------------------------------------
+
+数组相加
+````````````````````````````````````````````````
+
+矩阵乘法
+````````````````````````````````````````````````
+
++ https://bluewaters.ncsa.illinois.edu/liferay-content/image-gallery/content/BLA-final
++ https://www.quantstart.com/articles/Matrix-Matrix-Multiplication-on-the-GPU-with-Nvidia-CUDA/
+ 
+event
+````````````````````````````````````````````````
+
+https://www.bbsmax.com/A/mo5k6k1LJw/
+CUDA  events可以用来控制同步，包括cpu/gpu的同步、gpu上不同engine的同步和gpu之间的同步。
+此外，Event可以用来检查gpu的操作时长。它能够向CUDA  stream进行记录（record），cpu会等待event记录的这个地方完成才能执行下一步。所以Event可以统计GPU上面某一个任务或者代码段的精确运行时间。
+cudaEvent_t start_k1, stop_k1,
+//创建event
+cudaEventCreate(&start_k1);
+cudaEventCreate(&start_k2);
+
+cudaEventRecord(start_k1);
+... //some device code
+cudaEventRecord(stop_k1);
+//计算时间之前进行event sync
+cudaEventSynchronize(start_k1);
+cudaEventSynchronize(stop_k1);
+cudaEventElapsedTime(&milliseconds_k1, start_k1, stop_k1);
+//销毁event
+cudaEventDestroy(start_k1)
+cudaEventDestroy(stop_k1)
+
+stream
+````````````````````````````````````````````````
+
+https://developer.nvidia.com/blog/gpu-pro-tip-cuda-7-streams-simplify-concurrency/
+https://lulaoshi.info/gpu/python-cuda/streams.html
+CUDA streams用来管理执行单元的并发操作，在一个流中，操作是串行的按序执行的，但是在不同的流中操作就可以同时执行。前面的block和thread用于kernel内的并行，
+
+由于异构计算的硬件特性，CUDA中以下操作是相互独立的：
++ 主机端上的计算
++ 设备端的计算（核函数）
++ 数据从主机和设备间相互拷贝
++ 数据从设备内拷贝或转移
++ 数据从多个GPU设备间拷贝或转移
+  
+针对这种互相独立的硬件架构，CUDA使用多流作为一种高并发的方案：把一个大任务中的上述几部分拆分开，放到多个流中，每次只对一部分数据进行拷贝、计算和回写，并把这个流程做成流水线。因为数据拷贝不占用计算资源，计算不占用数据拷贝的总线（Bus）资源，因此计算和数据拷贝完全可以并发执行。将数据拷贝和函数计算重叠起来，形成流水线，能获得非常大的性能提升。
+通过使用stream，则可以实现：
+
++ 多个kernel的并发
++ kernel计算和数据拷贝的重叠
++ CPU和GPU的并发
++ 多GPU的并发
+
+例子，memcpy和kernel执行分别在四个stream中并发执行：
+cudaStream_t stream1, stream2, stream3, stream4 ;
+cudaStreamCreate ( &stream1) ;
+cudaStreamCreate ( &stream2) ;
+
+...
+cudaMalloc ( &dev1, size ) ;
+cudaMallocHost ( &host1, size ) ;
+…
+cudaMemcpyAsync ( dev1, host1, size, H2D, stream1 ) ;
+kernel2 <<< grid, block, 0, stream2 >>> ( …, dev2, … ) ;
+kernel3 <<< grid, block, 0, stream3 >>> ( …, dev3, … ) ;
+cudaMemcpyAsync ( host4, dev4, size, D2H, stream4 ) ;
+
+在cuda7之前，没有显式指定流，空流（默认流）会被隐式指定，它要同步设备上的所有操作。一个设备会产生一个空流。其它流的工作完成之后空流的工作才能开始，空流工作完成后其它流才能开始。cuda7版本增加了新的特性，可以选择每一个主机线程使用独立的空流，即一个线程一个空流，避免了原来空流的按序执行。
+//启动每个线程一个空流的方法
+//方法1
+
+nvcc --default-stream per-thread
+
+//方法2，在include CUDA头文件之前
+#define CUDA_API_PER_THREAD_DEFAULT_STREAM
+
+instrinsics
+可以方便地实现一些常用操作，如fp16和bf16类型的数学函数，SIMD函数调用等等
+
++ https://ion-thruster.medium.com/an-introduction-to-writing-fp16-code-for-nvidias-gpus-da8ac000c17f
++ https://docs.nvidia.com/cuda/cuda-math-api/index.html
+
+Tensor core编程
+````````````````````````````````````````````````
+空
+
+其他常用库
+------------------------------------------------
+
+cuDNN
+````````````````````````````````````````````````
+
+基本概念
+
++ cuDNN handle：create/destroy
++ tensor descriptor：3D、4D、5D、XYWZ等等
+
+3D tensor的layout为BMN，B为batch size,b=1时即GEMM操作。
+4D tensor的常用layout有NCHW、NHWC、CHWN。
+5D tensor的常用layout有NCDHW、 NDHWC、CDHWN。
+
+卷积：cudnn支持NCHW、NHWC、NC/32HW32。
+matmul：使用3维tensor，即BMN，layout有：(1)Packed Row-major: dim [B,M,N] with stride [MN, N, 1], （2）Packed Column-major: dim [B,M,N] with stride [MN, 1, M]
+
++ tensor core算子：卷积、RNN、Multi-Head Attention
+
+tensor core的一些注意点：
+
++ Make sure that the convolution operation is eligible for Tensor Cores by  avoiding any combinations of large padding and large filters.                               
++ Transform the inputs and filters to NHWC, pre-pad channel and batch size to be a multiple of 8.                               
++ Make sure that all user-provided tensors, workspace, and reserve space are  aligned to 128-bit boundaries. Note that 1024-bit alignment may deliver better performance.  
+
+精度：
+For FP16 data, Tensor Cores operate on FP16 input, output in FP16, and may accumulate in FP16 or FP32. 如果最后需要的是fp16的输出，会将fp32进行转换，保证更高精度。
+
+                
+Graph API
+分为：
+cuDNN frontend:https://github.com/NVIDIA/cudnn-frontend
+cuDNN backend:https://docs.nvidia.com/deeplearning/cudnn/api/index.html#cudnn-backend-api
+重要概念：
+●operation和operation graph
+●engine和engine config
+●Heuristics：启发式搜索，A heuristic is a way to get a list of engine configurations that are intended to be sorted from the most performant to least performant for the given operation graph
+
+
+cuBLAS
+````````````````````````````````````````````````
+
+cuSparse
+````````````````````````````````````````````````
+
+Thrust
+````````````````````````````````````````````````
+
+是一个基于CUDA的类似c++STL的库，封装了各种常用的容器和算法
++ https://github.com/NVIDIA/thrust
++ https://thrust.github.io/
+
+
++ https://www.shuzhiduo.com/A/kmzLNoBY5G/
++ https://blog.csdn.net/Megvii_tech/article/details/122053556
+
+多GPU编程
+------------------------------------------------
+空
+
+
+参考文档
+------------------------------------------------
+
++ CUDA python https://nvidia.github.io/cuda-python/index.html
++ https://docs.nvidia.com/cuda/
++ https://developer.nvidia.com/blog/?tags=accelerated-computing
++ https://developer.nvidia.com/cuda-faq
++ https://developer.nvidia.com/cuda-education-training
++ https://developer.nvidia.com/gpu-accelerated-libraries
++ 参考：https://llvm.org/docs/CompileCudaWithLLVM.html
++ Rocm https://sep5.readthedocs.io/en/latest/index.html
++ https://developer.nvidia.com/zh-cn/blog/nvidia-ampere-architecture-in-depth/
+
+
+cuDNN文档
+````````````````````````````````````````````````
+
++ https://docs.nvidia.com/deeplearning/cudnn/developer-guide/index.html
++ https://medium.com/@rohitdwivedula/minimal-cudnn-c-hello-world-example
++ https://github.com/tbennun/cudnn-training
++ https://pypi.org/project/cudnn-python-wrappers/
++ https://developer.nvidia.com/blog/cuda-graphs/
++ https://nvidia.github.io/cudnn-frontend/
+
+
+硬件规格说明
+````````````````````````````````````````````````
+#. H100 https://resources.nvidia.com/en-us-tensor-core/nvidia-tensor-core-gpu-datasheet
+#. A100	https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-us-nvidia-1758950-r4-web.pdf
+#. RTX A4000	https://www.nvidia.com/content/dam/en-zz/Solutions/gtcs21/rtx-a4000/nvidia-rtx-a4000-datasheet.pdf
+#. RTX 3090	https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3090-3090ti/
+#. https://www.techpowerup.com/gpu-specs/geforce-rtx-3090.c3622
