@@ -21,63 +21,64 @@ https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
 首先查看是否有NVIDIA显卡：
 
 .. code-block:: bash
-    :linenos:
 
-    lspci | grep -i nvidia
+    lspci | grep VGA
+
+如果输出中发现NVIDIA字样，说明系统识别到了NVIDIA的GPU硬件，例如：
+
+.. code-block:: bash
+
+    00:02.0 VGA compatible controller: Intel Corporation CometLake-S GT2 [UHD Graphics 630] (rev 03)
+    01:00.0 VGA compatible controller: NVIDIA Corporation TU117M (rev a1)
 
 不同Linux环境的下CUDA的安装可以参考：https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html
+
 在ubuntu/debian环境中，可以使用下面的步骤安装CUDA:
-#添加contrib源，只有debian要执行
+
+#. 添加contrib源（只有debian需要执行这一步）
+
+    .. code-block:: bash
+
+        sudo add-apt-repository contrib
+
+#. 添加GPG key
+
+    .. code-block:: bash
+
+        distro=ubuntu2204 #或debian11
+        arch=x86_64
+        wget https://developer.download.nvidia.com/compute/cuda/repos/$distro/$arch/cuda-keyring_1.0-1_all.deb
+        sudo dpkg -i cuda-keyring_1.0-1_all.deb
+
+        #安装
+        sudo apt update
+        sudo apt -y install cuda  #安装软件源中最新版本的CUDA软件栈
+
+#. 软件源中也包含了cudnn，可以同时安装
+
+#. 设置环境变量：
+
+    .. code-block:: bash
+
+        export CUDA_PATH=/usr
+
+也可以下载独立安装包进行安装，以CUDA11.4为例：
 
 .. code-block:: bash
-    :linenos:
-
-    sudo add-apt-repository contrib
-
-#添加GPG key
-
-.. code-block:: bash
-    :linenos:
-
-    distro=ubuntu2204 #或debian11
-    arch=x86_64
-    wget https://developer.download.nvidia.com/compute/cuda/repos/$distro/$arch/cuda-keyring_1.0-1_all.deb
-    sudo dpkg -i cuda-keyring_1.0-1_all.deb
-
-    #安装
-    sudo apt update
-    sudo apt -y install cuda  #安装软件源中最新版本的CUDA软件栈
-
-#软件源中也包含了cudnn，可以同时安装
-
-然后设置环境变量：
-
-.. code-block:: bash
-    :linenos:
-
-    export CUDA_PATH=/usr
-
-也可以下载独立安装包进行安装：
-
-.. code-block:: bash
-    :linenos:
 
     wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/cuda_11.4.0_470.42.01_linux.run
+    sudo <CudaInstaller>.run 
 
-然后 sudo <CudaInstaller>.run 
-安装好了之后设置CUDA_HOME环境变量，指向cuda安装目录
-并设置PATH和LD_LIBRARY_PATH
+安装好了之后设置 `CUDA_HOME` 环境变量，指向cuda安装目录，并设置 `PATH` 和 `LD_LIBRARY_PATH` 环境变量：
 
 .. code-block:: bash
-    :linenos:
 
     export PATH=$CUDA_HOME/bin:$PATH
     export LD_LIBRARY_PATH=$CUDA_HOME/bin:$LD_LIBRARY_PATH
 
-然后nvcc --version查看是否安装成功，典型输出如下：
+执行 `nvcc --version` 查看是否安装成功，典型输出如下：
 
 .. code-block:: bash
-    :linenos:
 
     nvcc: NVIDIA (R) Cuda compiler driver
     Copyright (c) 2005-2023 NVIDIA Corporation
@@ -85,10 +86,9 @@ https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
     Cuda compilation tools, release 12.0, V12.0.140
     Build cuda_12.0.r12.0/compiler.32267302_0
 
-安装nvidia-smi，用nvidia-smi查看GPU信息，从下图可以看出GPU型号为GTX1650：
+安装 `nvidia-smi`，用 `nvidia-smi` 查看GPU信息，典型的输出如下：
 
 .. code-block:: bash
-    :linenos:
 
     +---------------------------------------------------------------------------------------+
     | NVIDIA-SMI 530.30.02              Driver Version: 530.30.02    CUDA Version: 12.1     |
@@ -111,10 +111,12 @@ https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
     +---------------------------------------------------------------------------------------+
 
 在linux开发CUDA程序可以使用eclipse+nvidia nsight，后者可从CUDA安装目录下找到。
-注意CUDA需要和特定版本的编译器结合使用，具体可参考NVIDIA官网文献，如CUDA11.4对应的ubuntu20.04中gcc的版本为9.3.0，版本不匹配可能会出问题，需要参考support matrix，以安装正确的gcc/CUDA/cuDNN版本组合：
-https://docs.nvidia.com/deeplearning/cudnn/archives/index.html
 
-windows下CUDA环境配置
+注意CUDA需要和特定版本的驱动、编译器结合使用，版本不匹配可能会出问题，
+
+参考 `cuDNN Support Matrix <https://docs.nvidia.com/deeplearning/cudnn/archives/index.html>`_，以安装正确的gcc/CUDA/cuDNN版本组合。
+
+Windows下CUDA环境配置
 ````````````````````````````````````````````````
 
 Windows：使用vs2017和cuda10
@@ -134,24 +136,27 @@ Windows：使用vs2017和cuda10
     %CUDA_PATH%\bin
     %CUDA_PATH%\libnvvp
 
-进入%CUDA_PATH%/extras/demo_suite目录，在终端分别运行deviceQuery.exe和bandwidthTest.exe，若输出结果均为PASS，表明CUDA已经安装成功。
+进入 `%CUDA_PATH%/extras/demo_suite` 目录，在终端分别运行 `deviceQuery.exe` 和 `bandwidthTest.exe` ，若输出结果均为 PASS，表明CUDA已经安装成功。
+
 例子：
+
 在VS中新建一个CUDA项目，然后会自动产生一个kernel.cu文件，直接生成解决方案，然后运行，
 这是一个矢量加法的例子，在使用VS2010编译CUDA程序时，可能遇到如下所示的C4819警告：
 
-warning C4819:The file contains a character that cannot be represented in the current
-codepage (936). Save the file in Unicode format to prevent data loss；
+.. code-block:: bash
+
+    warning C4819:The file contains a character that cannot be represented in the current
+    codepage (936). Save the file in Unicode format to prevent data loss；
 
 这个警告的意思是：在该文件中有一个或多个字符不是Unicode字符。要求把这个字符变成Unicode字符防止数据丢失。这个警告跟代码本身无关，不会影响代码运行，但刷屏的warning使得对程序debug变得困难起来。
+
 解决方法：在 项目->属性 -> 配置属性 -> CUDA C/C++ ->Command Line的“其他选项”中添加：
 
-.. code-block:: powershell
-    :linenos:
+.. code-block:: bash
 
     -Xcompiler "/wd 4819"
 
 从编译过程的命令行输出可以看出，编译CUDA程序时，使用的是nvcc来进行编译，而非vs内置的编译程序。
-
 
 cuDNN离线安装
 ````````````````````````````````````````````````
@@ -161,7 +166,7 @@ cuDNN离线安装
 .. code-block:: bash
     :linenos:
 
-    tar -xvf cudnn-linux-x86_64-8.x.x.x_cudaX.Y-archive.tar.xz
+    tar -xvf cudnn-linux-x86_64-*.tar.xz
     sudo cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda/include 
     sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64 
     sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
@@ -208,25 +213,29 @@ nvidia-settings命令：
 入门例子
 ------------------------------------------------
 
-从https://github.com/NVIDIA/cuda-samples可以下载cuda的一些例子,下载编译之后，可以先运行两个demo程序来检查一下CUDA是否可用。
-生成的可执行文件在bin/x86_64/linux/release目录下
-查询设备信息deviceQuery
-进入cuda-sample//Samples/deviceQuery目录，然后执行make，成功后会生成一个deviceQuery的可执行程序，运行之后，以RTX A4000为例，部分输出如下：
+从 `https://github.com/NVIDIA/cuda-samples <https://github.com/NVIDIA/cuda-samples>`_ 可以下载cuda的一些例子,下载编译之后，可以先运行两个demo程序来检查一下CUDA是否可用。
+生成的可执行文件在 `bin/x86_64/linux/release` 目录下
 
-.. code-block:: bash
-    :linenos:
+#. 查询设备信息deviceQuery
 
-    Device 0: "NVIDIA RTX A4000"
-    CUDA Driver Version / Runtime Version          12.0 / 11.8
-    CUDA Capability Major/Minor version number:    8.6
-    Total amount of global memory:                 16106 MBytes (16888889344 bytes)
-    (048) Multiprocessors, (128) CUDA Cores/MP:    6144 CUDA Cores
-    GPU Max Clock rate:                            1560 MHz (1.56 GHz)
+  进入 `cuda-sample//Samples/deviceQuery` 目录，然后执行 `make` ，成功后会生成一个叫 `deviceQuery` 的可执行程序，运行之后，典型输出如下：
+  
+  .. code-block:: bash
+      :linenos:
+  
+      Device 0: "NVIDIA RTX A4000"
+      CUDA Driver Version / Runtime Version          12.0 / 11.8
+      CUDA Capability Major/Minor version number:    8.6
+      Total amount of global memory:                 16106 MBytes (16888889344 bytes)
+      (048) Multiprocessors, (128) CUDA Cores/MP:    6144 CUDA Cores
+      GPU Max Clock rate:                            1560 MHz (1.56 GHz)
+  
+  可以看出该GPU有6144个CUDA core，最后的Result=PASS表明运行没有问题。
 
-可以看出该GPU有6144个CUDA core，最后的Result=PASS表明运行没有问题。
-带宽测试bandwidthTest
-进入cuda-sample//Samples/bandwidthTest目录，然后执行make，然后执行bandwidthTest程序，输出如下：
-可以看到带宽数据。
+#. 带宽测试bandwidthTest
+
+  进入 `cuda-sample//Samples/bandwidthTest` 目录，然后执行 `make` ，然后执行 `bandwidthTest` 程序，输出如下：
+  可以看到带宽数据。
 
 CUDA API
 ------------------------------------------------
@@ -295,8 +304,7 @@ kernel函数内可以使用一些c++11语法，如auto
 
 常用头文件：
 
-.. code-block:: c++
-    :linenos:
+.. code-block:: cuda
 
     #include <cuda_runtime.h>
     #include <device_launch_parameters.h>
@@ -307,10 +315,9 @@ CUDA API可以分为driver API和runtime API，对应的函数分别以cu和cuda
 设备管理
 ````````````````````````````````````````````````
 
-.. code-block:: bash
-    :linenos:
+.. code-block:: cuda
 
-    device查询函数
+    //device查询函数
     cudaGetDeviceProperties()
     cudaGetDeviceCount(int* num)
     cudaGetDevice(int* id)
@@ -321,8 +328,7 @@ CUDA API可以分为driver API和runtime API，对应的函数分别以cu和cuda
 内存管理
 ````````````````````````````````````````````````
 
-.. code-block:: bash
-    :linenos:
+.. code-block:: cuda
 
     cudaMalloc
     cudaMallocManaged
@@ -330,15 +336,16 @@ CUDA API可以分为driver API和runtime API，对应的函数分别以cu和cuda
     cudaMemPrefetchAsync
     cudaDeviceSynchronize
     cudaFree
-    共享内存：__shared__
-    常量内存
-    cudaMemcpyToSymbol：拷贝数据到常量内存
+    cudaMemcpyToSymbol //拷贝数据到常量内存
+
+共享内存：__shared__
+
+常量内存
 
 流管理
 ````````````````````````````````````````````````
 
-.. code-block:: bash
-    :linenos:
+.. code-block:: cuda
 
     cudaStreamCreate
     cudaStreamSynchronize
@@ -347,8 +354,7 @@ CUDA API可以分为driver API和runtime API，对应的函数分别以cu和cuda
 
 错误处理
 ````````````````````````````````````````````````
-.. code-block:: bash
-    :linenos:
+.. code-block:: cuda
 
     cudaError_t枚举
     cudaGetLastError
@@ -372,27 +378,32 @@ event
 https://www.bbsmax.com/A/mo5k6k1LJw/
 CUDA  events可以用来控制同步，包括cpu/gpu的同步、gpu上不同engine的同步和gpu之间的同步。
 此外，Event可以用来检查gpu的操作时长。它能够向CUDA  stream进行记录（record），cpu会等待event记录的这个地方完成才能执行下一步。所以Event可以统计GPU上面某一个任务或者代码段的精确运行时间。
-cudaEvent_t start_k1, stop_k1,
-//创建event
-cudaEventCreate(&start_k1);
-cudaEventCreate(&start_k2);
 
-cudaEventRecord(start_k1);
-... //some device code
-cudaEventRecord(stop_k1);
-//计算时间之前进行event sync
-cudaEventSynchronize(start_k1);
-cudaEventSynchronize(stop_k1);
-cudaEventElapsedTime(&milliseconds_k1, start_k1, stop_k1);
-//销毁event
-cudaEventDestroy(start_k1)
-cudaEventDestroy(stop_k1)
+.. code-block:: cuda
+    :linenos:
+
+    cudaEvent_t start_k1, stop_k1,
+    //创建event
+    cudaEventCreate(&start_k1);
+    cudaEventCreate(&start_k2);
+
+    cudaEventRecord(start_k1);
+    ... //some device code
+    cudaEventRecord(stop_k1);
+    //计算时间之前进行event sync
+    cudaEventSynchronize(start_k1);
+    cudaEventSynchronize(stop_k1);
+    cudaEventElapsedTime(&milliseconds_k1, start_k1, stop_k1);
+    //销毁event
+    cudaEventDestroy(start_k1)
+    cudaEventDestroy(stop_k1)
 
 stream
 ````````````````````````````````````````````````
 
-https://developer.nvidia.com/blog/gpu-pro-tip-cuda-7-streams-simplify-concurrency/
-https://lulaoshi.info/gpu/python-cuda/streams.html
+#. https://developer.nvidia.com/blog/gpu-pro-tip-cuda-7-streams-simplify-concurrency/
+#. https://lulaoshi.info/gpu/python-cuda/streams.html
+
 CUDA streams用来管理执行单元的并发操作，在一个流中，操作是串行的按序执行的，但是在不同的流中操作就可以同时执行。前面的block和thread用于kernel内的并行，
 
 由于异构计算的硬件特性，CUDA中以下操作是相互独立的：
@@ -411,29 +422,39 @@ CUDA streams用来管理执行单元的并发操作，在一个流中，操作�
 + 多GPU的并发
 
 例子，memcpy和kernel执行分别在四个stream中并发执行：
-cudaStream_t stream1, stream2, stream3, stream4 ;
-cudaStreamCreate ( &stream1) ;
-cudaStreamCreate ( &stream2) ;
 
-...
-cudaMalloc ( &dev1, size ) ;
-cudaMallocHost ( &host1, size ) ;
-…
-cudaMemcpyAsync ( dev1, host1, size, H2D, stream1 ) ;
-kernel2 <<< grid, block, 0, stream2 >>> ( …, dev2, … ) ;
-kernel3 <<< grid, block, 0, stream3 >>> ( …, dev3, … ) ;
-cudaMemcpyAsync ( host4, dev4, size, D2H, stream4 ) ;
+.. code-block:: bash
+    :linenos:
+
+    cudaStream_t stream1, stream2, stream3, stream4 ;
+    cudaStreamCreate ( &stream1) ;
+    cudaStreamCreate ( &stream2) ;
+
+    ...
+    cudaMalloc ( &dev1, size ) ;
+    cudaMallocHost ( &host1, size ) ;
+    …
+    cudaMemcpyAsync ( dev1, host1, size, H2D, stream1 ) ;
+    kernel2 <<< grid, block, 0, stream2 >>> ( …, dev2, … ) ;
+    kernel3 <<< grid, block, 0, stream3 >>> ( …, dev3, … ) ;
+    cudaMemcpyAsync ( host4, dev4, size, D2H, stream4 ) ;
 
 在cuda7之前，没有显式指定流，空流（默认流）会被隐式指定，它要同步设备上的所有操作。一个设备会产生一个空流。其它流的工作完成之后空流的工作才能开始，空流工作完成后其它流才能开始。cuda7版本增加了新的特性，可以选择每一个主机线程使用独立的空流，即一个线程一个空流，避免了原来空流的按序执行。
 //启动每个线程一个空流的方法
 //方法1
 
-nvcc --default-stream per-thread
+.. code-block:: bash
+
+    nvcc --default-stream per-thread
 
 //方法2，在include CUDA头文件之前
-#define CUDA_API_PER_THREAD_DEFAULT_STREAM
 
-instrinsics
+.. code-block:: c++
+
+    #define CUDA_API_PER_THREAD_DEFAULT_STREAM
+
+CUDA instrinsics
+
 可以方便地实现一些常用操作，如fp16和bf16类型的数学函数，SIMD函数调用等等
 
 + https://ion-thruster.medium.com/an-introduction-to-writing-fp16-code-for-nvidias-gpus-da8ac000c17f
