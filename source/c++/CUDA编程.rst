@@ -171,7 +171,7 @@ cuDNN离线安装
     sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64 
     sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
 
-pip安装cuda python相关包
+pip安装cuda-python相关包
 
 https://pypi.org/search/?q=nvidia
 
@@ -188,7 +188,7 @@ https://pypi.org/search/?q=nvidia
 常用工具命令
 ````````````````````````````````````````````````
 
-nvidia-smi命令
+`nvidia-smi` 命令
 
 + nvidia-smi topo -m #查看GPU和CPU和拓扑连接方式
 + nvidia-smi -L #列出所有GPU设备
@@ -196,46 +196,102 @@ nvidia-smi命令
 
 多个查询：
 
-nvidia-smi --query-gpu=timestamp,name,pci.bus_id,driver_version,pstate,pcie.link.gen.max,pcie.link.gen.current,temperature.gpu,utilization.gpu,utilization.memory,memory.total,memory.free,memory.used --format=csv -l 1
+.. code-block:: bash
+    :linenos:
+
+    nvidia-smi --query-gpu=timestamp,name,pci.bus_id,driver_version,pstate,pcie.link.gen.max,\
+        pcie.link.gen.current,temperature.gpu,utilization.gpu,\
+        utilization.memory,memory.total,memory.free,memory.used --format=csv -l 1
 
 https://medium.com/analytics-vidhya/explained-output-of-nvidia-smi-utility-fc4fbee3b124
 
-nvidia-settings命令：
+`nvidia-settings` 命令：
 
 .. code-block:: bash
     :linenos:
 
     nvidia-settings -q gpus -t #查询GPU的数目
     nvidia-settings -q CUDACores -t #查询GPU中CUDA core的数目
-    nvidia-settings -q PCIEGen #查看PCIE接口
+    nvidia-settings -q PCIEGen -t #查看PCIE接口
     nvidia-settings -q GpuUUID -t #查看GPU的uuid
 
 入门例子
 ------------------------------------------------
 
-从 `https://github.com/NVIDIA/cuda-samples <https://github.com/NVIDIA/cuda-samples>`_ 可以下载cuda的一些例子,下载编译之后，可以先运行两个demo程序来检查一下CUDA是否可用。
+从 `https://github.com/NVIDIA/cuda-samples <https://github.com/NVIDIA/cuda-samples>`_ 可以下载cuda的一些例子:
+
+.. code-block:: bash
+
+    git clone https://github.com/NVIDIA/cuda-samples.git
+    #切换成与当前CUDA环境一致的代码版本
+    git checkout v11.8 && git switch -c v11.8
+    #安装依赖项
+    sudo apt install libopenmpi-dev -y
+    #编译
+    make -j
+
+编译之后，可以先运行两个demo程序来检查一下CUDA是否可用。
 生成的可执行文件在 `bin/x86_64/linux/release` 目录下
 
 #. 查询设备信息deviceQuery
 
-  进入 `cuda-sample//Samples/deviceQuery` 目录，然后执行 `make` ，成功后会生成一个叫 `deviceQuery` 的可执行程序，运行之后，典型输出如下：
+  进入 `bin/x86_64/linux/release` 目录，执行 `deviceQuery` 程序，运行之后，典型输出如下：
   
   .. code-block:: bash
-      :linenos:
   
-      Device 0: "NVIDIA RTX A4000"
-      CUDA Driver Version / Runtime Version          12.0 / 11.8
-      CUDA Capability Major/Minor version number:    8.6
-      Total amount of global memory:                 16106 MBytes (16888889344 bytes)
-      (048) Multiprocessors, (128) CUDA Cores/MP:    6144 CUDA Cores
-      GPU Max Clock rate:                            1560 MHz (1.56 GHz)
+      ./deviceQuery Starting...
   
-  可以看出该GPU有6144个CUDA core，最后的Result=PASS表明运行没有问题。
+      CUDA Device Query (Runtime API) version (CUDART static linking)
+  
+      Detected 1 CUDA Capable device(s)
+  
+      Device 0: "NVIDIA GeForce GTX 1650"
+      CUDA Driver Version / Runtime Version          12.1 / 11.8
+      CUDA Capability Major/Minor version number:    7.5
+      Total amount of global memory:                 3904 MBytes (4093509632 bytes)
+      (014) Multiprocessors, (064) CUDA Cores/MP:    896 CUDA Cores
+      GPU Max Clock rate:                            1515 MHz (1.51 GHz)
+      Memory Clock rate:                             6001 Mhz
+      Memory Bus Width:                              128-bit
+      L2 Cache Size:                                 1048576 bytes
+
+      ......
+
+      deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 12.1, CUDA Runtime Version = 11.8, NumDevs = 1
+      Result = PASS
+  
+  可以看出该GPU有896个CUDA core，最后的Result=PASS表明运行没有问题。
 
 #. 带宽测试bandwidthTest
 
-  进入 `cuda-sample//Samples/bandwidthTest` 目录，然后执行 `make` ，然后执行 `bandwidthTest` 程序，输出如下：
-  可以看到带宽数据。
+  进入 `bin/x86_64/linux/release` 目录，执行 `bandwidthTest` 程序，输出如下：
+
+  .. code-block:: bash
+
+    [CUDA Bandwidth Test] - Starting...
+    Running on...
+    
+    Device 0: NVIDIA GeForce GTX 1650
+    Quick Mode
+    
+    Host to Device Bandwidth, 1 Device(s)
+    PINNED Memory Transfers
+        Transfer Size (Bytes)	Bandwidth(GB/s)
+        32000000			6.2
+    
+    Device to Host Bandwidth, 1 Device(s)
+    PINNED Memory Transfers
+        Transfer Size (Bytes)	Bandwidth(GB/s)
+        32000000			6.5
+    
+    Device to Device Bandwidth, 1 Device(s)
+    PINNED Memory Transfers
+        Transfer Size (Bytes)	Bandwidth(GB/s)
+        32000000			169.8
+    
+    Result = PASS
+
+  可以看到H2D、D2H和D2D的带宽数据。
 
 CUDA API
 ------------------------------------------------
