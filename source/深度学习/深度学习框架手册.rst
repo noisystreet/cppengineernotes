@@ -47,17 +47,45 @@ https://zhuanlan.zhihu.com/p/371978706
     - Magma 2.6.1
     - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.7, CUDNN_VERSION=8.5.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -fabi-version=11 -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -DEDGE_PROFILER_USE_KINETO -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wunused-local-typedefs -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Werror=cast-function-type -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.13.1, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF,
 
+查看torch包的编译选项：
+
+    .. code-block:: python
+
+        import pprint
+        pprint.pprint(torch.__config__._cxx_flags())
+
+    输出：
+
+    .. code-block:: bash
+
+        (' -D_GLIBCXX_USE_CXX11_ABI=1 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL '
+        '-DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK '
+        '-DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 '
+        '-fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor '
+        '-Werror=range-loop-construct -Werror=bool-operation -Wnarrowing '
+        '-Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds '
+        '-Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function '
+        '-Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing '
+        '-Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic '
+        '-Wno-error=old-style-cast -Wno-invalid-partial-specialization '
+        '-Wno-unused-private-field -Wno-aligned-allocation-unavailable '
+        '-Wno-missing-braces -fdiagnostics-color=always -faligned-new '
+        '-Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno '
+        '-fno-trapping-math -Werror=format -Werror=cast-function-type '
+        '-Wno-stringop-overflow')
+
 CUDA相关：
 
 .. code-block:: python
     :linenos:
 
     import torch
-    torch.cuda.is_available() #检查CUDA是否可用
-    torch.cuda.is_bf16_supported() #检查GPU是否支持bfloat16
-    torch.cuda.device_count() #GPU数目
-    torch.cuda.get_arch_list() #打印sm信息
-    torch.cuda.get_device_name() #设备名称
+    torch.cuda.is_available()           #检查CUDA是否可用
+    torch.cuda.is_bf16_supported()      #检查GPU是否支持bfloat16
+    torch.cuda.device_count()           #GPU数目
+    torch.cuda.get_arch_list()          #打印计算力
+    torch.cuda.get_device_capability()  #打印计算力,返回的是tuple，如(7,5)
+    torch.cuda.get_device_name()        #设备名称
     torch.get_autocast_gpu_dtype()
 
 CPU相关：
@@ -65,8 +93,8 @@ CPU相关：
 .. code-block:: python
     :linenos:
 
-    torch.get_default_dtype() #默认数据类型
-    torch.get_num_threads() #线程数目
+    torch.get_default_dtype()   #默认数据类型
+    torch.get_num_threads()     #线程数目
     torch.get_num_interop_threads() #op间线程数目
 
 编译安装
@@ -233,7 +261,9 @@ tensor
 ````````````````````````````````````````````````
 
 tensor是一种与数组和矩阵类似的数据结构，在pytorch中，输入输出和模型的参数都是用tensor来表示的。
-tensor与numpy中的ndarray非常相似，但tensor能在GPU和其他硬件加速设备上运行。并且针对自动微分进行了优化。tensor和ndarray底层内存布局通常是一样的，免去了拷贝数据的麻烦。
+
+tensor与numpy中的ndarray非常相似，但tensor能在GPU和其他硬件加速设备上运行。并且针对自动微分进行了优化。
+
 tensor可以从python的list或者numpy的ndarray创建：
 
 .. code-block:: python
@@ -252,19 +282,17 @@ b=a.numpy()
 其他接口：
 
 .. code-block:: python
-    :linenos:
     
     torch.tensor()
     torch.empty()
     torch.rand()
     torch.randn()
     x=x.new_ones()
-    x.item() #获取标量的值
+    x.item()        #获取标量的值
 
 tensor的属性有shape,dtype，device等等，device代表tensor数据的存储位置，默认在cpu上
 
 .. code-block:: python
-    :linenos:
 
     tensor=torch.ones(3,4)
     print(tensor.device)   #结果为cpu
@@ -272,7 +300,6 @@ tensor的属性有shape,dtype，device等等，device代表tensor数据的存储
 如果GPU可用，可以显式地把数据拷贝到GPU上：
 
 .. code-block:: python
-    :linenos:
 
     if torch.cuda.is_available():   
         tensor = tensor.to('cuda')
@@ -282,10 +309,30 @@ tensor的属性有shape,dtype，device等等，device代表tensor数据的存储
 
 to方法可以将tensor在不同device之间或者不同数据类型进行拷贝和转换
 
+tensor类定义在torch/_tensor.py文件中，继承自torch._C._TensorBase类，它的一些常用成员方法有：
+
+.. code-block:: python
+
+    dim()
+    size()
+    numel()     #返回元素个数
+    data_ptr()  #返回底层数据地址
+    storage()
+    stride()
+    requires_grad()
+    [] #切片和索引
+    register_hook()
+    backward()
+    resize()
+    view()
+    reshape()
+    permute()
+
 自动微分
 ````````````````````````````````````````````````
 
 在训练过程中，对于梯度下降法，需要根据梯度和学习率来更新权重系数。可以采用自动微分的方法来计算损失函数的梯度。
+
 如下列代码：
 
 .. code-block:: python
@@ -298,6 +345,8 @@ to方法可以将tensor在不同device之间或者不同数据类型进行拷贝
     print(dydx==x.grad)
 
 可以验证y=x^2用自动微分求出的导数。
+
+自动微分是pytorch构建神经网络最核心的功能之一
 
 数据操作
 ````````````````````````````````````````````````
