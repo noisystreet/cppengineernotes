@@ -13,6 +13,8 @@ Python深入理解
 Python分析工具
 ------------------------------------------------
 
+pystack: https://github.com/bloomberg/pystack
+
 inspect模块
 ````````````````````````````````````````````````
 

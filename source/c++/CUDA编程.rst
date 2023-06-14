@@ -308,20 +308,21 @@ grid、block和thread都是软件逻辑层面的概念。CUDA的设备在实际�
 kernel在调用时也必须通过<<<grid, block>>>来指定kernel所使用的线程数及结构。
 可以使用nvprof分析CUDA程序中的函数的执行开销
 CUDA程序和编译
-编译时一定要根据硬件的compute capability设置匹配的编译选项，否则可能计算结果错误。
-由于GPU是异构模型，需要区分host和device上的代码，在CUDA中是通过函数类型修饰符开区别host和device上的函数，主要的三个函数类型修饰符如下：
+编译时一定要根据硬件的 `compute capability` 设置匹配的编译选项，否则可能计算结果错误。
 
-+ __global__：在device上执行，从host中调用（一些特定的GPU也可以从device上调用），返回类型必须是void，不支持可变参数参数，不能是类的成员函数。注意用__global__定义的kernel是异步的，这意味着host不会等待kernel执行完就执行下一步。
-+ __device__：在device上执行，且只能从device中调用，不可以和__global__同时用。
-+ __host__：在host上执行，仅可以从host上调用，一般省略不写，不可以和__global__同时用，但可和__device__同时用，此时函数会在device和host都编译。
+由于GPU是异构模型，需要区分host和device上的代码，在CUDA中对C语言进行的扩展，通过函数类型修饰符开区别host和device上的函数，主要的三个函数类型修饰符如下：
+
++ `__global__` 从host调用，在device上执行，（一些特定的GPU也可以从device上调用），返回类型必须是 `void` ，不支持可变参数参数，不能是类的成员函数。用 `__global__` 定义的kernel函数是异步的，这意味着host不会等待kernel执行完就执行下一步。
++ `__device__` 从device调用，在device上执行，且只能，不可以和 `__global__` 同时用。
++ `__host__` 从host上调用，在host上执行，一般省略不写，不可以和 `__global__` 同时用，但可和 `__device__` 同时用，此时函数会在device和host都编译。
 
 变量修饰符：
 
-+ __shared__：用来定义共享内存变量
-+ __constant__：用来定义常量内存
++ `__shared__` ：用来定义共享内存变量
++ `__constant__` ：用来定义常量内存
   
-kernel函数内可以使用一些c++11语法，如auto
-内置dim3结构体和uint3结构体：
+kernel函数内可以使用一些c++11语法，如 `auto`
+内置 `dim3` 结构体和 `uint3` 结构体：
 
 .. code-block:: c++
     :linenos:
@@ -349,18 +350,18 @@ kernel函数内可以使用一些c++11语法，如auto
 一些内置变量
 ````````````````````````````````````````````````
 
-+ gridDim
-+ blockDim
-+ blockIdx：线程块的索引
-+ threadIdx：线程块内线程的索引
-+ warpSize
++ `gridDim`
++ `blockDim`
++ `blockIdx` 线程块的索引
++ `threadIdx` 线程块内线程的索引
++ `warpSize`
 
 这些内置变量常用于在kernel函数中获取线程和blockID。
 
 
 常用头文件：
 
-.. code-block:: cuda
+.. code-block:: c++
 
     #include <cuda_runtime.h>
     #include <device_launch_parameters.h>
@@ -371,50 +372,77 @@ CUDA API可以分为driver API和runtime API，对应的函数分别以cu和cuda
 设备管理
 ````````````````````````````````````````````````
 
-.. code-block:: cuda
+.. code-block:: c++
 
-    //device查询函数
-    cudaGetDeviceProperties()
-    cudaGetDeviceCount(int* num)
-    cudaGetDevice(int* id)
-
-    cudaDeviceSynchronize
-    cudaDeviceReset
+    __host__            cudaError_t cudaGetDeviceProperties(cudaDeviceProp *prop, int device)
+    __host__ __device__ cudaError_t cudaGetDeviceCount (int* count)
+    __host__ __device__ cudaError_t cudaGetDevice(int* device)
+    __host__            cudaError_t cudaSetDevice(int device)
+    __host__ __device__ cudaError_t cudaDeviceSynchronize(void)
+    __host__            cudaError_t cudaDeviceReset(void)
 
 内存管理
 ````````````````````````````````````````````````
 
-.. code-block:: cuda
+.. code-block:: c++
 
-    cudaMalloc
-    cudaMallocManaged
-    cudaMemcpy
-    cudaMemPrefetchAsync
-    cudaDeviceSynchronize
-    cudaFree
-    cudaMemcpyToSymbol //拷贝数据到常量内存
+    __host__ cudaError_t cudaMemGetInfo(size_t* free, size_t* total)
+    //memset
+    __host__            cudaError_t cudaMemset(void* devPtr, int  value, size_t count)
+    __host__ __device__ cudaError_t cudaMemsetAsync(void* devPtr, int  value, size_t count, cudaStream_t stream = 0)
+    //malloc
+    __host__ __device__ cudaError_t cudaMalloc(void** devPtr, size_t size) 
+    __host__            cudaError_t cudaMallocManaged(void** devPtr, size_t size, unsigned int  flags = cudaMemAttachGlobal) 
+    __host__            cudaError_t cudaMallocPitch(void** devPtr, size_t* pitch, size_t width, size_t height) 
+    __host__            cudaError_t cudaHostAlloc(void** pHost, size_t size, unsigned int  flags)
+    //memcpy 
+    __host__            cudaError_t cudaMemcpy(void* dst, const void* src, size_t count, cudaMemcpyKind kind) 
+    __host__ __device__ cudaError_t cudaMemcpyAsync(void* dst, const void* src, size_t count, cudaMemcpyKind kind, cudaStream_t stream = 0) 
+    __host__ cudaError_t cudaMemPrefetchAsync(const void* devPtr, size_t count, int  dstDevice, cudaStream_t stream = 0) 
+    __host__ cudaError_t cudaMemcpyToSymbol(const void* symbol, const void* src, size_t count, size_t offset = 0, cudaMemcpyKind kind = cudaMemcpyHostToDevice) 
+    //free
+    __host__ __device__ cudaError_t cudaFree(void* devPtr) 
+    __host__            cudaError_t cudaFreeHost(void* ptr) 
 
-共享内存：__shared__
 
-常量内存
+共享内存 `__shared__`
+
+常量内存 `__constant__`
+
+事件管理
+````````````````````````````````````````````````
+
+.. code-block:: c++
+    
+    __host__            cudaError_t cudaEventCreate(cudaEvent_t* event)
+    __host__ __device__ cudaError_t cudaEventCreateWithFlags(cudaEvent_t* event, unsigned int  flags)
+    __host__ __device__ cudaError_t cudaEventDestroy(cudaEvent_t event)
+    __host__            cudaError_t cudaEventElapsedTime(float* ms, cudaEvent_t start, cudaEvent_t end)
+    __host__            cudaError_t cudaEventQuery(cudaEvent_t event)
+    __host__ __device__ cudaError_t cudaEventRecord(cudaEvent_t event, cudaStream_t stream = 0)
+    __host__            cudaError_t cudaEventRecordWithFlags(cudaEvent_t event, cudaStream_t stream = 0, unsigned int  flags = 0)
+    __host__            cudaError_t cudaEventSynchronize(cudaEvent_t event) 
 
 流管理
 ````````````````````````````````````````````````
 
-.. code-block:: cuda
+.. code-block:: c++
 
-    cudaStreamCreate
-    cudaStreamSynchronize
-    cudaStreamWaitEvent
-    cudaStreamDestroy
+    __host__            cudaError_t cudaStreamCreate(cudaStream_t* pStream) 
+    __host__ __device__ cudaError_t cudaStreamDestroy(cudaStream_t stream) 
+    __host__ __device__ cudaError_t cudaStreamCreateWithFlags(cudaStream_t* pStream, unsigned int  flags) 
+    __host__            cudaError_t cudaStreamGetId(cudaStream_t hStream, unsigned long long* streamId) 
+    __host__            cudaError_t cudaStreamQuery(cudaStream_t stream) 
+    __host__            cudaError_t cudaStreamSynchronize(cudaStream_t stream) 
+    __host__ __device__ cudaError_t cudaStreamWaitEvent(cudaStream_t stream, cudaEvent_t event, unsigned int  flags = 0) 
 
 错误处理
 ````````````````````````````````````````````````
-.. code-block:: cuda
+.. code-block:: c++
 
-    cudaError_t枚举
-    cudaGetLastError
-    cudaGetErrorString
+    cudaError_t 枚举
+    cudaGetLastError()
+    cudaGetErrorString()
 
 更多例子
 ------------------------------------------------
@@ -483,17 +511,17 @@ CUDA streams用来管理执行单元的并发操作，在一个流中，操作�
     :linenos:
 
     cudaStream_t stream1, stream2, stream3, stream4 ;
-    cudaStreamCreate ( &stream1) ;
-    cudaStreamCreate ( &stream2) ;
+    cudaStreamCreate(&stream1) ;
+    cudaStreamCreate(&stream2) ;
 
     ...
-    cudaMalloc ( &dev1, size ) ;
-    cudaMallocHost ( &host1, size ) ;
+    cudaMalloc(&dev1, size) ;
+    cudaMallocHost(&host1, size) ;
     …
-    cudaMemcpyAsync ( dev1, host1, size, H2D, stream1 ) ;
-    kernel2 <<< grid, block, 0, stream2 >>> ( …, dev2, … ) ;
-    kernel3 <<< grid, block, 0, stream3 >>> ( …, dev3, … ) ;
-    cudaMemcpyAsync ( host4, dev4, size, D2H, stream4 ) ;
+    cudaMemcpyAsync(dev1, host1, size, H2D, stream1) ;
+    kernel2 <<< grid, block, 0, stream2 >>>(…, dev2, …) ;
+    kernel3 <<< grid, block, 0, stream3 >>>(…, dev3, …) ;
+    cudaMemcpyAsync(host4, dev4, size, D2H, stream4) ;
 
 在cuda7之前，没有显式指定流，空流（默认流）会被隐式指定，它要同步设备上的所有操作。一个设备会产生一个空流。其它流的工作完成之后空流的工作才能开始，空流工作完成后其它流才能开始。cuda7版本增加了新的特性，可以选择每一个主机线程使用独立的空流，即一个线程一个空流，避免了原来空流的按序执行。
 //启动每个线程一个空流的方法
