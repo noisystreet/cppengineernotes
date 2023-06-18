@@ -1,3 +1,29 @@
 深度学习模型
 ================
-空
+
+卷积神经网络
+------------------------------------------------
+
+带你认识9种常用卷积神经网络 https://www.51cto.com/article/668768.html
+
+Transformer
+------------------------------------------------
+
+position encoding
+
+#. Transformer 中的 Positional Encoding https://wmathor.com/index.php/archives/1453/
+#. 如何理解Transformer论文中的positional encoding，和三角函数有什么关系？https://www.zhihu.com/question/347678607
+#. https://kazemnejad.com/blog/transformer_architecture_positional_encoding/
+
+Attention机制
+
+#. 图解 Attention https://wmathor.com/index.php/archives/1450/
+
+参考阅读
+
+#. Transformer模型详解（图解最完整版）https://zhuanlan.zhihu.com/p/338817680
+#. Transformer各层网络结构详解！面试必备！(附代码实现) https://www.cnblogs.com/mantch/p/11591937.html
+#. https://github.com/NLP-LOVE/ML-NLP
+#. https://www.zhihu.com/question/68482809/answer/264632289
+#. https://jalammar.github.io/illustrated-transformer/
+#. Transformer pytorch实现逐行详解 https://mdnice.com/writing/fc0b920d4ca84837a5712df1a46865d2
