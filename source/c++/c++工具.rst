@@ -506,10 +506,10 @@ viztracer
 
 参考资料：
 
-#. pax-utils：https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities
-#. valgrind：https://valgrind.org/docs/manual/manual.html
+#. pax-utils https://wiki.gentoo.org/wiki/Hardened/PaX_Utilities
+#. valgrind https://valgrind.org/docs/manual/manual.html
 #. Profiling Native Python Extensions https://www.benfrederickson.com/profiling-native-python-extensions-with-py-spy/
-#. py-spy文档：https://docs.rs/crate/py-spy/latest
+#. py-spy文档 https://docs.rs/crate/py-spy/latest
 #. viztracer https://viztracer.readthedocs.io/en/latest/#
 
 其他

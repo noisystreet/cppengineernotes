@@ -300,7 +300,6 @@ https://iamsorush.com/posts/weak-pointer-cpp/
 涉及头文件
 
 .. code-block:: c++
-    :linenos:
 
     #include <thread>
     #include <mutex>
@@ -312,8 +311,8 @@ https://iamsorush.com/posts/weak-pointer-cpp/
 线程的创建：
 
 + ``std::thread``
-+ ``std::async`` : 用来创建一个异步任务，可以通过 ``future`` 的 ``get`` 、 ``wait_for`` 、 ``wait`` 函数对子线程的结果和状态进行访问.
-+ ``std::packaged_task``是个模板类。 ``std::packaged_task`` 包装任何可调用目标(函数、lambda表达式、bind表达式、函数对象)以便它可以被异步调用。它的返回值或抛出的异常被存储于能通过std::future对象访问的共享状态中，std::packaged_task类似于std::function，但是会自动将其结果传递给std::future对象。
++ ``std::async`` 用来创建一个异步任务，可以通过 ``future`` 的 ``get`` 、 ``wait_for`` 、 ``wait`` 函数对子线程的结果和状态进行访问.
++ ``std::packaged_task`` 是个模板类。 ``std::packaged_task`` 包装任何可调用目标(函数、lambda表达式、bind表达式、函数对象)以便它可以被异步调用。它的返回值或抛出的异常被存储于能通过 ``std::future`` 对象访问的共享状态中， ``std::packaged_task`` 类似于 ``std::function`` ，但是会自动将其结果传递给 ``std::future`` 对象。
 
 std::packaged_task的例子
 
@@ -379,7 +378,6 @@ chrono时间处理
 + ``chrono::duration`` 类 （ ``/usr/include/c++/11/chrono`` ）代表一段时间间隔
 
 .. code-block:: c++
-    :linenos:
 
     /// `chrono::duration` represents a distance between two points in time
     template<typename _Rep, typename _Period = ratio<1>>
@@ -390,16 +388,14 @@ chrono时间处理
 不同 ``duration`` 的转换：
 
 .. code-block:: c++
-    :linenos:
 
     std::chrono::seconds s=std::chrono::duration_cast<std::chrono::seconds>(ms);
 
-+ ``timepoint`` 类
++ ``time_point`` 类
 
 也是一个模板类：
 
 .. code-block:: c++
-    :linenos:
 
     template<typename _Clock, typename _Dur>
     struct time_point
@@ -432,8 +428,8 @@ C++14
 + ``std::exchange``
 + ``auto`` 和泛型lambda表达式
 
-``auto glambda = [](auto a, auto&& b) { return a < b; };``
-``auto lambda = []<class T>(T a, auto&& b) { return a < b; };``
+  + ``auto lambda = [](auto a, auto&& b) { return a < b; };``
+  + ``auto lambda = []<class T>(T a, auto&& b) { return a < b; };``
 
 C++17
 ````````````````````````````````````````````````
@@ -442,7 +438,7 @@ C++17
 + ``std::any``
 + ``std::optional``
 + ``std::string_view``
-+ ``std::apply``：将tuple的成员转变成函数参数，并调用函数
++ ``std::apply``：将 ``tuple`` 的成员转变成函数参数，并调用函数
 + polymorphic allocators
 + searchers
 + fold expression
@@ -454,7 +450,6 @@ C++20
 新增头文件：
 
 .. code-block:: c++
-    :linenos:
 
     #include <bit>      //位运算
     #include <compare>
@@ -492,7 +487,6 @@ C++23
 新增头文件：
 
 .. code-block:: c++
-    :linenos:
 
     #include <expected>
     #include <flat_map>
@@ -507,6 +501,7 @@ C++23
 
 参考阅读
 ------------------------------------------------
+#. `C++ FAQ <https://isocpp.org/wiki/faq>`_
 #. `cppreference <https://en.cppreference.com/w/>`_
 #. `cplusplus <https://cplusplus.com/reference/>`_
 #. `GCC文档 <https://gcc.gnu.org/onlinedocs/>`_
