@@ -176,6 +176,58 @@ git配置和仓库管理
 
 打印数组 ``print *arr@100`` 
 
+打印C++STL容器
+````````````````````````````````````````````````
+
+参考：https://sourceware.org/gdb/wiki/STLSupport
+
+首先，需要gdb编译时启用了 ``--with-python`` 选项。
+
+查找printers.py路径：
+
+.. code-block:: bash
+
+    locate python/libstdcxx/v6/printers.py
+
+创建$HOME/.gdbinit文件，加入以下内容：
+
+.. code-block:: bash
+
+    python
+    import sys
+    import os
+    if os.path.exists('/usr/share/gcc/python'):
+        sys.path.insert(0, '/usr/share/gcc/python')
+        from libstdcxx.v6.printers import register_libstdcxx_printers
+        register_libstdcxx_printers (None)
+    end
+
+启动gdb，执行 ``info pretty-printer`` ,典型输出如下：
+
+.. code-block:: bash
+
+    global pretty-printers:
+    builtin
+        mpx_bound128
+    libstdc++-v6
+        __gnu_cxx::_Slist_iterator
+        __gnu_cxx::__8::_Slist_iterator
+        __gnu_cxx::__8::__normal_iterator
+        __gnu_cxx::__8::slist
+        __gnu_cxx::__normal_iterator
+        __gnu_cxx::slist
+        __gnu_debug::_Safe_iterator
+        std::_Bit_const_iterator
+        std::_Bit_iterator
+        std::_Bit_reference
+        std::_Deque_const_iterator
+        std::_Deque_iterator
+        std::_Fwd_list_const_iterator
+        std::_Fwd_list_iterator
+        ......
+
+然后就可以以美观简洁的方式打印STL容器
+
 条件断点
 ````````````````````````````````````````````````
 

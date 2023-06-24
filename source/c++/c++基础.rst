@@ -498,6 +498,10 @@ C++23
     #include <stacktrace>
     #include <stdfloat>     //float16和bfloat16支持
 
+c++设计模式
+------------------------------------------------
+
+#. `设计 C++ 接口文件的小技巧之 PIMPL <https://www.cnblogs.com/tengzijian/p/17473602.html>`_
 
 参考阅读
 ------------------------------------------------
