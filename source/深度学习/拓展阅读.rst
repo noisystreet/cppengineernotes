@@ -46,14 +46,17 @@ GPU
 + `看完H100白皮书后的一些感想 <https://zhuanlan.zhihu.com/p/485992286>`_
 + `NVCC 分步编译 <https://www.zangcq.com/2020/08/13/nvcc-%e5%88%86%e6%ad%a5%e7%bc%96%e8%af%91/>`_
 
-TPU
+TPU/IPU/NPU
 ------------------------------------------------
 
 + `Google AI芯片TPU核心架构--脉动阵列Systolic Array <https://zhuanlan.zhihu.com/p/421737378>`_
 + `TPU System Architecture <https://cloud.google.com/tpu/docs/system-architecture-tpu-vm>`_
 + `脉动阵列 - 因Google TPU获得新生 <https://zhuanlan.zhihu.com/p/26522315>`_
 + `BFloat16: The secret to high performance on Cloud TPUs <https://cloud.google.com/blog/products/ai-machine-learning/bfloat16-the-secret-to-high-performance-on-cloud-tpus>`_
-
++ `Graphcore IPU介绍 <https://www.graphcore.ai/products/c600#product-spec>`_
++ `DaVinci: A Scalable Architecture for Neural Network Computing <https://www.cmc.ca/wp-content/uploads/2020/03/Zhan-Xu-Huawei.pdf>`_
++ `希姆计算 <https://docs.streamcomputing.com/zh/latest/>`_
+  
 性能分析与优化
 ------------------------------------------------
 
