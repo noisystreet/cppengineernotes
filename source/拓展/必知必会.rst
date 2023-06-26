@@ -9,6 +9,7 @@
 + 正则表达式：https://regexper.com/
 + open standard：https://www.open-std.org/
 + FHS标准：https://refspecs.linuxfoundation.org/fhs.shtml
++ XML https://developer.mozilla.org/en-US/docs/Web/XML/XML_introduction
 
 代码
 ------------------------------------------------
