@@ -5,8 +5,15 @@ C++编译器与运行时
 c++编译器
 ------------------------------------------------
 
+最常用的编译器：gcc和clang
+
+.. image:: images/gcc.png
+.. image:: images/llvm-dragon.png
+    :scale: 50 %
+
+gcc的发行版：
+
 + `mingw <https://nuwen.net/mingw.html>`_
-+ `equation gcc <http://www.equation.com/>`_
 
 C++实现
 ------------------------------------------------
