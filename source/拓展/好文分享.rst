@@ -1,6 +1,12 @@
 好文分享
 ========================
 
+技术博客
+------------------------------------------------
+
+#. https://blog.yossarian.net/archive
+#. https://timdettmers.com/
+
 编程语言
 ------------------------------------------------
 
@@ -14,6 +20,7 @@
 CPU
 ------------------------------------------------
 #. `Intel CPU Brand Letters & Nomenclature Explained <https://www.dignited.com/99881/intel-cpu-brand-letters-nomenclature-explained/>`_
+#. `AArch64 SoC features <https://marcin.juszkiewicz.com.pl/download/tables/arm-socs.html>`_
 
 工程思维
 ------------------------------------------------

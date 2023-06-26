@@ -513,3 +513,5 @@ c++设计模式
 #. `SGI-STL实现 <http://www.sgi.com/tech/stl/index.html>`_
 #. `C++重载底层原理 <https://www.cnblogs.com/whiteBear/p/17180339.html>`_
 #. `All About Lambda Function in C++(From C++11 to C++20) <http://www.vishalchovatiya.com/learn-lambda-function-in-cpp-with-example/>`_
+#. `CppCoreGuidelines <https://github.com/isocpp/CppCoreGuidelines>`_
+#. `C++ Stories <https://www.cppstories.com/p/start-here/>`_

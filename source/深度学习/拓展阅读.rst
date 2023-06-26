@@ -23,6 +23,7 @@
 + `AI处理器单元中的矩阵乘法器电路设计 <https://zhuanlan.zhihu.com/p/446456791>`_
 + `AI处理器架构设计 <https://www.zhihu.com/column/c_1135148448771956736>`_
 + `陈巍谈芯：最新发布的壁仞GPU BR100参数深度对比和优势分析 <https://zhuanlan.zhihu.com/p/551888300>`_
++ `计算机体系结构 [1]：CPU/GPU/NPU算力 <https://no5-aaron-wu.github.io/2021/12/09/ComputerArch-1-OPS/>`_
 
 GPU
 ------------------------------------------------
