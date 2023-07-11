@@ -171,3 +171,5 @@ ast的可视化：https://ucb-sejits.github.io/ctree-docs/ipythontips.html
 #. https://realpython.com/cpython-source-code-guide/
 #. https://devguide.python.org/internals/
 #. https://cython.readthedocs.io/en/latest/
+#. https://realpython.com/
+#. https://pythoncat.top
