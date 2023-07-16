@@ -212,7 +212,11 @@ https://pypi.org/search/?q=nvidia
         pcie.link.gen.current,temperature.gpu,utilization.gpu,\
         utilization.memory,memory.total,memory.free,memory.used --format=csv -l 1
 
-https://medium.com/analytics-vidhya/explained-output-of-nvidia-smi-utility-fc4fbee3b124
+参考：
+
++ https://medium.com/analytics-vidhya/explained-output-of-nvidia-smi-utility-fc4fbee3b124
++ https://www.seimaxim.com/kb/gpu/nvidia-smi-cheat-sheet
++ https://xcat-docs.readthedocs.io/en/2.16.2/advanced/gpu/nvidia/management.html
 
 ``nvidia-settings`` 命令：
 
@@ -302,6 +306,15 @@ https://medium.com/analytics-vidhya/explained-output-of-nvidia-smi-utility-fc4fb
 
 可以看到H2D、D2H和D2D的带宽数据。
 
+GPU硬件和执行模型
+------------------------------------------------
+
+参考
+
++ warp深度解析 https://blog.51cto.com/u_15127500/3641722
++ https://cse.iitkgp.ac.in/~soumya/hp3/slides/warp-divr.pdf
++ CUDA Programming:An In-Depth Look https://www.run.ai/guides/nvidia-cuda-basics-and-best-practices/cuda-programming
+
 CUDA API
 ------------------------------------------------
 
@@ -321,6 +334,8 @@ kernel在调用时必须通过 ``<<<grid, block>>>`` 来指定kernel所使用的
 可以使用nvprof分析CUDA程序中的函数的执行开销
 
 CUDA编程模型 https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/
+
++ CUDA 深入理解threadIdx https://www.cnblogs.com/zzzsj/p/14866103.html
 
 CUDA程序和编译
 ````````````````````````````````````````````````
@@ -603,6 +618,7 @@ Graph API
 
 #. `cuDNN frontend <https://github.com/NVIDIA/cudnn-frontend>`_
 #. `cuDNN backend <https://docs.nvidia.com/deeplearning/cudnn/api/index.html#cudnn-backend-api>`_
+#. `New features and application from cuDNN V8 <https://medium.com/@billchenxi/cudnn-v8-2020-4-8-gtc-5a86365d33c3>`_
 
 重要概念：
 

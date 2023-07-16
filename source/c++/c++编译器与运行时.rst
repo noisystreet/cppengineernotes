@@ -11,9 +11,11 @@ c++编译器
 .. image:: images/llvm-dragon.png
     :scale: 50 %
 
-gcc的发行版：
+gcc参考：
 
 + `mingw <https://nuwen.net/mingw.html>`_
++ `x86 Built-in Functions <https://gcc.gnu.org/onlinedocs/gcc/x86-Built-in-Functions.html>`_
++ `Using Vector Instructions through Built-in Functions <https://gcc.gnu.org/onlinedocs/gcc/Vector-Extensions.html>`_
 
 C++实现
 ------------------------------------------------
@@ -31,6 +33,12 @@ c++对象内存布局
 + `memory-layout-of-cpp-object <http://www.vishalchovatiya.com/memory-layout-of-cpp-object/>`_
 + `memory-layout-in-c <https://medium.com/@vivekkr1020/memory-layout-in-c-87f8b8c67fc5>`_
 + `cpp-object-layout-and-casting <https://www.stefanmisik.com/post/cpp-object-layout-and-casting.html>`_
+
+二进制文件分析
+------------------------------------------------
+
+#. 
+#. `Object File Format <https://www.gnu.org/software/guile/manual/html_node/Object-File-Format.html>`_
 
 参考
 ------------------------------------------------

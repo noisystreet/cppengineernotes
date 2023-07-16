@@ -344,3 +344,4 @@ awk
 #. `linux-man-page-guide <https://itsfoss.com/linux-man-page-guide/>`_
 #. `Linux® technology reference <http://www.makelinux.net/reference/>`_
 #. `tldr <https://manpages.ubuntu.com/manpages/jammy/man1/tldr-py.1.html>`_
+#. `VITUX The Linux Compendium <https://vitux.com/>`_
