@@ -487,6 +487,8 @@ https://github.com/intel/intel-extension-for-pytorch
 ````````````````````````````````````````````````
 
 + torch.utils 系列,https://zhuanlan.zhihu.com/p/375445552
++ Some important Pytorch tasks - A concise summary from a vision researcher https://spandan-madan.github.io/A-Collection-of-important-tasks-in-pytorch/
++ https://huggingface.co/blog/accelerating-pytorch
 
 horovod
 ````````````````````````````````````````````````

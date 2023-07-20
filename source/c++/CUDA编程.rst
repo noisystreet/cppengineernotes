@@ -485,6 +485,7 @@ kernel函数内可以使用一些c++11语法，如 ``auto``
 
 + https://bluewaters.ncsa.illinois.edu/liferay-content/image-gallery/content/BLA-final
 + https://www.quantstart.com/articles/Matrix-Matrix-Multiplication-on-the-GPU-with-Nvidia-CUDA/
++ 矩阵乘法的 CUDA 实现、优化及性能分析
  
 event
 ````````````````````````````````````````````````
