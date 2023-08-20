@@ -105,9 +105,9 @@ GroupNorm
 + L2 loss
 + triplet loss
 
-+ https://zhuanlan.zhihu.com/p/258395701
-+ http://giantpandacv.com/academic/%E7%AE%97%E6%B3%95%E7%A7%91%E6%99%AE/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/Pytorch%E4%B8%AD%E7%9A%84%E5%9B%9B%E7%A7%8D%E7%BB%8F%E5%85%B8Loss%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/
-+ https://zhuanlan.zhihu.com/p/98785902
++ `19个损失函数汇总，以Pytorch为例 <https://zhuanlan.zhihu.com/p/258395701>`_
++ `Pytorch 中的四种经典 Loss 源码解析 <http://giantpandacv.com/academic/%E7%AE%97%E6%B3%95%E7%A7%91%E6%99%AE/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/Pytorch%E4%B8%AD%E7%9A%84%E5%9B%9B%E7%A7%8D%E7%BB%8F%E5%85%B8Loss%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/>_`
++ `Pytorch常用的交叉熵损失函数CrossEntropyLoss()详解 <https://zhuanlan.zhihu.com/p/98785902>_`
 
 优化器(optimizer)
 ````````````````````````````````````````````````

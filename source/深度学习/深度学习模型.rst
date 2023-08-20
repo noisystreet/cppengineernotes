@@ -1,13 +1,279 @@
 深度学习模型
 ================
 
-卷积神经网络
+计算机视觉
 ------------------------------------------------
 
 带你认识9种常用卷积神经网络 https://www.51cto.com/article/668768.html
 
-Transformer
+图像分类
+````````````````````````````````````````````````
+
++ SOTA: https://paperswithcode.com/sota/image-classification-on-imagenet
++ 深度学习基础：分类网络 https://zhuanlan.zhihu.com/p/59990714
++ 从卷积拆分和分组的角度看CNN模型的演化 https://blog.csdn.net/blogshinelee/article/details/106154772?spm=1001.2101.3001.6650.4&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-4-106154772-blog-122990652.pc_relevant_recovery_v2&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-4-106154772-blog-122990652.pc_relevant_recovery_v2&utm_relevant_index=5
++ 深度学习中有哪些魔改的特征融合方法？ https://www.zhihu.com/question/584973666
+
+lenet5(1998)
+
+论文：
+
+Gradient-Based Learning Applied to Document Recognition http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf
+
+解读：
+
++ 深度学习-LeNet https://zhuanlan.zhihu.com/p/471026689
++ LeNet Architecture: A Complete Guide https://www.kaggle.com/code/blurredmachine/lenet-architecture-a-complete-guide/notebook
++ 这可能是神经网络 LeNet-5 最详细的解释了！ https://blog.csdn.net/red_stone1/article/details/121804658
++ 卷积神经网络CNN（LeNet-5网络详解） https://blog.csdn.net/weixin_42398658/article/details/84392845
+
+代码：
+
++ tensorflow1：https://github.com/xiao-data/lenet
++ tf2-keras：https://www.cxyzjd.com/article/Jwenxue/106815859
++ pytorch：https://github.com/ChawDoe/LeNet5-MNIST-PyTorch
++ 手把手PyTorch 深度学习 (6): LeNet-5考古实现 https://zhuanlan.zhihu.com/p/506243982
+
+AlexNet(2012)
+
+论文：
+
+ImageNet Classification with Deep Convolutional Neural Networks
+
+主要特点：
+
++ 首次使用ReLU/Dropout/LRN
++ 使用双GPU训练
++ 使用imagenet数据集和数据增强技术
+
+解读：
+
++ 深度学习-AlexNet https://zhuanlan.zhihu.com/p/477417326
++ AlexNet—深度学习大放异彩开端之作 https://zhuanlan.zhihu.com/p/460891496
++ AlexNet网络模型讲解搭建以及训练 https://blog.csdn.net/qq_42076902/article/details/123864381
++ AlexNet: The First CNN to win Image Net https://www.mygreatlearning.com/blog/alexnet-the-first-cnn-to-win-image-net/
+
+VGG(2014)
+
+论文：
+
+Very Deep Convolutional Networks for Large-Scale Image Recognition https://arxiv.org/abs/1409.1556
+
+主要特点：
+
+解读：
+
++ 深度学习-VGGNet https://zhuanlan.zhihu.com/p/477805357
++ VGGNet原理和实现 https://zhuanlan.zhihu.com/p/91002845
+
+NiN(2014)
+
+解读：
+
++ NIN网络中的网络 https://blog.csdn.net/weixin_45132473/article/details/127673043
++ 深度学习-NiN https://zhuanlan.zhihu.com/p/478195280
+
+GoogLeNet(2014)
+
+解读：
+
+深度学习-GoogLeNet https://zhuanlan.zhihu.com/p/478197016
+
+ResNet(2015)
+
+解读：
+
++ 深度学习-ResNet https://zhuanlan.zhihu.com/p/478199175
++ ResNet及其变种的结构梳理、有效性分析与代码解读 https://zhuanlan.zhihu.com/p/54289848
++ 理解并实现 ResNet（Keras） https://zhuanlan.zhihu.com/p/68134150
++ ResNet50网络结构图及结构详解 https://zhuanlan.zhihu.com/p/353235794
+
+代码：
+
++ 通过Pytorch实现ResNet18 https://zhuanlan.zhihu.com/p/157134695
++ 深度学习第19讲：CNN经典论文研读之残差网络ResNet及其keras实现 https://zhuanlan.zhihu.com/p/60538104
++ PyTorch实现ResNet的代码解读 https://zhuanlan.zhihu.com/p/348660658
++ How to Train State-Of-The-Art Models Using TorchVision’s Latest Primitives https://pytorch.org/blog/how-to-train-state-of-the-art-models-using-torchvision-latest-primitives/
++ ImageNet Training in PyTorch https://docs.nvidia.com/deeplearning/dali/user-guide/docs/examples/use_cases/pytorch/resnet50/pytorch-resnet50.html#
++ https://pytorch.org/hub/pytorch_vision_wide_resnet/ https://pytorch.org/hub/pytorch_vision_wide_resnet/
+
+ResNext（2016）
+
+论文：
+
+Aggregated Residual Transformations for Deep Neural Networks https://arxiv.org/abs/1611.05431
+
+解读：
+
++ 深度学习入门笔记之ResNeXt https://blog.csdn.net/ysukitty/article/details/122990652
++ 深度学习_经典网络_ResNext详解 https://rockyding.blog.csdn.net/article/details/107587021?spm=1001.2101.3001.6650.7&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-7-107587021-blog-122990652.pc_relevant_recovery_v2&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-7-107587021-blog-122990652.pc_relevant_recovery_v2&utm_relevant_index=8
++ 详解ResNeXt网络(一) https://blog.csdn.net/sgzqc/article/details/121376693?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-121376693-blog-82453632.pc_relevant_aa&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-121376693-blog-82453632.pc_relevant_aa&utm_relevant_index=1
+
+DenseNet（2017）
+
+论文：
+
+Densely Connected Convolutional Networks https://openaccess.thecvf.com/content_cvpr_2017/papers/Huang_Densely_Connected_Convolutional_CVPR_2017_paper.pdf
+
+解读：
+
++ 深度学习-DenseNet https://zhuanlan.zhihu.com/p/478199913
++ 经典回顾：DenseNet https://zhuanlan.zhihu.com/p/359781176
++ 读DenseNet https://zhuanlan.zhihu.com/p/28859470
++ Backbone 网络-DenseNet 论文解读 https://www.cnblogs.com/armcvai/p/16982001.html
+
+EfficientNet(2019)
+
+解读
+
++ 深度学习-EfficientNet https://zhuanlan.zhihu.com/p/546936868
++ 细品EfficientNet https://zhuanlan.zhihu.com/p/137089135
++ 令人拍案叫绝的EfficientNet和EfficientDet https://zhuanlan.zhihu.com/p/96773680
+
+NFNet（2021）
+
+论文：
+
+High-Performance Large-Scale Image Recognition Without Normalization http://proceedings.mlr.press/v139/brock21a/brock21a.pdf
+
+解读：
+
++ NFNet的学习笔记 https://blog.csdn.net/Simple_jiang/article/details/125607860
++ 最强ResNet变体！归一化再见！DeepMind提出NFNet https://zhuanlan.zhihu.com/p/350766415
++ NFNet论文解读 -- 无归一化的高性能大规模图像识别 https://zhuanlan.zhihu.com/p/358228383
+
+代码：
+
+原版为jax实现：https://github.com/deepmind/deepmind-research/tree/master/nfnets
+
+ConvNext（2022）
+
+论文：
+
+A ConvNet for the 2020s https://arxiv.org/abs/2201.03545
+
+解读：
+
++ A ConvNet for the 2020s & 如何设计神经网络总结 https://zhuanlan.zhihu.com/p/528057027
++ ConvNeXt详解 https://zhuanlan.zhihu.com/p/459163188
++ 深度网络架构的设计技巧(三)之ConvNeXt：打破Transformer垄断的纯CNN架构 https://blog.csdn.net/wqthaha/article/details/125492488
+
+代码：
+
++ http://github.com/facebookresearch/ConvNeXt
++ https://zhuanlan.zhihu.com/p/511477312
++ https://paperswithcode.com/paper/a-convnet-for-the-2020s
+
+其他
+
++ 深度学习-ShuffleNet https://zhuanlan.zhihu.com/p/478201697
++ 谷歌人脸识别系统FaceNet解析 https://zhuanlan.zhihu.com/p/24837264
++ ViT源码阅读-PyTorch https://zhuanlan.zhihu.com/p/442125846
+
+目标检测
+````````````````````````````````````````````````
+
++ 综述：目标检测二十年（2001-2021） https://zhuanlan.zhihu.com/p/383616728
++ 增强CNN学习能力的Backbone:CSPNet https://zhuanlan.zhihu.com/p/116611721
+
+其他
+
++ 【目标检测】FPN(Feature Pyramid Network) https://zhuanlan.zhihu.com/p/62604038
++ FPN https://zhuanlan.zhihu.com/p/109949232
++ 【CV中的特征金字塔】四，CVPR 2018 PANet https://zhuanlan.zhihu.com/p/110204563
+
+YOLO
+
++ YOLO 算法最全综述：从 YOLOv1 到 YOLOv5 https://www.cnblogs.com/shuimuqingyang/p/14200018.html
++ 你一定从未看过如此通俗易懂的YOLO系列（从V1到V5）模型解读！ https://www.cnblogs.com/shuimuqingyang/p/15989766.html
+
+YOLO V1(2015)
+
+深度学习-YOLOv1 https://zhuanlan.zhihu.com/p/488006575
+
+解读：
+
++ 你真的读懂yolo了吗？ https://zhuanlan.zhihu.com/p/37850811
++ YOLO详解 https://zhuanlan.zhihu.com/p/25236464
++ 目标检测之YOLO算法 https://zhuanlan.zhihu.com/p/136382095
+
+YOLO V2
+
+YOLOv2 / YOLO9000 深入理解 https://zhuanlan.zhihu.com/p/47575929
+
+YOLO V3
+
++ 揭秘YOLOv3鲜为人知的关键细节 https://zhuanlan.zhihu.com/p/50595699
++ 深入理解YOLO v3实现细节 - 第1篇 数据预处理 https://zhuanlan.zhihu.com/p/79425557
++ 深入理解YOLO v3实现细节 - 第2篇 backbone&network https://zhuanlan.zhihu.com/p/80056633
++ Yolo三部曲解读——Yolov3 https://zhuanlan.zhihu.com/p/76802514
++ 探索 YOLO v3 源码 - 第1篇 训练 https://www.cnblogs.com/shuimuqingyang/p/14132245.html
++ 探索 YOLO v3 源码 - 第2篇 模型 https://www.cnblogs.com/shuimuqingyang/p/14132250.html
+
+YOLO V4
+
++ 一文了解YOLO-v4目标检测 https://zhuanlan.zhihu.com/p/137393450
++ YOLO系列梳理与复习（二）YOLOv4 https://mp.weixin.qq.com/s?__biz=MzkyMDE2OTA3Mw==&mid=2247494393&idx=1&sn=cdbad1b535816a06213cac31e7d8e4db&chksm=c19455e7f6e3dcf19d9eb19ed8aa22ddc23d2c5553ebfe5ff46f82b2534894316363975a603a&scene=21#wechat_redirect
+
+YOLO V5
+
++ YOLO系列梳理（三）YOLOv5 https://mp.weixin.qq.com/s?__biz=MzkyMDE2OTA3Mw==&mid=2247494638&idx=1&sn=ac84cfb2e3d2e346aa766ff5c5185609&chksm=c19454f0f6e3dde67258380c28b9882b7453a37f0d657bdbf85e407e0e8f4d2650d7384f037e#rd
++ 深入浅出Yolo系列之Yolov5核心基础知识完整讲解 https://zhuanlan.zhihu.com/p/172121380
+
+模型代码：
+
++ https://pytorch.org/hub/ultralytics_yolov5/
++ https://github.com/ultralytics/yolov5
++ https://docs.ultralytics.com/tutorials/pytorch-hub/
+
+简单推理例子：
+
+.. code-block:: python
+
+    #pip install -qr https://raw.githubusercontent.com/ultralytics/yolov5/master/requirements.txt
+
+    import torch
+
+    # Model
+    model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
+
+    # Images
+    imgs = ['https://ultralytics.com/images/zidane.jpg']  # batch of images
+
+    # Inference
+    results = model(imgs)
+
+    # Results
+    results.print()
+    results.save() 
+
+
+其他
+````````````````````````````````````````````````
+
+二阶段目标检测网络-FPN 详解 https://www.cnblogs.com/armcvai/p/16987246.html
+
+NLP
 ------------------------------------------------
+
++ NLP的巨人肩膀 https://zhuanlan.zhihu.com/p/50443871
++ 从Transformer到Bert https://zhuanlan.zhihu.com/p/406786658
++ 完全解析RNN, Seq2Seq, Attention注意力机制 https://zhuanlan.zhihu.com/p/51383402
++ Tacotron&Tacotron2——基于深度学习的端到端语音合成模型 https://zhuanlan.zhihu.com/p/101064153
+
+RNN
+````````````````````````````````````````````````
+
++ 完全图解RNN、RNN变体、Seq2Seq、Attention机制 https://zhuanlan.zhihu.com/p/28054589
++ 完全解析RNN, Seq2Seq, Attention注意力机制 https://zhuanlan.zhihu.com/p/51383402
++ 三分钟吃透RNN和LSTM神经网络 https://zhuanlan.zhihu.com/p/86006495
++ Attention机制详解（一）——Seq2Seq中的Attention https://zhuanlan.zhihu.com/p/47063917
++ 使用PyTorch手写代码从头构建LSTM https://zhuanlan.zhihu.com/p/144132609
++ TensorFlow 实现循环神经网络RNN https://zhuanlan.zhihu.com/p/107425192
++ TensorFlow中RNN实现的正确打开方式 https://zhuanlan.zhihu.com/p/28196873
+
+Transformer
+````````````````````````````````````````````````
 
 position encoding
 
@@ -27,3 +293,160 @@ Attention机制
 #. https://www.zhihu.com/question/68482809/answer/264632289
 #. https://jalammar.github.io/illustrated-transformer/
 #. Transformer pytorch实现逐行详解 https://mdnice.com/writing/fc0b920d4ca84837a5712df1a46865d2
+
+#. Transformer模型详解（图解最完整版） https://zhuanlan.zhihu.com/p/338817680
+#. Transformer 模型详解 https://blog.csdn.net/benzhujie1245com/article/details/117173090
+#. Transformer模型详解 https://www.cnblogs.com/LXP-Never/p/15850142.html
+#. 矩阵视角下的Transformer详解 https://zhuanlan.zhihu.com/p/462410907
+#. 十分钟理解Transformer https://zhuanlan.zhihu.com/p/82312421
+
+代码：
+
++ 从零搭建Pytorch模型教程（三）搭建Transformer网络 https://zhuanlan.zhihu.com/p/499340574
++ Self-Attention手动推导及实现 https://zhuanlan.zhihu.com/p/157331749
++ Transformer家族 论文和代码大全 https://zhuanlan.zhihu.com/p/493408428
+
+BERT
+
++ 机器阅读理解 & Bert & SQUAD的故事 https://zhuanlan.zhihu.com/p/393363550
++ 谷歌最强NLP模型BERT官方代码来了 https://zhuanlan.zhihu.com/p/48731842
++ 利用Tensorflow使用BERT模型+输出句向量和字符向量 https://zhuanlan.zhihu.com/p/124757409
+
+模型库
+------------------------------------------------
+
++ https://github.com/tensorflow/models
++ https://pytorch.org/hub/
++ https://github.com/huggingface
++ https://github.com/openvinotoolkit/open_model_zoo
++ https://github.com/onnx/models
+
+torchhub使用例子：
+
+.. code-block:: python
+
+    import torch
+    model = torch.hub.load('pytorch/vision:0.10', 'deeplabv3_resnet101', pretrained=True)
+    #查找库中可用的模型
+    torch.hub.list("pytorch/vision")
+
+diffusion model
+------------------------------------------------
+
++ https://huggingface.co/docs/diffusers/index
++ https://jalammar.github.io/illustrated-stable-diffusion/
+
+常用数据集
+------------------------------------------------
+
+常用数据集及介绍：https://paperswithcode.com/datasets
+
+mnist
+````````````````````````````````````````````````
+
+http://yann.lecun.com/exdb/mnist/
+
+The MNIST database of handwritten digits, has a training set of 60,000 examples, and a test set of 10,000 examples. It is a subset of a larger set available from NIST. The digits have been size-normalized and centered in a fixed-size image. 
+The original black and white (bilevel) images from NIST were size normalized to fit in a 20x20 pixel box while preserving their aspect ratio. The resulting images contain grey levels as a result of the anti-aliasing technique used by the normalization algorithm. the images were centered in a 28x28 image by computing the center of mass of the pixels, and translating the image so as to position this point at the center of the 28x28 field. 
+
+fashion mnist
+````````````````````````````````````````````````
+
+https://github.com/zalandoresearch/fashion-mnist
+Fashion-MNIST is a dataset of Zalando's  article images—consisting of a training set of 60,000 examples and a  test set of 10,000 examples. Each example is a 28x28 grayscale image,  associated with a label from 10 classes. We intend Fashion-MNIST to serve as a direct drop-in replacement for the original MNIST dataset for benchmarking machine learning algorithms. It shares the same image size and structure of training and testing splits.
+
+cifar
+````````````````````````````````````````````````
+
+https://www.cs.toronto.edu/~kriz/cifar.html
+
+分为cifar10和cifar100：
+
+cifar-10:The CIFAR-10 dataset consists of 60000 32x32 colour images in 10  classes, with 6000 images per class. There are 50000 training images and  10000 test images. 
+cifar-100:This dataset is just like the CIFAR-10, except it has 100 classes  containing 600 images each. There are 500 training images and 100  testing images per class. The 100 classes in the CIFAR-100 are grouped into 20 superclasses. Each  image comes with a "fine" label (the class to which it belongs) and a  "coarse" label (the superclass to which it belongs).
+image net
+
+COCO
+````````````````````````````````````````````````
+
+VOC
+````````````````````````````````````````````````
+
+模型复现
+------------------------------------------------
+
+resnet50
+````````````````````````````````````````````````
+
+代码：https://github.com/weiaicunzai/pytorch-cifar100
+
+数据集：cifar100
+
+模型：包含了VGG/densenet/googlenet/inception/resnet/shufflenet等一系列CNN网络
+
+脚本：python train.py -net resnet50 -gpu
+
+首次运行时会下载cifar100数据集放在data目录下并解压
+
+验证：
+
+.. code-block:: bash
+
+    python test.py -net vgg16 -weights path_to_vgg16_weights_file
+
+    tensorboard：tensorboard --logdir='runs' --bind_all
+
+参考资料
+
+#. 千亿参数开源大模型 BLOOM 背后的技术 https://my.oschina.net/HuggingFace/blog/8589909
+
+
+模型分析工具
+------------------------------------------------
+
+#. datasets 	下载一些常用数据集	
+#. netron	网络结构可视化	
+#. vizdom	pytorch可视化工具	
+#. torchinfo	模型结构查看
+#. nvtop和gpustat	用来查看GPU状态	apt安装或者使用pip安装
+
+
+工具
+
+torchbench：https://github.com/pytorch/benchmark
+
+打印模型算子：
+
+torchinfo.summary(model,input_size=[xx],depth=4)
+
+参考
+
++ 可视化深度学习模型架构的6个常用的方法总结 https://zhuanlan.zhihu.com/p/469767328
++ 利用python一层一层可视化卷积神经网络，以ResNet50为例 https://zhuanlan.zhihu.com/p/101038013
++ 硬刚keras源码，从Layer开始 https://zhuanlan.zhihu.com/p/170302026
++ 聊一聊AI框架前端 https://zhuanlan.zhihu.com/p/393031067
++ 模型计算力（flops）和参数（parameters） https://zhuanlan.zhihu.com/p/144938518
++ 如何估计各种神经网络的计算量和参数量 https://zhuanlan.zhihu.com/p/342668070
++ AI-GPU显存优化领域前沿工作发展史 https://zhuanlan.zhihu.com/p/536940298
++ DNN库中matmul分析和设计 https://zhuanlan.zhihu.com/p/564672391
++ OneDNN GEMM(AVX FP32)算法浅析 https://zhuanlan.zhihu.com/p/527017415
++ 如何开发机器学习系统：高性能GPU矩阵乘法 https://zhuanlan.zhihu.com/p/531498210
++ Eigen的速度为什么这么快？ https://www.zhihu.com/question/28571059/answer/1073149732
++ pytorch实用工具总结 https://zhuanlan.zhihu.com/p/33992733
++ pytorch计算模型FLOPs和Params https://zhuanlan.zhihu.com/p/337810633
++ CNN 模型所需的计算力flops是什么？怎么计算？ https://zhuanlan.zhihu.com/p/137719986
++ PyTorch计算模型的参数量以及FLOPs https://zhuanlan.zhihu.com/p/469103977
++ ONNX学习笔记 https://zhuanlan.zhihu.com/p/346511883
+ 
+其他
+
++ 混合精度训练原理 https://zhuanlan.zhihu.com/p/441591808
++ 浅谈混合精度训练 https://zhuanlan.zhihu.com/p/103685761
++ 深度学习编译器 - 低精度计算之量化 https://zhuanlan.zhihu.com/p/469972467
++ 深度学习模型大小与模型推理速度的探讨 https://zhuanlan.zhihu.com/p/411522457
+
+
+参考
+------------------------------------------------
+
++ https://github.com/NVIDIA/DeepLearningExamples
