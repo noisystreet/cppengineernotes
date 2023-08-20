@@ -117,15 +117,9 @@ CPU相关：
 .. code-block:: bash
     :linenos:
 
+    sudo add-apt-repository non-free #对于debian，安装mkl之前需要添加non-free源
     sudo apt install libgmp-dev libmpfr-dev libfftw3-dev libnuma-dev intel-mkl-full clang ccache doxygen libssl-dev
 
-对于debian，安装mkl时：
-
-.. code-block:: bash
-    :linenos:
-
-    sudo add-apt-repository non-free
-    sudo apt install intel-mkl-full
 
 使用conda创建基础python环境：
 
@@ -135,12 +129,12 @@ CPU相关：
     conda create -n ptdbg && conda activate ptdbg
     conda install pip
 
-安装依赖包：
+安装依赖包，在pytorch源码目录下执行：
 
 .. code-block:: bash
     :linenos:
 
-    pip install astunparse numpy ninja pyyaml mkl mkl-include setuptools cmake cffi typing_extensions future six requests dataclasses sphinx
+    pip -r requirements.txt
     conda install magma-cuda118 -c pytorch #可选，注意cuda后缀要与CUDA的版本一致
     conda install doxyrest -c conda-forge #可选
 
@@ -150,6 +144,8 @@ CPU相关：
 + numpy	基础数据结构
 + mkl和mkl-include CPU的一些算子调用MKL实现
 + sphinx pytorch文档构建工具
++ magma可以手动下载安装：https://icl.utk.edu/projectsfiles/magma/downloads/，magma2.7.1使用cmake进行编译
++ doxyrest可以手动下载安装：https://github.com/vovkos/doxyrest/releases
 
 编译pytorch
 + 获取源码，并切换到指定版本（此处为2.0）：
@@ -525,6 +521,16 @@ sudo apt install openmpi-bin libopenmpi-dev
     #查看gpu上的模型参数
     resnet18 = models.resnet18().cuda()
     summary(resnet18,(3,300,300),batch_size=32,device="cuda")
+
+参考资料
+````````````````````````````````````````````````
++ https://github.com/pytorch/pytorch/wiki/
++ https://blog.paperspace.com/pytorch-101-advanced/
++ https://web.stanford.edu/~nanbhas/blog/forward-hooks-pytorch/
++ https://zhuanlan.zhihu.com/p/103630393
++ https://timdettmers.com/2023/01/30/which-gpu-for-deep-learning/
++ https://www.learnpytorch.io/pytorch_2_intro/
++ 记录一次keras与pytorch的源码比较 https://www.dazhuanlan.com/icesma/topics/1152012
 
 Tensorflow
 ------------------------------------------------

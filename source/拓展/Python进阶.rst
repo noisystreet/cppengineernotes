@@ -163,6 +163,12 @@ ast的可视化：https://ucb-sejits.github.io/ctree-docs/ipythontips.html
 
 有了ast和符号表，就可以生成字节码，生成 CFG 和字节码的代码在 Python/compile.c 中
 
+Python 扩展编程
+------------------------------------------------
+
+#. https://docs.python.org/3/extending/index.html
+#. https://pythonextensionpatterns.readthedocs.io/en/latest/index.html
+
 参考资料
 ------------------------------------------------
 
@@ -173,3 +179,4 @@ ast的可视化：https://ucb-sejits.github.io/ctree-docs/ipythontips.html
 #. https://cython.readthedocs.io/en/latest/
 #. https://realpython.com/
 #. https://pythoncat.top
+#. https://python-course.eu/

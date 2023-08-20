@@ -158,3 +158,9 @@ EMA
 + 量化
 + 剪枝和蒸馏
 + 稀疏
+
+参考资料
+------------------------------------------------
+
++ https://www.deeplearningbook.org/
++ https://ml-cheatsheet.readthedocs.io/en/latest/

@@ -48,6 +48,7 @@ https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
 
 .. code-block:: bash
 
+    sudo apt install software-properties-common
     sudo add-apt-repository contrib
 
 #. 添加GPG key
