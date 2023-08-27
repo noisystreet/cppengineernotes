@@ -4,11 +4,14 @@ Pytorch使用手册
 安装
 ------------------------------------------------
 
-直接安装：https://pytorch.org/get-started/locally/
+直接安装
+````````````````````````````````````````````````
+
+步骤：https://pytorch.org/get-started/locally/
 
 简单验证：
 
-.. code-block:: python
+.. code-block:: ipython
 
     import torch
     x = torch.rand(5, 3)
@@ -16,7 +19,7 @@ Pytorch使用手册
 
 查看编译选项：
 
-.. code-block:: python
+.. code-block:: ipython
 
     print(torch.__config__.show())
 
@@ -41,30 +44,61 @@ Pytorch使用手册
 
 查看torch包的编译选项：
 
-    .. code-block:: python
+.. code-block:: ipython
 
-        import pprint
-        pprint.pprint(torch.__config__._cxx_flags())
+    import pprint
+    pprint.pprint(torch.__config__._cxx_flags().split())
 
-    输出：
+输出：
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        (' -D_GLIBCXX_USE_CXX11_ABI=1 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL '
-        '-DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK '
-        '-DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 '
-        '-fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor '
-        '-Werror=range-loop-construct -Werror=bool-operation -Wnarrowing '
-        '-Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds '
-        '-Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function '
-        '-Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing '
-        '-Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic '
-        '-Wno-error=old-style-cast -Wno-invalid-partial-specialization '
-        '-Wno-unused-private-field -Wno-aligned-allocation-unavailable '
-        '-Wno-missing-braces -fdiagnostics-color=always -faligned-new '
-        '-Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno '
-        '-fno-trapping-math -Werror=format -Werror=cast-function-type '
-        '-Wno-stringop-overflow')
+    ['-D_GLIBCXX_USE_CXX11_ABI=0',
+    '-fabi-version=11',
+    '-Wno-deprecated',
+    '-fvisibility-inlines-hidden',
+    '-DUSE_PTHREADPOOL',
+    '-DNDEBUG',
+    '-DUSE_KINETO',
+    '-DLIBKINETO_NOROCTRACER',
+    '-DUSE_FBGEMM',
+    '-DUSE_QNNPACK',
+    '-DUSE_PYTORCH_QNNPACK',
+    '-DUSE_XNNPACK',
+    '-DSYMBOLICATE_MOBILE_DEBUG_HANDLE',
+    '-O2',
+    '-fPIC',
+    '-Wall',
+    '-Wextra',
+    '-Werror=return-type',
+    '-Werror=non-virtual-dtor',
+    '-Werror=bool-operation',
+    '-Wnarrowing',
+    '-Wno-missing-field-initializers',
+    '-Wno-type-limits',
+    '-Wno-array-bounds',
+    '-Wno-unknown-pragmas',
+    '-Wunused-local-typedefs',
+    '-Wno-unused-parameter',
+    '-Wno-unused-function',
+    '-Wno-unused-result',
+    '-Wno-strict-overflow',
+    '-Wno-strict-aliasing',
+    '-Wno-error=deprecated-declarations',
+    '-Wno-stringop-overflow',
+    '-Wno-psabi',
+    '-Wno-error=pedantic',
+    '-Wno-error=redundant-decls',
+    '-Wno-error=old-style-cast',
+    '-fdiagnostics-color=always',
+    '-faligned-new',
+    '-Wno-unused-but-set-variable',
+    '-Wno-maybe-uninitialized',
+    '-fno-math-errno',
+    '-fno-trapping-math',
+    '-Werror=format',
+    '-Werror=cast-function-type',
+    '-Wno-stringop-overflow'
 
 CUDA相关：
 
@@ -88,7 +122,7 @@ CPU相关：
     torch.get_num_interop_threads() #op间线程数目
 
 编译安装
-
+````````````````````````````````````````````````
 
 源码：https://github.com/pytorch/pytorch
 
@@ -138,6 +172,7 @@ CPU相关：
 + doxyrest可以手动下载安装：https://github.com/vovkos/doxyrest/releases
 
 编译pytorch
+
 + 获取源码，并切换到指定版本（此处为2.0）：
 
 .. code-block:: bash
@@ -175,7 +210,7 @@ CPU相关：
 
     python setup.py develop
 
-编译文档：
+编译文档
 
 .. code-block:: bash
 
@@ -187,8 +222,8 @@ CPU相关：
 生成的html 文档保存在 docs/build/html 目录下
 
 编译torchvision
-torchvision的版本要和pytorch对应，具体可参考：
-https://github.com/pytorch/vision
+
+torchvision的版本要和pytorch对应，可参考：https://github.com/pytorch/vision
 
 安装依赖：
 
