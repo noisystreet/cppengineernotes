@@ -1,20 +1,14 @@
-深度学习框架手册
-=================
-
-Pytorch
-------------------------------------------------
-
-https://zhuanlan.zhihu.com/p/371978706
+Pytorch使用手册
+==================================
 
 安装
-````````````````````````````````````````````````
+------------------------------------------------
 
 直接安装：https://pytorch.org/get-started/locally/
 
 简单验证：
 
 .. code-block:: python
-    :linenos:
 
     import torch
     x = torch.rand(5, 3)
@@ -23,14 +17,12 @@ https://zhuanlan.zhihu.com/p/371978706
 查看编译选项：
 
 .. code-block:: python
-    :linenos:
 
     print(torch.__config__.show())
 
 典型输出如下：
 
 .. code-block:: bash
-    :linenos:
 
     PyTorch built with:
     - GCC 9.3
@@ -77,7 +69,6 @@ https://zhuanlan.zhihu.com/p/371978706
 CUDA相关：
 
 .. code-block:: python
-    :linenos:
 
     import torch
     torch.cuda.is_available()           #检查CUDA是否可用
@@ -91,10 +82,9 @@ CUDA相关：
 CPU相关：
 
 .. code-block:: python
-    :linenos:
 
-    torch.get_default_dtype()   #默认数据类型
-    torch.get_num_threads()     #线程数目
+    torch.get_default_dtype()       #默认数据类型
+    torch.get_num_threads()         #线程数目
     torch.get_num_interop_threads() #op间线程数目
 
 编译安装
@@ -135,8 +125,8 @@ CPU相关：
     :linenos:
 
     pip -r requirements.txt
-    conda install magma-cuda118 -c pytorch #可选，注意cuda后缀要与CUDA的版本一致
-    conda install doxyrest -c conda-forge #可选
+    conda install magma-cuda118 -c pytorch  #可选，注意cuda后缀要与CUDA的版本一致
+    conda install doxyrest -c conda-forge   #可选
 
 重要的依赖包说明：
 
@@ -159,7 +149,6 @@ CPU相关：
 + 设置编译的环境变量：
 
 .. code-block:: bash
-    :linenos:
 
     export CMAKE_BUILD_TYPE=Debug
     export CMAKE_INCLUDE_PATH=/usr/include/mkl
@@ -174,7 +163,6 @@ CPU相关：
 + 生成wheel格式的python包：
 
 .. code-block:: bash
-    :linenos:
 
     python setup.py build
     python setup.py bdist_wheel
@@ -184,19 +172,17 @@ CPU相关：
 + 也可以使用下面命令，安装时会直接将python源码软链接到安装目录下，方便debug
 
 .. code-block:: bash
-    :linenos:
 
     python setup.py develop
 
 编译文档：
 
 .. code-block:: bash
-    :linenos:
 
     cd docs && pip install -r requirements.txt
     sudo npm install -g katex
-    make #输出所有支持的文档格式
-    make html #生成html格式文档
+    make        #输出所有支持的文档格式
+    make html   #生成html格式文档
 
 生成的html 文档保存在 docs/build/html 目录下
 
@@ -215,14 +201,12 @@ https://github.com/pytorch/vision
 获取代码：
 
 .. code-block:: bash
-    :linenos:
 
     git clone -b release/0.14 git@github.com:pytorch/vision.git
 
 编译：
 
 .. code-block:: bash
-    :linenos:
 
     export BUILD_VERSION=0.14.0
     python setup.py build
@@ -231,14 +215,12 @@ https://github.com/pytorch/vision
 同样，可以直接将python源码文件软链接到安装目录：
 
 .. code-block:: bash
-    :linenos:
 
     python setup.py develop
 
 简介
-````````````````````````````````````````````````
+------------------------------------------------
 
-https://blog.paperspace.com/pytorch-101-advanced/
 
 常用模块
 ````````````````````````````````````````````````
@@ -345,26 +327,31 @@ tensor类定义在torch/_tensor.py文件中，继承自torch._C._TensorBase类�
 自动微分是pytorch构建神经网络最核心的功能之一
 
 数据操作
-````````````````````````````````````````````````
+------------------------------------------------
 
 pytorch中与此相关的主要模块torch.utils.data.DataLoader和torch.utils.data.Dataset
+
 PyTorch 提供了一些特殊的库如TorchText, TorchVision和TorchAudio, 其中都包含了一些数据集。
-操作数据集的一个例子：
-https://www.cnblogs.com/DeepRS/p/15737009.html
+
+操作数据集的一个例子：https://www.cnblogs.com/DeepRS/p/15737009.html
 
 tensor数据结构
-````````````````````````````````````````````````
+------------------------------------------------
 
-tensor的一些属性：shape,stride,dtype,memory_format,storage
-storage和共享storage
-深拷贝：clone操作
-to操作
-https://zhuanlan.zhihu.com/p/436892343
-contiguous和stride概念
-https://zhuanlan.zhihu.com/p/64551412
+#. tensor的一些属性：shape,stride,dtype,memory_format,storage
+#. storage和共享storage
+#. 深拷贝：clone操作
+#. to操作
+#. contiguous和stride概念
+
+参考：
+
++ `Tensor Views <https://pytorch.org/docs/stable/tensor_view.html>`_
++ `view与reshape区别详解 <https://zhuanlan.zhihu.com/p/436892343>`_
++ `PyTorch中的contiguous <https://zhuanlan.zhihu.com/p/64551412>`_
 
 pytorch中的算子
-````````````````````````````````````````````````
+------------------------------------------------
 
 算子主要集中在以下模块：
 
@@ -378,7 +365,7 @@ pytorch中的算子
 https://dev-discuss.pytorch.org/t/where-do-the-2000-pytorch-operators-come-from-more-than-you-wanted-to-know/373
 
 神经网络组件
-````````````````````````````````````````````````
+------------------------------------------------
 
 + 数据集
 + DataLoader
@@ -390,7 +377,7 @@ https://dev-discuss.pytorch.org/t/where-do-the-2000-pytorch-operators-come-from-
 PyTorch可复现/重复实验的相关设置 https://zhuanlan.zhihu.com/p/584208060
 
 定义网络并训练
-````````````````````````````````````````````````
+------------------------------------------------
 
 根据基础一节中的流程，在pytorch中进行训练的流程大体如下：
 
@@ -404,7 +391,7 @@ PyTorch可复现/重复实验的相关设置 https://zhuanlan.zhihu.com/p/584208
 #. 重复3-7步直到loss下降到期望阈值，然后保存模型，完成训练
 
 模型保存、加载与应用
-````````````````````````````````````````````````
+------------------------------------------------
 
 .. code-block:: python
     :linenos:
@@ -418,7 +405,7 @@ PyTorch可复现/重复实验的相关设置 https://zhuanlan.zhihu.com/p/584208
     model.load_state_dict(torch.load(PATH))
 
 性能
-````````````````````````````````````````````````
+------------------------------------------------
 
 intel提供的pytorch扩展：
 https://github.com/intel/intel-extension-for-pytorch
@@ -429,7 +416,7 @@ https://github.com/intel/intel-extension-for-pytorch
 + pytorch profiler
 
 分布式训练
-````````````````````````````````````````````````
+------------------------------------------------
 
 参考：https://pytorch.org/tutorials/beginner/dist_overview.html
 
@@ -479,20 +466,19 @@ https://github.com/intel/intel-extension-for-pytorch
 + Pytorch DDP分布式训练介绍 https://zhuanlan.zhihu.com/p/453798093
 + PyTorch分布式训练基础--DDP使用 https://zhuanlan.zhihu.com/p/358974461
 
-其他模块
-````````````````````````````````````````````````
-
-+ torch.utils 系列,https://zhuanlan.zhihu.com/p/375445552
-+ Some important Pytorch tasks - A concise summary from a vision researcher https://spandan-madan.github.io/A-Collection-of-important-tasks-in-pytorch/
-+ https://huggingface.co/blog/accelerating-pytorch
 
 horovod
-````````````````````````````````````````````````
+------------------------------------------------
 
 环境：ubuntu20.04 anaconda cuda11.1
+
 参考：https://horovod.readthedocs.io/en/stable/gpus_include.html
+
 安装openmpi:
-sudo apt install openmpi-bin libopenmpi-dev
+
+.. code-block:: bash
+
+    sudo apt install openmpi-bin libopenmpi-dev
 
 下载安装NCCL并解压，然后通过pip安装horovod：
 
@@ -503,9 +489,8 @@ sudo apt install openmpi-bin libopenmpi-dev
     pip install --no-cache-dir horovod
 
 辅助工具
-````````````````````````````````````````````````
+------------------------------------------------
 
-+ 使用tensorboard https://zhuanlan.zhihu.com/p/103630393
 + 查看网络和参数：torchsummary
 
 例子：
@@ -523,156 +508,15 @@ sudo apt install openmpi-bin libopenmpi-dev
     summary(resnet18,(3,300,300),batch_size=32,device="cuda")
 
 参考资料
-````````````````````````````````````````````````
-+ https://github.com/pytorch/pytorch/wiki/
-+ https://blog.paperspace.com/pytorch-101-advanced/
-+ https://web.stanford.edu/~nanbhas/blog/forward-hooks-pytorch/
-+ https://zhuanlan.zhihu.com/p/103630393
-+ https://timdettmers.com/2023/01/30/which-gpu-for-deep-learning/
-+ https://www.learnpytorch.io/pytorch_2_intro/
-+ 记录一次keras与pytorch的源码比较 https://www.dazhuanlan.com/icesma/topics/1152012
-
-Tensorflow
 ------------------------------------------------
-
-直接安装
-````````````````````````````````````````````````
-
-+ 安装CUDA和cuDNN,最方便的是使用 ``conda install cudnn`` ,可以一步安装好cuda和对应的cudnn
-+ 使用pip安装tensorflow（tf2之后cpu gpu包名一样），如：
-
-.. code-block:: bash
-    :linenos:
-
-    pip install tensorflow==2.6.0
-
-如果是CUDA环境，安装完成后需要找到libcudnn.so.8的路径，并添加到LD_LIBRARY_PATH环境变量中
-+ 测试：
-
-.. code-block:: python
-    :linenos:
-
-    import tensorflow as tf
-    print(tf.test.is_gpu_available())
-    print(tf.config.list_physical_devices())
-
-如果正常输出了GPU和CUDA相关信息，表明可以使用
-
-源码编译TF2
-````````````````````````````````````````````````
-
-软件版本
-
-+ ubuntu	22.04	
-+ python	3.9.12
-+ gcc	11.3	
-+ CUDA Toolkit	11.7.0
-+ cuDNN	8.6.0.163
-+ tensorflow	2.9	源码
-+ bazel	5.0.0	
-
-参考：
-
-+ 使用bazel安装tensorflow https://xhhszc.github.io/2019/01/08/%E4%BD%BF%E7%94%A8bazel%E5%AE%89%E8%A3%85tensorflow/
-+ Building Tensorflow from source. Step by step guide. https://medium.com/analytics-vidhya/building-tensorflow-from-source-step-by-step-guide-1075ef2d9356
-
-+ 下载tf源码（https://github.com/tensorflow/tensorflow）
-
-.. code-block:: bash
-    :linenos:
-
-    git clone -b r2.11 git@github.com:tensorflow/tensorflow.git
-
-+ 安装bazel：查看并下载安装对应版本：https://mirrors.huaweicloud.com/bazel
-
-.. code-block:: bash
-    :linenos:
-
-    VER=$(cat .bazelversion)
-    wget https://mirrors.huaweicloud.com/bazel/${VER}/bazel_${VER}-linux-x86_64.deb
-    sudo dpkg -i bazel_${VER}-linux-x86_64.deb
-
-+ 运行./configure
-+ 进行编译：
-
-.. code-block:: bash
-    :linenos:
-
-    #https://cloud.tencent.com/developer/article/1967814
-    bazel build --config=cuda --config=dbg //tensorflow/tools/pip_package:build_pip_package
-
-在笔记本上编译时，要设置内存和cpu限制，如：--local_ram_resources=9012 -j 4 
-设置不编译一些模块：
-
-.. code-block:: bash
-    :linenos:
-
-    --config=nonccl
-    --config=noaws
-    --config=nohdfs
-    --config=noignite
-    --config=nokafka
-
-+ 生成wheel包：
-
-.. code-block:: bash
-    :linenos:
-
-    ./bazel-bin/tensorflow/tools/pip_package/build_pip_package .
-
-+ 查看可以编译的项目：
-
-.. code-block:: bash
-    :linenos:
-
-    bazel query 'kind(rule, //:*)' --output label_kind
-
-bazel参考
-````````````````````````````````````````````````
-
-https://blog.csdn.net/ayqy42602/article/details/108378427
-+ 可以使用conda直接安装bazel：
-
-.. code-block:: bash
-    :linenos:
-
-    conda search bazel
-    conda install bazel
-
-+ bazel在构建过程中可能需要下载一些第三方库，有时会网络超时，可以设置让bazel从本地目录获取源码包：
-
-.. code-block:: bash
-    :linenos:
-
-    bazel build ...... --distdir  dirname
-
-+ 额外添加c和c++编译选项:
-
-.. code-block:: bash
-    :linenos:
-
-    --copt="-g" --cxxopt="-g"
-    --cxxopt="-mfma"
-    --cxxopt="-mavx"
-    --cxxopt="-mavx2"
-
-+ 显示编译时详细失败原因：-
-
-.. code-block:: bash
-    :linenos:
-
-    -verbose_failures
-
-+ 只构建c++库:
-
-.. code-block:: bash
-    :linenos:
-
-    bazel build -c opt/dbg/fastbuild //tensorflow:libtensorflow_cc.so
-
-+ 只构建pythony库：
-
-.. code-block:: bash
-    :linenos:
-
-    bazel build -c opt/dbg/fastbuild //tensorflow/tools/pip_package:build_pip_package
++ `PyTorch developer's wiki <https://github.com/pytorch/pytorch/wiki/>`_
++ `PyTorch 101, Part 3: Going Deep with PyTorch <https://blog.paperspace.com/pytorch-101-advanced/>`_
++ `Intermediate Activations — the forward hook <https://web.stanford.edu/~nanbhas/blog/forward-hooks-pytorch/>`_
++ `PyTorch下的Tensorboard 使用 <https://zhuanlan.zhihu.com/p/103630393>`_
++ `Which GPU\(s\) to Get for Deep Learning: My Experience and Advice for Using GPUs in Deep Learning <https://timdettmers.com/2023/01/30/which-gpu-for-deep-learning/>`_
++ `A Quick PyTorch 2.0 Tutorial <https://www.learnpytorch.io/pytorch_2_intro/>`_
++ `记录一次keras与pytorch的源码比较 <https://www.dazhuanlan.com/icesma/topics/1152012>`_
++ `PyTorch工程的最佳实践 <https://zhuanlan.zhihu.com/p/371978706>`_
++ `torch.utils 系列 <https://zhuanlan.zhihu.com/p/375445552>`_
++ `Some important Pytorch tasks - A concise summary from a vision researcher <https://spandan-madan.github.io/A-Collection-of-important-tasks-in-pytorch/>`_
++ `Accelerating PyTorch distributed fine-tuning with Intel technologies <https://huggingface.co/blog/accelerating-pytorch>`_
