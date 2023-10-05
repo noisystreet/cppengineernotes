@@ -665,12 +665,13 @@ Thrust是一个基于CUDA的类似c++STL的库，封装了各种常用的容器�
 ------------------------------------------------
 
 + CUDA python https://nvidia.github.io/cuda-python/index.html
++ https://docs.nvidia.com/deeplearning/performance/
 + https://docs.nvidia.com/cuda/
 + https://developer.nvidia.com/blog/?tags=accelerated-computing
 + https://developer.nvidia.com/cuda-faq
 + https://developer.nvidia.com/cuda-education-training
 + https://developer.nvidia.com/gpu-accelerated-libraries
-+ 参考：https://llvm.org/docs/CompileCudaWithLLVM.html
++ Compiling CUDA with clang https://llvm.org/docs/CompileCudaWithLLVM.html
 + Rocm https://sep5.readthedocs.io/en/latest/index.html
 + https://developer.nvidia.com/zh-cn/blog/nvidia-ampere-architecture-in-depth/
 + GPU 兼容性的那些事 http://wsfdl.com/kubernetes/2019/05/08/versions_in_gpu.html

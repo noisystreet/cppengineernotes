@@ -4,6 +4,7 @@
 
 
 #. `神经网络与深度学习 <https://nndl.github.io/>`_
+#. `CS231n: Deep Learning for Computer Vision <http://cs231n.stanford.edu/>`_
 #. `动手学深度学习 <https://zh.d2l.ai/>`_
 #. `机器学习系统：设计和实现 <https://openmlsys.github.io/>`_
 #. `AI System <https://github.com/microsoft/AI-System>`_
