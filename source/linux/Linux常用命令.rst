@@ -221,6 +221,14 @@ systemd软件包中包含的重要命令:
 网络相关
 ------------------------------------------------
 
+网络端口介绍：
+
++ https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/4/html/security_guide/ch-ports
++ http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
++ https://matt-rickard.com/de-facto-ports
+
+
+
 + ``ping`` 测试主机的连通性
 + ``w3m`` 文本模式的浏览器
 + ``netstat`` 查看网络信息
