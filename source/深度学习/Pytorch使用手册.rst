@@ -191,6 +191,7 @@ CPU相关：
     export USE_CUDNN=1
     export USE_MKLDNN=1
     export MAX_JOBS=32                   #设置编译使用的线程数
+    export BUILD_TEST=0
     #下面两个环境变量要么都设置，或者都不设置
     export PYTORCH_BUILD_VERSION=2.0.0  #设置编译后的版本号
     export PYTORCH_BUILD_NUMBER=1

@@ -78,6 +78,8 @@ TPU/IPU/NPU
 + `Profiling Native Python Extensions <https://www.benfrederickson.com/profiling-native-python-extensions-with-py-spy/>`_
 + `x64 CPU GEMM 优化 <https://zhuanlan.zhihu.com/p/593537184>`_
 + `Roofline Model与深度学习模型的性能分析 <https://zhuanlan.zhihu.com/p/34204282>`_
++ `NVIDIA Deep Learning Performance <https://docs.nvidia.com/deeplearning/performance/index.html>`_
++ `Grokking PyTorch Intel CPU performance from first principles <https://pytorch.org/tutorials/intermediate/torchserve_with_ipex.html?highlight=grokking%20pytorch%20intel%20cpu%20performance%20from%20first%20principles>`_
 
 模型部署
 ------------------------------------------------
