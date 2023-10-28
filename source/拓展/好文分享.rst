@@ -23,6 +23,7 @@ CPU
 #. `Intel CPU Brand Letters & Nomenclature Explained <https://www.dignited.com/99881/intel-cpu-brand-letters-nomenclature-explained/>`_
 #. `AArch64 SoC features <https://marcin.juszkiewicz.com.pl/download/tables/arm-socs.html>`_
 #. https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html
+#. `DDR 探密一：从电容鼓到 DDR，内存技术进化史 <https://zhuanlan.zhihu.com/p/663690992>`_
 
 
 GPU
@@ -33,6 +34,13 @@ GPU
 #. `List of AMD graphics processing units <https://en.wikipedia.org/wiki/List_of_AMD_graphics_processing_units>`_
 #. https://www.intel.com/content/www/us/en/developer/articles/technical/intel-data-center-gpu-max-series-overview.html
 #. https://videocardz.net/intel-data-center-gpu-max-series-1550
+#. `Understanding GPU Architecture <https://cvw.cac.cornell.edu/gpu-architecture>`_
+#. `NVIDIA Ampere Architecture In-Depth <https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/>`_
+#. `NVIDIA Hopper Architecture In-Depth <https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/>`_
+#. `NVIDIA GPU Architecture: from Pascal to Turing to Ampere <https://wolfadvancedtechnology.com/articles/nvidia-gpu-architecture>`_
+#. `A history of NVidia Stream Multiprocessor <https://fabiensanglard.net/cuda/>`_
+#. `Diving Deep Into The Nvidia Ampere GPU Architecture <https://www.nextplatform.com/2020/05/28/diving-deep-into-the-nvidia-ampere-gpu-architecture/>`_
+#. `NVIDIA Tensor Core Programming <https://leimao.github.io/blog/NVIDIA-Tensor-Core-Programming/>`_
 
 工程思维
 ------------------------------------------------
