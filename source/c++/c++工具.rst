@@ -96,6 +96,31 @@ git配置和仓库管理
 跨平台编译构建：cmake
 ------------------------------------------------
 
+基本选项：
+
++ ``cmake -S src -B build``
++ ``cmake --build build``
++ ``cmake --install <dir>``
+
+其他常用选项：
+
++ ``-D <var>:<type>=<value>, -D <var>=<value>``
++ ``-G <generator-name>``
++ ``--install-prefix <directory>``
++ ``--graphviz=<file>``
+
+trace相关选项:
+
++ ``--trace``
++ ``--trace-expand``
++ ``--trace-format=<format>``
++ ``--trace-redirect=<file>``
+
+profile相关选项：
+
++ ``--profiling-output=<path>``
++ ``--profiling-format=<file>``
+
 参考资料
 ````````````````````````````````````````````````
 
