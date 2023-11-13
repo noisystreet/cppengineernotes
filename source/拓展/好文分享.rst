@@ -42,6 +42,11 @@ GPU
 #. `Diving Deep Into The Nvidia Ampere GPU Architecture <https://www.nextplatform.com/2020/05/28/diving-deep-into-the-nvidia-ampere-gpu-architecture/>`_
 #. `NVIDIA Tensor Core Programming <https://leimao.github.io/blog/NVIDIA-Tensor-Core-Programming/>`_
 
+PCIE
+------------------------------------------------
+
+#. `PCIe系统4种复位介绍 <https://zhuanlan.zhihu.com/p/653885306>`_
+
 工程思维
 ------------------------------------------------
 

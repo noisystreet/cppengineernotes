@@ -4,6 +4,7 @@
 
 
 #. `神经网络与深度学习 <https://nndl.github.io/>`_
+#. `ECE 5545: Machine Learning Hardware and Systems <https://abdelfattah-class.github.io/ece5545/>`_
 #. `CS231n: Deep Learning for Computer Vision <http://cs231n.stanford.edu/>`_
 #. `Parallel Computer Architecture and Programming <https://www.cs.cmu.edu/~418/schedule.html>`_
 #. https://dlsyscourse.org/lectures/
