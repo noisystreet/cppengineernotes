@@ -340,10 +340,16 @@ https://zhuanlan.zhihu.com/p/336922639
 程序执行流程分析：uftrace
 ------------------------------------------------
 
-安装：
+编译安装：
 
 .. code-block:: bash
-    :linenos:
+
+    sudo apt install libelf-dev libdw-dev libcapstone-dev libtraceevent-dev libunwind-dev libluajit-5.1-dev
+    git clone -b master https://github.com/namhyung/uftrace.git
+
+直接安装：
+
+.. code-block:: bash
 
     sudo apt install uftrace
 

@@ -115,6 +115,10 @@ cpython源码分析
 
 代码分支：3.11，commid ID:1633aea0e430f4c0d115b1ea5baac5daaecf81ff
 
+编译时启用debug选项：
+
+https://pythonextensionpatterns.readthedocs.io/en/latest/debugging/debug_python.html
+
 c/c++代码可达几十万行，如下：
 
 .. code-block:: bash

@@ -24,6 +24,7 @@ CPU
 #. `AArch64 SoC features <https://marcin.juszkiewicz.com.pl/download/tables/arm-socs.html>`_
 #. https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html
 #. `DDR 探密一：从电容鼓到 DDR，内存技术进化史 <https://zhuanlan.zhihu.com/p/663690992>`_
+#. `All SPEC CPU2017 Results Published by SPEC <https://www.spec.org/cpu2017/results/cpu2017.html>`_
 
 
 GPU
