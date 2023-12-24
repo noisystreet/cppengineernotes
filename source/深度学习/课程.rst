@@ -13,3 +13,4 @@
 #. `AI System <https://github.com/microsoft/AI-System>`_
 #. `deep learning book <https://www.deeplearningbook.org/>`_
 #. `智能计算系统 <https://novel.ict.ac.cn/aics/>`_
+#. `Understanding Deep Learning <https://udlbook.github.io/udlbook/>`_
