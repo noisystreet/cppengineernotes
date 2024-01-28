@@ -1,6 +1,14 @@
 Linux系统管理
 =================
 
+Linux设备
+------------------------------------------------
+
++ https://wiki.archlinux.org/title/Device_file
++ https://linuxjourney.com/lesson/dev-directory
++ https://www.debian.org/releases/buster/amd64/apds01.en.html
++ https://www.baeldung.com/linux/dev-directory
+
 kvm、qemu和libvirt
 ------------------------------------------------
 空

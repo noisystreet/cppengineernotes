@@ -200,12 +200,15 @@ linux的目录结构
 ````````````````````````````````````````````````
 
 systemd软件包中包含的重要命令:
+
 + ``timedatectl``
 + ``hostnamectl``
 + ``bootctl``
 + ``localectl``
 + ``resolvectl``
 + ``systemd-analyze``
+
+sysctemctl的主要用法：
 
 + 启动服务 ``systemctl start xx.service``
 + 关闭服务 ``systemctl stop xx.service``
@@ -339,6 +342,7 @@ awk
 参考资料
 ------------------------------------------------
 
+#. https://linuxjourney.com/
 #. `Linux Standard Base(LSB) <https://refspecs.linuxfoundation.org/lsb.shtml>`_
 #. `Linux man pages <https://linux.die.net/man/>`_
 #. `linux command library <https://linuxcommandlibrary.com/>`_

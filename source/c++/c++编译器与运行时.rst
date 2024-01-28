@@ -20,6 +20,7 @@ gcc参考：
 LLVM
 ------------------------------------------------
 
++ https://llvm.org
 + `The Architecture of Open Source Applications Volume 1: LLVM <https://aosabook.org/en/v1/llvm.html>`_
 
 C++实现
