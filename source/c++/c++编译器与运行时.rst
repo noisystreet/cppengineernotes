@@ -17,6 +17,11 @@ gcc参考：
 + `x86 Built-in Functions <https://gcc.gnu.org/onlinedocs/gcc/x86-Built-in-Functions.html>`_
 + `Using Vector Instructions through Built-in Functions <https://gcc.gnu.org/onlinedocs/gcc/Vector-Extensions.html>`_
 
+LLVM
+------------------------------------------------
+
++ `The Architecture of Open Source Applications Volume 1: LLVM <https://aosabook.org/en/v1/llvm.html>`_
+
 C++实现
 ------------------------------------------------
 
@@ -37,8 +42,11 @@ c++对象内存布局
 二进制文件分析
 ------------------------------------------------
 
-#. 
+#. `ELF Malware Analysis 101 Part 2: Initial Analysis 
+<https://intezer.com/blog/malware-analysis/elf-malware-analysis-101-initial-analysis/>`_
 #. `Object File Format <https://www.gnu.org/software/guile/manual/html_node/Object-File-Format.html>`_
+#. `How to Analyze an ELF Executable File <https://workinjapan.today/hightech/linux-lessons-how-to-analyze-elf-files/>`_
+#. `9 essential GNU binutils tools <https://opensource.com/article/19/10/gnu-binutils>`_
 
 参考
 ------------------------------------------------

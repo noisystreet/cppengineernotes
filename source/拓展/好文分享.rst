@@ -16,6 +16,7 @@
 ------------------------------------------------
 
 #. `解析内存中的高性能图结构 <https://www.cnblogs.com/nebulagraph/p/17385501.html>`_
+#. `Bit Twiddling Hacks <https://graphics.stanford.edu/~seander/bithacks.html>`_
 
 CPU
 ------------------------------------------------

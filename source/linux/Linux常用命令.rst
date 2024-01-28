@@ -162,7 +162,7 @@ linux的目录结构
 查看硬件设备
 ````````````````````````````````````````````````
 
-+ ``lshw`` 查看计算机硬件信息，sudo lshw -C display 查看显示设备
++ ``lshw`` 查看计算机硬件信息，sudo lshw -C display 查看显示设备。https://ezix.org/project/wiki/HardwareLiSter
 + ``lscpu`` 查看cpu信息
 + ``lsusb`` 查看usb接信息
 + ``lsblk`` 查看块设备文件
