@@ -675,7 +675,7 @@ Thrust是一个基于CUDA的类似c++STL的库，封装了各种常用的容器�
 + Rocm https://sep5.readthedocs.io/en/latest/index.html
 + https://developer.nvidia.com/zh-cn/blog/nvidia-ampere-architecture-in-depth/
 + GPU 兼容性的那些事 http://wsfdl.com/kubernetes/2019/05/08/versions_in_gpu.html
-
++ CUDATutorial https://cuda-tutorial.github.io/index.html
 
 硬件规格说明
 ````````````````````````````````````````````````

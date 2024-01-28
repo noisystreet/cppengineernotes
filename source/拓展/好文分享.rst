@@ -22,10 +22,10 @@ CPU
 
 #. `Intel CPU Brand Letters & Nomenclature Explained <https://www.dignited.com/99881/intel-cpu-brand-letters-nomenclature-explained/>`_
 #. `AArch64 SoC features <https://marcin.juszkiewicz.com.pl/download/tables/arm-socs.html>`_
-#. https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html
+#. `Technical Overview Of The 4th Gen Intel® Xeon® Scalable processor family <https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html>`_
 #. `DDR 探密一：从电容鼓到 DDR，内存技术进化史 <https://zhuanlan.zhihu.com/p/663690992>`_
 #. `All SPEC CPU2017 Results Published by SPEC <https://www.spec.org/cpu2017/results/cpu2017.html>`_
-
+#. `How To Make A CPU - A Simple Picture Based Explanation <https://blog.robertelder.org/how-to-make-a-cpu/>`_
 
 GPU
 ------------------------------------------------
@@ -33,8 +33,7 @@ GPU
 #. `List of Intel graphics processing units <https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units>`_
 #. `List of Nvidia graphics processing units <https://en.wikipedia.org/wiki/List_of_Nvidia_graphics_processing_units>`_
 #. `List of AMD graphics processing units <https://en.wikipedia.org/wiki/List_of_AMD_graphics_processing_units>`_
-#. https://www.intel.com/content/www/us/en/developer/articles/technical/intel-data-center-gpu-max-series-overview.html
-#. https://videocardz.net/intel-data-center-gpu-max-series-1550
+#. `Intel Data Center GPU Max Series 1550 Professional Graphics Card <https://videocardz.net/intel-data-center-gpu-max-series-1550>`_
 #. `Understanding GPU Architecture <https://cvw.cac.cornell.edu/gpu-architecture>`_
 #. `NVIDIA Ampere Architecture In-Depth <https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/>`_
 #. `NVIDIA Hopper Architecture In-Depth <https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/>`_
