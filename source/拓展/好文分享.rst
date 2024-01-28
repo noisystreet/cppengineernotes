@@ -41,6 +41,8 @@ GPU
 #. `A history of NVidia Stream Multiprocessor <https://fabiensanglard.net/cuda/>`_
 #. `Diving Deep Into The Nvidia Ampere GPU Architecture <https://www.nextplatform.com/2020/05/28/diving-deep-into-the-nvidia-ampere-gpu-architecture/>`_
 #. `NVIDIA Tensor Core Programming <https://leimao.github.io/blog/NVIDIA-Tensor-Core-Programming/>`_
+#. `NVIDIA GPU Architecture: from Pascal to Turing to Ampere <https://wolfadvancedtechnology.com/articles/nvidia-gpu-architecture>`_
+#. https://www.hc32.hotchips.org/
 
 PCIE
 ------------------------------------------------

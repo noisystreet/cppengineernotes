@@ -676,6 +676,9 @@ Thrust是一个基于CUDA的类似c++STL的库，封装了各种常用的容器�
 + https://developer.nvidia.com/zh-cn/blog/nvidia-ampere-architecture-in-depth/
 + GPU 兼容性的那些事 http://wsfdl.com/kubernetes/2019/05/08/versions_in_gpu.html
 + CUDATutorial https://cuda-tutorial.github.io/index.html
++ Matching CUDA arch and CUDA gencode for various NVIDIA architectures https://arnon.dk/matching-sm-architectures-arch-and-gencode-for-various-nvidia-cards/
++ https://carpentries-incubator.github.io/lesson-gpu-programming/
++ CUDA — Memory Model https://medium.com/analytics-vidhya/cuda-memory-model-823f02cef0bf
 
 硬件规格说明
 ````````````````````````````````````````````````
