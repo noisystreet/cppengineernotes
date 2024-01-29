@@ -5,27 +5,20 @@ CUDA编程
 简介
 ------------------------------------------------
 
-可以在这个页面查看支持CUDA的GPU： 
+支持CUDA的GPU： https://developer.nvidia.com/cuda-gpus
 
-https://developer.nvidia.com/cuda-gpus
-
-CUDA的软件栈：
-
-https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
+CUDA的软件栈：https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
 
 基础环境配置
 ------------------------------------------------
 
-CUDA 基础软件栈由CUDA driver（包括GPU kernel mode driver和CUDA usermode driver）、CUDA Toolkit和runtime组成。
-要运行CUDA程序，至少要有CUDA driver和CUDA runtime，要开发CUDA程序，还要有CUDA Toolkit
+CUDA基础软件栈由 ``CUDA driver`` （包括GPU kernel mode driver和CUDA usermode driver）、 ``CUDA Toolkit`` 和 ``runtime`` 组成。
+要运行CUDA程序，至少要有 ``CUDA driver`` 和 ``CUDA runtime`` ，要开发CUDA程序，还要有 ``CUDA Toolkit``
 
 Linux下CUDA环境配置
 ````````````````````````````````````````````````
 
 CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
-
-CUDA和driver的版本关系：
-https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
 
 首先查看是否有NVIDIA显卡：
 
@@ -200,14 +193,15 @@ https://pypi.org/search/?q=nvidia
 
 ``nvidia-smi`` 命令
 
-+ ``nvidia-smi topo -m`` #查看GPU和CPU和拓扑连接方式
-+ ``nvidia-smi -L`` #列出所有GPU设备
-+ ``nvidia-smi --help-query-gpu`` #查看--query-gpu的所有可选参数
+.. code-block:: bash
+
+    nvidia-smi topo -m          #查看GPU和CPU和拓扑连接方式
+    nvidia-smi -L               #列出所有GPU设备
+    nvidia-smi --help-query-gpu #查看--query-gpu的所有可选参数
 
 多个查询：
 
 .. code-block:: bash
-    :linenos:
 
     nvidia-smi --query-gpu=timestamp,name,pci.bus_id,driver_version,pstate,pcie.link.gen.max,\
         pcie.link.gen.current,temperature.gpu,utilization.gpu,\
@@ -215,14 +209,13 @@ https://pypi.org/search/?q=nvidia
 
 参考：
 
-+ https://medium.com/analytics-vidhya/explained-output-of-nvidia-smi-utility-fc4fbee3b124
-+ https://www.seimaxim.com/kb/gpu/nvidia-smi-cheat-sheet
-+ https://xcat-docs.readthedocs.io/en/2.16.2/advanced/gpu/nvidia/management.html
++ `Explained Output of Nvidia-smi Utility <https://medium.com/analytics-vidhya/explained-output-of-nvidia-smi-utility-fc4fbee3b124>`_
++ `nvidia-smi Cheat Sheet <https://www.seimaxim.com/kb/gpu/nvidia-smi-cheat-sheet>`_
++ `GPU Management and Monitoring <https://xcat-docs.readthedocs.io/en/2.16.2/advanced/gpu/nvidia/management.html>`_
 
 ``nvidia-settings`` 命令：
 
 .. code-block:: bash
-    :linenos:
 
     nvidia-settings -q gpus -t #查询GPU的数目
     nvidia-settings -q CUDACores -t #查询GPU中CUDA core的数目
@@ -238,7 +231,8 @@ https://pypi.org/search/?q=nvidia
 
     git clone https://github.com/NVIDIA/cuda-samples.git
     #切换成与当前CUDA环境一致的代码版本
-    git checkout v11.8 && git switch -c v11.8
+    version=v11.8
+    git checkout $version && git switch -c $version
     #安装依赖项
     sudo apt install libopenmpi-dev -y
     #编译
@@ -310,33 +304,40 @@ https://pypi.org/search/?q=nvidia
 GPU硬件和执行模型
 ------------------------------------------------
 
+
+GPU的内存层次:
+
++ Register
++ L1/Shared memory (SMEM)
++ Read-only memory
++ L2 cache
++ Global memory
+
 参考
 
-+ warp深度解析 https://blog.51cto.com/u_15127500/3641722
-+ https://cse.iitkgp.ac.in/~soumya/hp3/slides/warp-divr.pdf
-+ CUDA Programming:An In-Depth Look https://www.run.ai/guides/nvidia-cuda-basics-and-best-practices/cuda-programming
++ `warp深度解析 <https://blog.51cto.com/u_15127500/3641722>`_
++ `Warp Scheduling and Divergence <https://cse.iitkgp.ac.in/~soumya/hp3/slides/warp-divr.pdf>`_
++ `CUDA Refresher <https://developer.nvidia.com/blog/tag/cuda-refresher>`_
 
 CUDA API
 ------------------------------------------------
 
-
-CUDA API可以分为 ``driver API`` 和 ``runtime API`` ，对应的函数分别以cu和cuda开头， ``driver API`` 是更加偏底层的接口。一般使用 ``runtime API`` 即可。下面介绍的均为 ``runtime API`` 。
+CUDA API可以分为 ``driver API`` 和 ``runtime API`` ，对应的函数分别以 ``cu`` 和 ``cuda`` 开头， ``driver API`` 是更加偏底层的接口。一般使用 ``runtime API`` 即可。下面介绍的均为 ``runtime API`` 。
 
 一些概念
 ````````````````````````````````````````````````
 
-``grid`` 一个kernel所启动的所有线程称为一个网格
-``block`` grid由三维结构的block组成
-``thread`` 一个block由多个线程组成
++ ``grid`` 一个kernel所启动的所有线程称为一个网格
++ ``block`` grid由三维结构的block组成
++ ``thread`` 一个block由多个线程组成
 
 grid、block和thread都是软件逻辑层面的概念。CUDA的设备在实际执行过程中，会以block为单位。把一个个block分配给SM进行运算；而block中的thread又会以warp（线程束）为单位，对thread进行分组计算。目前CUDA的warp大小都是32，也就是说32个thread会被组成一个warp来一起执行。同一个warp中的thread执行的指令是相同的，只是处理的数据不同。
+
 基本上warp 分组的动作是由SM自动进行的，会以连续的方式来做分组。比如说如果有一个block 里有128 个thread 的话，就会被分成四组warp，实际上，warp 也是CUDA 中每一个SM 执行的最小单位；
 kernel在调用时必须通过 ``<<<grid, block>>>`` 来指定kernel所使用的线程数及结构。
 可以使用nvprof分析CUDA程序中的函数的执行开销
 
-CUDA编程模型 https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/
-
-+ CUDA 深入理解threadIdx https://www.cnblogs.com/zzzsj/p/14866103.html
++ `CUDA 深入理解threadIdx <https://www.cnblogs.com/zzzsj/p/14866103.html>`_
 
 CUDA程序和编译
 ````````````````````````````````````````````````
@@ -345,14 +346,15 @@ CUDA程序和编译
 
 由于GPU是异构模型，需要区分host和device上的代码，在CUDA中对C语言进行的扩展，通过函数类型修饰符开区别host和device上的函数，主要的三个函数类型修饰符如下：
 
-+ ``__global__`` 从host调用，在device上执行，（一些特定的GPU也可以从device上调用），返回类型必须是 `void` ，不支持可变参数参数，不能是类的成员函数。用 `__global__` 定义的kernel函数是异步的，这意味着host不会等待kernel执行完就执行下一步。
-+ ``__device__`` 从device调用，在device上执行，且只能，不可以和 `__global__` 同时用。
-+ ``__host__`` 从host上调用，在host上执行，一般省略不写，不可以和 `__global__` 同时用，但可和 `__device__` 同时用，此时函数会在device和host都编译。
++ ``__global__`` 从host调用，在device上执行，（一些特定的GPU也可以从device上调用），返回类型必须是 ``void`` ，不支持可变参数参数，不能是类的成员函数。用 ``__global__`` 定义的kernel函数是异步的，这意味着host不会等待kernel执行完就执行下一步。
++ ``__device__`` 从device调用，在device上执行，且只能，不可以和 ``__global__`` 同时用。
++ ``__host__`` 从host上调用，在host上执行，一般省略不写，不可以和 ``__global__`` 同时用，但可和 ``__device__`` 同时用，此时函数会在device和host都编译。
 
-变量修饰符：
+变量定义：
 
 + ``__shared__`` ：用来定义共享内存变量
 + ``__constant__`` ：用来定义常量内存
++ thread_local变量，定义在kernel函数内，被线程私有。
   
 kernel函数内可以使用一些c++11语法，如 ``auto``
 内置 ``dim3`` 结构体和 ``uint3`` 结构体：
