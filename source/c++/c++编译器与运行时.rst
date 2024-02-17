@@ -20,7 +20,8 @@ gcc参考：
 LLVM
 ------------------------------------------------
 
-+ https://llvm.org
++ 主页：https://llvm.org
++ `Building LLVM with CMake <https://llvm.org/docs/CMake.html>`_
 + `The Architecture of Open Source Applications Volume 1: LLVM <https://aosabook.org/en/v1/llvm.html>`_
 
 C++实现
