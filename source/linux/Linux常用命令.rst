@@ -227,10 +227,10 @@ sysctemctl的主要用法：
 网络端口介绍：
 
 + https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/4/html/security_guide/ch-ports
-+ http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
-+ https://matt-rickard.com/de-facto-ports
++ `Service Name and Transport Protocol Port Number Registry <http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml>`_
++ `De Facto Ports <https://matt-rickard.com/de-facto-ports>`_
 
-
+网络相关命令：
 
 + ``ping`` 测试主机的连通性
 + ``w3m`` 文本模式的浏览器
@@ -238,11 +238,11 @@ sysctemctl的主要用法：
 + ``route`` 路由管理
 + ``ip`` 网络管理
 + ``nmap``
-+ ``ssh`` 远程登录，ssh免密码登录 ``scp ~/.ssh/id_rsa.pub remote_host /some_user_home/.ssh/authorized_keys``，打开远程主机的gui: ``ssh -Y user@IP``，然后输入命令即可，如 ``cmake-gui``
++ ``ssh`` 远程登录，ssh免密码登录 ``scp ~/.ssh/id_rsa.pub remote_host:/some_user_home/.ssh/authorized_keys``，打开远程主机的gui: ``ssh -Y user@IP``，然后输入命令即可，如 ``cmake-gui``
 
 + ``talk`` 与其他用户聊天
 + ``mail`` 查看邮件
-+ ``curl`` 获取URL链接。-H 自定义请求头；-I 只打印响应头；-o 保存到文件； -L 跟随链接重定向；-d 发送POST请求
++ ``curl`` 获取URL链接。 ``-H`` 自定义请求头； ``-I`` 只打印响应头； ``-o`` 保存到文件； ``-L`` 跟随链接重定向； ``-d`` 发送POST请求
 + ``wget`` 下载文件
 
 shell终端快捷键
