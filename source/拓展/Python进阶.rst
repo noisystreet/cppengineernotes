@@ -9,11 +9,31 @@ Python重要标准库
 + os
 + platform
 
+重要命令：
+
+python -m site
+
 Python深入理解
 ------------------------------------------------
 
+python源码的编译：
+
+.. code-block:: bash
+    :linenos:
+
+    sudo apt install gdb lcov pkg-config libbz2-dev libffi-dev \
+    libgdbm-dev libgdbm-compat-dev liblzma-dev libncurses5-dev libreadline-dev libsqlite3-dev \
+    libssl-dev lzma lzma-dev tk-dev uuid-dev zlib1g-dev
+
+    mkdir build && cd build
+
+    ../configure --enable-optimizations --prefix=$HOME/soft/python
+
+    make -j16 && make install
+
 参考
 
++ https://devguide.python.org/getting-started/setup-building/
 + https://www.cnblogs.com/jiakecong/p/16869432.html
 + https://www.cnblogs.com/jiakecong/p/16908795.html
 + https://www.cnblogs.com/Chang-LeHung/p/16988279.html

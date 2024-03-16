@@ -6,6 +6,7 @@
 参考资料
 ------------------------------------------------
 
+#. `芯片微架构 <https://en.wikichip.org/wiki/WikiChip>`_
 #. https://uops.info/index.html
 #. https://kunpengcompute.github.io/2020/04/03/linux-xia-huo-qu-armv8-a-cpu-xiang-qing-de-3-chong-fang-fa/
 #. https://www.cnblogs.com/orlion/p/14076199.html

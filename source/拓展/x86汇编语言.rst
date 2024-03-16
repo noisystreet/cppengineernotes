@@ -253,14 +253,14 @@ x86 采用 IEEE-754 标准来表示浮点数。但 FPU采用了扩展精度格�
 参考资料
 ------------------------------------------------
 
-#. Intel® 64 and IA-32 Architectures Software Developer Manuals 
-#. https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
-#. https://cs0330-fall2022.github.io/
+#. `Intel® 64 and IA-32 Architectures Software Developer Manuals <https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html>`_
+#. `Introduction to Computer Systems <https://cs0330-fall2023.github.io/>`_
 #. x86-64 Assembly Language Programming with Ubuntu
-#. https://www.cs.uaf.edu/2017/fall/cs301/reference/x86_64.html
-#. https://www.conradk.com/2017/06/06/x86-64-assembly-from-scratch
-#. https://jameshfisher.com/2018/03/10/linux-assembly-hello-world/
-#. https://www.mourtada.se/calling-printf-from-the-c-standard-library-in-assembly/
-#. https://blog.51cto.com/u_15333820/category3
-#. Linux系统调用表：https://github.com/torvalds/linux/blob/master/arch/x86/entry/syscalls/syscall_64.tbl
-#. 芯片微架构 https://en.wikichip.org/wiki/WikiChip
+#. `x86-64 assembly from scratch <https://www.conradk.com/2017/06/06/x86-64-assembly-from-scratch>`_
+#. `Hello world in Linux x86-64 assembly <https://jameshfisher.com/2018/03/10/linux-assembly-hello-world/>`_
+#. `Calling printf from the C standard library in assembly <https://www.mourtada.se/calling-printf-from-the-c-standard-library-in-assembly>`_
+#. `X86处理器汇编技术系列 <https://blog.51cto.com/u_15333820/category3>`_
+#. `x86 and amd64 instruction reference <https://www.felixcloutier.com/x86>`_
+#. `Linux Assembly: x86-64 Instructions Set <https://linasm.sourceforge.net/docs/instructions/index.php>`_
+#. `X86-64 Instruction Encoding <https://wiki.osdev.org/X86-64_Instruction_Encoding>`_
+#. `x86-64 assembly language reference <https://inst.eecs.berkeley.edu/~cs164/fa23/resources/Assembly-Reference.html>`_
