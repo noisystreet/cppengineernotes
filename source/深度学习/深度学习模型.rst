@@ -342,36 +342,91 @@ diffusion model
 
 常用数据集及介绍：https://paperswithcode.com/datasets
 
-mnist
+MNIST
 ````````````````````````````````````````````````
 
 http://yann.lecun.com/exdb/mnist/
 
-The MNIST database of handwritten digits, has a training set of 60,000 examples, and a test set of 10,000 examples. It is a subset of a larger set available from NIST. The digits have been size-normalized and centered in a fixed-size image. 
-The original black and white (bilevel) images from NIST were size normalized to fit in a 20x20 pixel box while preserving their aspect ratio. The resulting images contain grey levels as a result of the anti-aliasing technique used by the normalization algorithm. the images were centered in a 28x28 image by computing the center of mass of the pixels, and translating the image so as to position this point at the center of the 28x28 field. 
+..
 
-fashion mnist
+    The MNIST database of handwritten digits, has a training set of 60,000 examples, and a test set of 10,000 examples. It is a subset of a larger set available from NIST. The digits have been size-normalized and centered in a fixed-size image. 
+    The original black and white (bilevel) images from NIST were size normalized to fit in a 20x20 pixel box while preserving their aspect ratio. The resulting images contain grey levels as a result of the anti-aliasing technique used by the normalization algorithm. the images were centered in a 28x28 image by computing the center of mass of the pixels, and translating the image so as to position this point at the center of the 28x28 field. 
+
+Fashion-MNIST
 ````````````````````````````````````````````````
 
 https://github.com/zalandoresearch/fashion-mnist
-Fashion-MNIST is a dataset of Zalando's  article images—consisting of a training set of 60,000 examples and a  test set of 10,000 examples. Each example is a 28x28 grayscale image,  associated with a label from 10 classes. We intend Fashion-MNIST to serve as a direct drop-in replacement for the original MNIST dataset for benchmarking machine learning algorithms. It shares the same image size and structure of training and testing splits.
 
-cifar
+..
+
+    Fashion-MNIST is a dataset of Zalando's  article images—consisting of a training set of 60,000 examples and a  test set of 10,000 examples. Each example is a 28x28 grayscale image,  associated with a label from 10 classes. We intend Fashion-MNIST to serve as a direct drop-in replacement for the original MNIST dataset for benchmarking machine learning algorithms. It shares the same image size and structure of training and testing splits.
+
+CIFAR
 ````````````````````````````````````````````````
 
 https://www.cs.toronto.edu/~kriz/cifar.html
 
-分为cifar10和cifar100：
+..
 
-cifar-10:The CIFAR-10 dataset consists of 60000 32x32 colour images in 10  classes, with 6000 images per class. There are 50000 training images and  10000 test images. 
-cifar-100:This dataset is just like the CIFAR-10, except it has 100 classes  containing 600 images each. There are 500 training images and 100  testing images per class. The 100 classes in the CIFAR-100 are grouped into 20 superclasses. Each  image comes with a "fine" label (the class to which it belongs) and a  "coarse" label (the superclass to which it belongs).
-image net
+    The CIFAR-10 and CIFAR-100 are labeled subsets of the 80 million tiny images dataset. They were collected by Alex Krizhevsky, Vinod Nair, and Geoffrey Hinton. 
+
+    cifar-10:The CIFAR-10 dataset consists of 60000 32x32 colour images in 10  classes, with 6000 images per class. There are 50000 training images and  10000 test images.
+    cifar-100:This dataset is just like the CIFAR-10, except it has 100 classes  containing 600 images each. There are 500 training images and 100  testing images per class. The 100 classes in the CIFAR-100 are grouped into 20 superclasses. Each  image comes with a "fine" label (the class to which it belongs) and a  "coarse" label (the superclass to which it belongs).
+    image net
 
 COCO
 ````````````````````````````````````````````````
 
-VOC
+https://cocodataset.org
+
+..
+
+    COCO is a large-scale object detection, segmentation, and captioning dataset. COCO has several features:
+
+    + Object segmentation
+    + Recognition in context
+    + Superpixel stuff segmentation
+    + 330K images (>200K labeled)
+    + 1.5 million object instances
+    + 80 object categories
+    + 91 stuff categories
+    + 5 captions per image
+    + 250,000 people with keypoints
+
+Pascal VOC data sets
 ````````````````````````````````````````````````
+
+http://host.robots.ox.ac.uk/pascal/VOC/
+
+
+Wikipedia dataset
+````````````````````````````````````````````````
+
+https://huggingface.co/datasets/wikimedia/wikipedia
+
+..
+
+    Wikipedia dataset containing cleaned articles of all languages.
+
+Open WebText
+````````````````````````````````````````````````
+
+https://huggingface.co/datasets/Skylion007/openwebtext
+
+..
+
+    An open-source replication of the WebText dataset from OpenAI, that was used to train GPT-2.
+
+SQuAD2.0
+````````````````````````````````````````````````
+
+https://rajpurkar.github.io/SQuAD-explorer/
+
+.. 
+
+    Stanford Question Answering Dataset (SQuAD) is a reading comprehension dataset, consisting of questions posed by crowdworkers on a set of Wikipedia articles, where the answer to every question is a segment of text, or span, from the corresponding reading passage, or the question might be unanswerable.
+
+
 
 模型复现
 ------------------------------------------------
