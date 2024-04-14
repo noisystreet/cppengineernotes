@@ -31,7 +31,7 @@ CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
 .. code-block:: bash
 
     00:02.0 VGA compatible controller: Intel Corporation CometLake-S GT2 [UHD Graphics 630] (rev 03)
-    01:00.0 VGA compatible controller: NVIDIA Corporation TU117M (rev a1)
+    01:00.0 VGA compatible controller: NVIDIA Corporation TU117M [GeForce GTX 1650 Mobile / Max-Q] (rev a1
 
 不同Linux环境的下CUDA的安装可以参考：https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html
 
@@ -48,10 +48,12 @@ CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
 
 .. code-block:: bash
 
-    distro=ubuntu2204 #或debian11
+    #参考：https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Debian&target_version=12&target_type=deb_network
+    distro=ubuntu2204 #或debian12
     arch=x86_64
-    wget https://developer.download.nvidia.com/compute/cuda/repos/$distro/$arch/cuda-keyring_1.0-1_all.deb
-    sudo dpkg -i cuda-keyring_1.0-1_all.deb
+    version=1.1-1
+    wget https://developer.download.nvidia.com/compute/cuda/repos/$distro/$arch/cuda-keyring_${version}_all.deb
+    sudo dpkg -i cuda-keyring_${version}_all.deb
 
     #安装
     sudo apt update
@@ -84,42 +86,38 @@ CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
 .. code-block:: bash
 
     nvcc: NVIDIA (R) Cuda compiler driver
-    Copyright (c) 2005-2023 NVIDIA Corporation
-    Built on Fri_Jan__6_16:45:21_PST_2023
-    Cuda compilation tools, release 12.0, V12.0.140
-    Build cuda_12.0.r12.0/compiler.32267302_0
+    Copyright (c) 2005-2024 NVIDIA Corporation
+    Built on Thu_Mar_28_02:18:24_PDT_2024
+    Cuda compilation tools, release 12.4, V12.4.131
+    Build cuda_12.4.r12.4/compiler.34097967_0
 
 安装 ``nvidia-smi``，用 ``nvidia-smi`` 查看GPU信息，典型的输出如下：
 
 .. code-block:: bash
 
-    +---------------------------------------------------------------------------------------+
-    | NVIDIA-SMI 530.30.02              Driver Version: 530.30.02    CUDA Version: 12.1     |
-    |-----------------------------------------+----------------------+----------------------+
-    | GPU  Name                  Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
-    | Fan  Temp  Perf            Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-    |                                         |                      |               MIG M. |
-    |=========================================+======================+======================|
-    |   0  NVIDIA GeForce GTX 1650         On | 00000000:01:00.0 Off |                  N/A |
-    | N/A   42C    P8                3W /  50W|      1MiB /  4096MiB |      0%      Default |
-    |                                         |                      |                  N/A |
-    +-----------------------------------------+----------------------+----------------------+
+    +-----------------------------------------------------------------------------------------+
+    | NVIDIA-SMI 550.54.15              Driver Version: 550.54.15      CUDA Version: 12.4     |
+    |-----------------------------------------+------------------------+----------------------+
+    | GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+    |                                         |                        |               MIG M. |
+    |=========================================+========================+======================|
+    |   0  NVIDIA GeForce GTX 1650        On  |   00000000:01:00.0 Off |                  N/A |
+    | N/A   41C    P8              2W /   50W |       5MiB /   4096MiB |      0%      Default |
+    |                                         |                        |                  N/A |
+    +-----------------------------------------+------------------------+----------------------+
                                                                                              
-    +---------------------------------------------------------------------------------------+
-    | Processes:                                                                            |
-    |  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
-    |        ID   ID                                                             Usage      |
-    |=======================================================================================|
-    |  No running processes found                                                           |
-    +---------------------------------------------------------------------------------------+
+    +-----------------------------------------------------------------------------------------+
+    | Processes:                                                                              |
+    |  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+    |        ID   ID                                                               Usage      |
+    |=========================================================================================|
+    |    0   N/A  N/A      1818      G   /usr/lib/xorg/Xorg                              4MiB |
+    +-----------------------------------------------------------------------------------------+
 
 在linux开发CUDA程序可以使用eclipse+nvidia nsight，后者可从CUDA安装目录下找到。
 
-注意CUDA需要和特定版本的驱动、编译器结合使用，版本不匹配可能会出问题，
-
-CUDA的兼容性： https://docs.nvidia.com/deploy/cuda-compatibility/index.html
-
-参考 `cuDNN Support Matrix <https://docs.nvidia.com/deeplearning/cudnn/archives/index.html>`_，以安装正确的gcc/CUDA/cuDNN版本组合。
+注意CUDA需要和特定版本的驱动、编译器结合使用，版本不匹配可能会出问题，CUDA的兼容性请参考 `CUDA Compatibility <https://docs.nvidia.com/deploy/cuda-compatibility/index.html>`_ 和 `cuDNN Support Matrix <https://docs.nvidia.com/deeplearning/cudnn/archives/index.html>`_，以安装正确的gcc/CUDA/cuDNN版本组合。
 
 Windows下CUDA环境配置
 ````````````````````````````````````````````````
@@ -191,6 +189,14 @@ https://pypi.org/search/?q=nvidia
 常用工具命令
 ````````````````````````````````````````````````
 
+#. nvcc
+#. cuda-gdb
+#. cuc++filt
+#. nvdisasm
+#. nsys
+#. nvidia-smi
+#. nvidia-settings
+
 ``nvidia-smi`` 命令
 
 .. code-block:: bash
@@ -209,6 +215,7 @@ https://pypi.org/search/?q=nvidia
 
 参考：
 
++ `NVIDIA CUDA Installation Guide for Linux <https://docs.nvidia.com/cuda/cuda-installation-guide-linux/>`_
 + `Explained Output of Nvidia-smi Utility <https://medium.com/analytics-vidhya/explained-output-of-nvidia-smi-utility-fc4fbee3b124>`_
 + `nvidia-smi Cheat Sheet <https://www.seimaxim.com/kb/gpu/nvidia-smi-cheat-sheet>`_
 + `GPU Management and Monitoring <https://xcat-docs.readthedocs.io/en/2.16.2/advanced/gpu/nvidia/management.html>`_
@@ -476,6 +483,11 @@ kernel函数内可以使用一些c++11语法，如 ``auto``
     cudaError_t 枚举
     cudaGetLastError()
     cudaGetErrorString()
+
+NVCC
+------------------------------------------------
+
+    nvcc -arch-ls -code-ls
 
 更多例子
 ------------------------------------------------

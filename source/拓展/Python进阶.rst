@@ -8,6 +8,7 @@ Python重要标准库
 + sys
 + os
 + platform
++ pydoc
 
 重要命令：
 
