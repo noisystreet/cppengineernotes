@@ -6,14 +6,28 @@ C++基础
 
 程序的编译和执行
 ````````````````````````````````````````````````
-源代码文件->预处理->编译->汇编->链接->可执行文件
+* 编写源代码文件
+* 编译
+
+  * 预处理
+  * 编译生成目标文件
+  * 汇编
+  * 链接生成可执行程序
+
+* 执行
+
+
+其中，从预处理直到生成可执行程序的过程，可以统称为编译。
 
 hello world
 ````````````````````````````````````````````````
 
+编写源代码文件：
+
 .. code-block:: c++
     :linenos:
 
+    //hello_world.cpp
     #include <iostream>
 
     using namespace std;
@@ -22,27 +36,47 @@ hello world
       cout<<"hello world!"<<endl;
     }
 
+编译:
+
+.. code-block:: bash
+
+    g++ -o hello_world hello_world.cpp
+
+执行：
+
+.. code-block:: bash
+
+    ./hello_world
+
 c++基本语法
 ````````````````````````````````````````````````
 
 关键字
 ::::::::::::::::::::::::::
 
+常见的关键字
+
 .. code-block:: c++
 
-    and	and_eq	asm	auto	bitand	bitor
-    bool	break	case	catch	char	class
-    compl	const	const_cast	continue	default	delete
-    do	double	dynamic_cast	else	enum	explicit
-    export	extern	false	float	for	friend
-    goto	if	inline	int	long	mutable
-    namespace	new	not	not_eq	operator	or
-    or_eq	private	protected	public	register	reinterpret_cast
-    return	short	signed	sizeof	static	static_cast
-    struct	switch	template	this	throw	true
-    try	typedef	typeid	typename	union	unsigned
-    using	virtual	void	volatile	wchar_t	while
-    xor	xor_eq				
+    asm	 auto
+    bool break
+    case catch char class const const_cast continue
+    default delete do double dynamic_cast
+    else enum explicit export extern
+    false float for friend
+    goto
+    if inline int
+    long
+    mutable
+    namespace new
+    operator
+    private protected public
+    reinterpret_cast return
+    short signed sizeof static static_cast struct switch
+    template this throw true try typedef typeid typename
+    union unsigned using
+    virtual void volatile
+    wchar_t while
 
 
 数据类型
@@ -52,7 +86,7 @@ c++基本语法
 + 字符型： ``char``
 + 浮点型： ``float,double,long double``
 + 布尔型 ``bool``：	``true`` 和 ``false``
-+ 指针
++ 指针  ``*`` 和 ``&``
 + 空类型： ``void``
 + 枚举： ``enum``
 + 结构体：  ``struct``
@@ -60,19 +94,28 @@ c++基本语法
 + 类： ``class``
 
 
-常量与变量，const修饰符
+常量: ``const`` 修饰符
 
-数据类型的转换：自动转换，强制转换和static_cast
+变量： 声明，赋值，变量和引用
+
+数据类型的转换：自动转换，强制转换和 ``static_cast``
 
 运算符
 ::::::::::::::::::::::::::
 
-+ 算术运算符 ``+-*/``
-+ 逻辑运算符&& || !
-+ 位运算符 ``& ^ >> <<``
-+ 地址运算符 ``&`` 和 ``*``
-+ 其它: ``[] <> () = . ->`` , ``new delete sizeof``
-+ 运算符的优先级
++ 算术运算符 ``+`` ``-`` ``*`` ``/`` ``%`` ``++`` ``--``
++ 赋值运算符 ``=`` ``+=`` ``-=`` ``*=`` ``/=`` ``%=``
++ 关系运算符 ``>`` ``>=`` ``<`` ``<=`` ``==`` ``!=``
++ 逻辑运算符 ``&&`` ``||`` ``!``
++ 位运算符 ``&`` ``|`` ``~`` ``^`` ``>>`` ``<<``
++ 指针运算符 ``&`` 和 ``*``
++ 括号 ``[]`` ``<>`` ``()`` ``{}``
++ 计算数据类型大小 ``sizeof``
++ 内存管理 ``new`` ``delete``
++ 成员运算符 ``.`` ``->``
++ 域运算符 ``::``
+
+运算符的优先级
 
 表达式
 ::::::::::::::::::::::::::
@@ -82,9 +125,9 @@ c++基本语法
 流程控制
 ::::::::::::::::::::::::::
 
-+ 分支：if-else、switch
-+ 循环：for while do-while
-+ 跳转：break、continue、goto
++ 分支： ``if-else`` ``switch``
++ 循环： ``for`` ``while`` ``do-while``
++ 跳转： ``break`` ``continue`` ``goto``
 
 函数
 ::::::::::::::::::::::::::
@@ -93,7 +136,7 @@ c++基本语法
 + 函数的参数：参数传递方式，默认参数
 + 默认参数
 + 可变参数
-+ 函数的重载(overload)
++ 函数的重载( ``overload`` )
 + 函数的递归
 + 变量的作用域
 
@@ -101,20 +144,19 @@ c++基本语法
 数组
 ::::::::::::::::::::::::::
 
-数组和元素
-多维数组
-
++ 数据的声明和初始化
++ 数组和元素
++ 多维数组
 
 指针
 ::::::::::::::::::::::::::
 
 指针的类型
 
-+ 变量指针 
++ 变量指针， ``const`` 修饰符
 + 函数指针
-+ 指针函数
 + 多重指针
-+ 动态内存管理： ``malloc`` / ``free`` 、 ``new`` / ``delete``
++ 动态内存管理： ``malloc`` ``free`` ``new`` ``delete``
 + 智能指针
 
 专题
@@ -132,7 +174,7 @@ c++基本语法
 + 成员函数
 + ``static`` 和 ``const`` 修饰符
 
-+ 访问属性： ``public,private,protected``
++ 访问属性： ``public private protected``
 + 默认函数：构造函数，析构函数，=,==, 
 + 构造函数： ``explicit，default`` 和 ``delete``
 + 浅拷贝和深拷贝
@@ -255,11 +297,11 @@ C++11
 + 类型推导： ``auto`` 和 ``decltype``
 + 容器的列表初始化： ``vector<int> a={1,2,3,4};``
 + 统一初始化（列表初始化）方法：使用大括号初始化 ``int a{5}``;
-+ 枚举类：``enum class``
-+ 模板别名using
++ 枚举类： ``enum class``
++ 模板别名 ``using``
 + 可变参数模板
 + ``constexpr``
-+ 右值引用，移动语义和完美转发
++ 右值引用 ``&&`` ，移动语义 ``std::move`` 和完美转发 ``std::forward``
 + range based loop
 + ``final`` 和 ``override``
 + ``delete`` 和 ``default``
@@ -336,7 +378,6 @@ std::packaged_task的例子
         std::cout << "1 + 2 => " << future.get() << std::endl;
 
         t.join();
-        return 0;
     }
     /// 输出: 1 + 2 => 3
 
