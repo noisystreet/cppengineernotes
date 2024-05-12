@@ -5,15 +5,13 @@ vim手册
 安装vim
 ------------------------------------------------
 
-直接安装最新版vim 
+通过apt命令安装：
 
 .. code-block:: bash
-    :linenos:
 
-    sudo add-apt-repository ppa:jonathonf/vim
-    sudo apt install vim
+    sudo apt install vim-gtk3 #一般带有python3支持，推荐安装这个
 
-编译安装
+也可以下载源码进行编译安装：
 
 .. code-block:: bash
     :linenos:
@@ -22,7 +20,9 @@ vim手册
     git clone -b master https://github.com/vim/vim.git
 
     #配置编译选项
-    ./configure --with-features=huge --enable-cscope --enable-multibyte \
+    ./configure --with-features=huge \
+    --enable-cscope \
+    --enable-multibyte \
     --enable-python3interp \
     --with-python3-config-dir=\
     /usr/lib/python3.9/config-3.9-x86_64-linux-gnu \
@@ -43,12 +43,11 @@ vim有3个模式 插入模式、命令模式、末行模式
 vim的配置文件
 ------------------------------------------------
 
-vim的配置文件为 ``.vimrc`` ，一些基本设置如下 
+vim的配置文件为 ``$HOME/.vimrc`` ，一些基本设置如下 
 
 .. code-block:: bash
     :linenos:
 
-    " [Common Configration] 公共配置
     " [ui beautification] 界面美化
     syntax on           " 开启代码高亮
     set nu              " 开启行号
@@ -251,7 +250,7 @@ vim的配置文件为 ``.vimrc`` ，一些基本设置如下
 
 + ``vi{`` 选择括号内的内容 
 + ``ggvG`` 选择全文 
-+ ``0 ctrl+v  $`` 或者 ``V`` 或者 ``shift+v`` ,选择一行 
++ ``0 ctrl+v $`` 或者 ``V`` 或者 ``shift+v`` ,选择一行 
 
 末行模式
 ------------------------------------------------
@@ -270,11 +269,12 @@ vim的配置文件为 ``.vimrc`` ，一些基本设置如下
 vim的插件
 ------------------------------------------------
 
-推荐 https://vimawesome.com/,首先需要安装插件管理:vim-plug
+推荐 https://vimawesome.com/,首先需要安装插件管理: ``vim-plug``
+
 推荐安装下面的一些 
 
 + ``vim-plug`` 插件管理工具 需要手工安装
-+ ``coc-nvim`` 基于nodejs的插件管理工具，相关coc-clangd,coc-jedi 需要安装clangd和jedi(使用pip安装)
++ ``coc-nvim`` 基于nodejs的插件管理工具
 + ``nerdtree`` 浏览文件目录 
 + ``leaderF`` 查找文件 
 + ``vim-airline-theme``  设置状态栏主题 
@@ -291,15 +291,15 @@ vim的插件
 `vim-plug <https://github.com/junegunn/vim-plug>`_
 ````````````````````````````````````````````````````````````````````````````````````````````````
 
-vim-plug是一个管理插件的插件,下载之后将 ``plug.vim`` 拷贝到 ``~/.vim/autoload/`` 目录下即可。
+用来管理其他插件,下载之后将 ``plug.vim`` 拷贝到 ``~/.vim/autoload/`` 目录下即可。
 
 在末行模式下的常用命令有:
 
-+  ``:PlugInstall``
-+  ``:PlugUpgrade`` 更新vim-plug自身
-+  ``:PlugUpdate`` 更新已经安装的其他插件
-+  ``:PlugClean`` 清理已经安装的插件
-+  ``:PlugStatus`` 检查已经安装的插件
++ ``:PlugInstall``
++ ``:PlugUpgrade`` 更新 ``vim-plug`` 自身
++ ``:PlugUpdate`` 更新已经安装的其他插件
++ ``:PlugClean`` 清理已经安装的插件
++ ``:PlugStatus`` 检查已经安装的插件
   
 安装插件，如https://github.com/vim-airline/vim-airline，只要在 ``.vimrc`` 中添加 
 
@@ -309,6 +309,31 @@ vim-plug是一个管理插件的插件,下载之后将 ``plug.vim`` 拷贝到 ``
     Plug 'vim-airline/vim-airline' #, {'branch': 'release'}可选
 
 然后执行 ``:PlugInstall`` 即可安装。
+
+`Nerdtree <https://github.com/preservim/nerdtree>`_
+````````````````````````````````````````````````````````````````````````````````````````````````
+
+用来显示和管理文件目录，常用命令：
+
++ ``:r`` 刷新目录和文件 
++ ``:m`` 移动文件目录 
++ ``:a`` 新建文件或者目录 
++ ``:o`` 展开目录 
++ ``:O`` 递归展开目录 
++ ``:e`` 在新窗口打开目录 
++ ``:?`` 查看使用帮助 
+
+
+`LeaderF <https://github.com/Yggdroot/LeaderF>`_
+````````````````````````````````````````````````````````````````````````````````````````````````
+
+用来查找文件和内容，常用命令：
+
++ ``:LeaderfFile`` 查找文件 
++ ``:LeaderfBuffer`` 查找当前的Buffer
++ ``:LeaderfMru`` 查找最近使用过的文件( search most recently used files) 
++ ``:LeaderfFunction`` 查找当前文件的函数 
++ ``:LeaderfLine`` 查找当前文件中有的某个单词（好处就是能把他们都列出来，不是很常用，其实，不过可以看看有多少行，也不错）
 
 `coc.nvim <https://github.com/neoclide/coc.nvim>`_
 ````````````````````````````````````````````````````````````````````````````````````````````````
@@ -323,21 +348,24 @@ vim-plug是一个管理插件的插件,下载之后将 ``plug.vim`` 拷贝到 ``
     #安装yarn,可选，上步已经安装
     sudo npm install -g yarn
 
-coc.nvim常用扩展安装 
-``CocInstall coc-clangd coc-jedi coc-cmake coc-sh``
+``coc.nvim`` 常用扩展安装 
+``CocInstall coc-clangd coc-jedi coc-rust-analyzer coc-cmake coc-sh``
 
-`Nerdtree <https://github.com/preservim/nerdtree>`_
-````````````````````````````````````````````````````````````````````````````````````````````````
+``coc-clangd`` 需要首先安装 `clangd <https://github.com/clangd/clangd/releases>`_
 
-常用命令
+``coc.nvim`` 的配置文件为： ``$HOME/.vim/coc-settings.json``
 
-+ ``:r`` 刷新目录和文件 
-+ ``:m`` 移动文件目录 
-+ ``:a`` 新建文件或者目录 
-+ ``:o`` 展开目录 
-+ ``:O`` 递归展开目录 
-+ ``:e`` 在新窗口打开目录 
-+ ``:?`` 查看使用帮助 
+``coc-jedi`` 需要先通过pip安装jedi，并在coc.nvim的配置文件中加入：
+
+.. code-block:: json
+
+    "python.pythonPath": "python"
+
+``coc-rust-analyzer`` 安装后需要在coc.nvim的配置文件中加入:
+
+.. code-block:: json
+    
+    "rust-analyzer.server.path":"/home/gzz/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rust-analyzer"
 
 `blamer.nvim <https://github.com/APZelos/blamer.nvim>`_
 ````````````````````````````````````````````````````````````````````````````````````````````````
@@ -345,53 +373,15 @@ coc.nvim常用扩展安装
 + ``:BlamerShow`` 显示代码的提交记录
 + ``:BlamerHide`` 不显示提交记录
 
-`vim-clangformat <https://github.com/rhysd/vim-clang-format>`_
+`vim-clang-format <https://github.com/rhysd/vim-clang-format>`_
 ````````````````````````````````````````````````````````````````````````````````````````````````
-
-先在可视化模式下选中要格式化的代码，然后在末行模式下执行 ``:ClangFormat``
-``gtags``和 ``cscope``
-先安装 ``global``
+使用前需要先安装 ``clang-format``：
 
 .. code-block:: bash
-    :linenos:
 
-    sudo apt install global cscope
+    sudo apt install clang-format
 
-然后将 ``gtags-cscope.vim`` 和 ``gtags.vim`` 拷贝到 ``$HOME/.vim/plugin`` 目录下（如不存在可手工创建），然后就可以使用 ``Gtags`` 命令。,基本用法 
-+ ``gtags``  #生成tags
-+ ``:Gtags [option] pattern``
-
-可以参照对应的 ``global`` 命令
-如 ``:Gtags -r func ctags`` 生成tag 
-``ctags -R –c++-kinds=+px –fields=+iaS –extra=+q .``
-
-cscope
-生成数据库 
-``cscope -Rbkq``
-
-使用方法（末行模式） 
-+ ``:cs help``
-+ ``:cs find d func_name``
-
-可选项有 
-+ ``c`` 查找调用本函数的函数
-+ ``d`` 查找本函数调用的函数
-+ ``e`` Find this egrep pattern 查找egrep模式
-+ ``f`` 查找文件
-+ ``g`` 查找定义
-+ ``i`` 查找包含了本文件的文件
-+ ``s`` 查询符号，函数/枚举/宏
-+ ``t`` 查找指定字符串
-
-手工生成tags文件 
-
-.. code-block:: bash
-    :linenos:
-
-    find /my/project/dir -name '*.c' -o -name '*.h' > /foo/cscope.files
-    cd /foo
-    cscope -b
-    export CSCOPE_DB=/foo/cscope.out
+使用时，先在可视化模式下选中要格式化的代码，然后在末行模式下执行 ``:ClangFormat`` 即可
 
 `vim-gutentags <https://github.com/ludovicchabant/vim-gutentags>`_
 ````````````````````````````````````````````````````````````````````````````````````````````````
@@ -412,17 +402,6 @@ cscope
 + ``<leader>ca`` Find places where current symbol is assigned
 + ``<leader>cz`` Find current word in ctags database
 
-`LeaderF <https://github.com/Yggdroot/LeaderF>`_
-````````````````````````````````````````````````````````````````````````````````````````````````
-
-常用命令
-
-+ ``:LeaderfFile`` 查找文件 
-+ ``:LeaderfBuffer`` 查找当前的Buffer
-+ ``:LeaderfMru`` 查找最近使用过的文件( search most recently used files) 
-+ ``:LeaderfFunction`` 查找当前文件的函数 
-+ ``:LeaderfLine`` 查找当前文件中有的某个单词（好处就是能把他们都列出来，不是很常用，其实，不过可以看看有多少行，也不错）
-
 `gen_tags.vim <https://github.com/jsfaint/gen_tags.vim>`_
 ````````````````````````````````````````````````````````````````````````````````````````````````
 
@@ -440,3 +419,55 @@ gen_tags的快捷键:
 + ``Ctrl+\ i`` Find files #including this file
 + ``Ctrl+\ s`` Find this C symbol
 + ``Ctrl+\ t`` Find this text string
+
+gtags和cscope使用（不推荐）
+````````````````````````````````````````````````````````````````````````````````````````````````
+
+``gtags`` 和 ``cscope``
+
+先安装 ``global``
+
+.. code-block:: bash
+
+    sudo apt install global cscope
+
+然后将 ``gtags-cscope.vim`` 和 ``gtags.vim`` 拷贝到 ``$HOME/.vim/plugin`` 目录下（如不存在可手工创建），然后就可以使用 ``Gtags`` 命令。
+
+基本用法：
+
++ ``gtags``  #生成tags
++ ``:Gtags [option] pattern``
+
+可以参照对应的 ``global`` 命令
+如 ``:Gtags -r func ctags`` 生成tag 
+``ctags -R –c++-kinds=+px –fields=+iaS –extra=+q .``
+
+cscope生成数据库 ：
+
+``cscope -Rbkq``
+
+使用方法（末行模式） ：
+
++ ``:cs help``
++ ``:cs find d func_name``
+
+可选项：
+
++ ``c`` 查找调用本函数的函数
++ ``d`` 查找本函数调用的函数
++ ``e`` Find this egrep pattern 查找egrep模式
++ ``f`` 查找文件
++ ``g`` 查找定义
++ ``i`` 查找包含了本文件的文件
++ ``s`` 查询符号，函数/枚举/宏
++ ``t`` 查找指定字符串
+
+手工生成tags文件 
+
+.. code-block:: bash
+    :linenos:
+
+    find /my/project/dir -name '*.c' -o -name '*.h' > /foo/cscope.files
+    cd /foo
+    cscope -b
+    export CSCOPE_DB=/foo/cscope.out
