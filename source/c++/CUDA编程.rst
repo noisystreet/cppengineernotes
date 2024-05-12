@@ -57,6 +57,8 @@ CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
 
     #安装
     sudo apt update
+    sudo apt install -y linux-headers-$(uname -r)
+    sudo apt install -y nvidia-kernel-open-dkmssudo cuda-drivers
     sudo apt -y install cuda  #安装软件源中最新版本的CUDA软件栈
 
 #. 软件源中也包含了cudnn，可以同时安装

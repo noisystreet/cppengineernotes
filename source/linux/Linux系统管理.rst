@@ -35,6 +35,7 @@ CPU和进程工具：
 + idlestat	查看CPU空闲信息	
 + top	进程信息查看	
 + htop	比top更直观的工具
++ pstree 查看进程树
 
 内存和带宽分析：
 

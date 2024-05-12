@@ -1,3 +1,4 @@
 C++并行编程
 ===============
-空
+
+Algorithms for Modern Hardware https://en.algorithmica.org/hpc/
