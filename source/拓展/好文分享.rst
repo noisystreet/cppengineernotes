@@ -6,6 +6,26 @@
 
 #. https://blog.yossarian.net/archive
 #. https://timdettmers.com/
+#. https://manateelazycat.github.io/
+#. https://blog.codingnow.com/
+#. https://timdettmers.com/
+#. https://pythoncat.top/archive
+#. https://jia.je/
+#. https://wu-kan.cn/archive/
+#. https://www.karlrupp.net/blog/
+#. https://www.changping.me/archives/
+#. https://www.stroustrup.com/index.html
+#. https://face2ai.com/program-blog/#GPU%E7%BC%96%E7%A8%8B%EF%BC%88CUDA%EF%BC%89
+#. https://trendingpapers.com
+#. https://matt-rickard.com/
+#. https://qiankunli.github.io/
+#. `苏剑林的博客 <https://spaces.ac.cn/category/Big-Data>`_
+#. `廖雪峰的官方网站 <https://liaoxuefeng.com>`_
+#. https://blog.yossarian.net/archive
+#. https://medium.com/polo-club-of-data-science
+#. https://arthurchiao.art/articles-zh/
+#. `阮一峰的网络日志 <http://www.ruanyifeng.com/blog/>`_
+#. https://areweloongyet.com/newsletter
 
 编程语言
 ------------------------------------------------
@@ -17,6 +37,7 @@
 
 #. `解析内存中的高性能图结构 <https://www.cnblogs.com/nebulagraph/p/17385501.html>`_
 #. `Bit Twiddling Hacks <https://graphics.stanford.edu/~seander/bithacks.html>`_
+#. `大语言模型 <https://llmbook-zh.github.io>`_
 
 CPU
 ------------------------------------------------
