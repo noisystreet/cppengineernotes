@@ -8,7 +8,6 @@ Tensorflow使用手册
 + 使用pip安装tensorflow（tf2之后cpu gpu包名一样），如：
 
 .. code-block:: bash
-    :linenos:
 
     pip install tensorflow==2.6.0
 

@@ -14,6 +14,16 @@ Python重要标准库
 
 python -m site
 
++ `Python's many command-line utilities <https://www.pythonmorsels.com/cli-tools/>`_
+
+
+Python重要工具
+------------------------------------------------
+
+包管理器：https://github.com/astral-sh/uv
+代码格式化：
+
+
 Python深入理解
 ------------------------------------------------
 
