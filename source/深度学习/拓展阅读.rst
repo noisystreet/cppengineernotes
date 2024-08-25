@@ -115,3 +115,24 @@ TPU/IPU/NPU
 ------------------------------------------------
 
 + `AI大模型时代的RDMA网络杂谈 <https://zhuanlan.zhihu.com/p/618357812>`_
+
+TVM
+------------------------------------------------
+
+源码：https://github.com/apache/tvm
+
+文档：
+
++ https://tvm.apache.org/docs/
++ https://daobook.github.io/tvm/docs/tutorial/index.html
++ TVM设计与架构：Relay Pass，深度学习编译器的高层次优化在做什么
+
+官方的安装说明：https://tvm.apache.org/docs/tutorial/introduction.html#sphx-glr-tutorial-introduction-py
+
+.. code-block:: bash
+    :linenos:
+
+    cd tvm
+    git submodule update --init --recursive
+    mkdir && cmake -DCMAKE_BUILD_TYPE=Release ..
+    make && make install
