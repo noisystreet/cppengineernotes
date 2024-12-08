@@ -13,6 +13,7 @@ c++编译器
 
 gcc参考：
 
++ `Diving into GCC internals <https://gcc-newbies-guide.readthedocs.io/en/latest/diving-into-gcc-internals.html>`_
 + `mingw <https://nuwen.net/mingw.html>`_
 + `x86 Built-in Functions <https://gcc.gnu.org/onlinedocs/gcc/x86-Built-in-Functions.html>`_
 + `Using Vector Instructions through Built-in Functions <https://gcc.gnu.org/onlinedocs/gcc/Vector-Extensions.html>`_

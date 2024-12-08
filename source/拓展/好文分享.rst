@@ -65,6 +65,7 @@ GPU
 #. `NVIDIA Tensor Core Programming <https://leimao.github.io/blog/NVIDIA-Tensor-Core-Programming/>`_
 #. `NVIDIA GPU Architecture: from Pascal to Turing to Ampere <https://wolfadvancedtechnology.com/articles/nvidia-gpu-architecture>`_
 #. https://www.hc32.hotchips.org/
+#. `From bare metal to a 70B model: infrastructure set-up and scripts <https://imbue.com/research/70b-infrastructure/>`_
 
 PCIE
 ------------------------------------------------

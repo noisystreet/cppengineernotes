@@ -164,3 +164,4 @@ EMA
 
 + https://www.deeplearningbook.org/
 + https://ml-cheatsheet.readthedocs.io/en/latest/
++ `How does cosine similarity work? <https://tomhazledine.com/cosine-similarity/>`_

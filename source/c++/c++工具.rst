@@ -332,7 +332,7 @@ https://zhuanlan.zhihu.com/p/336922639
 ````````````````````````````````````````````````
 
 #. https://www.sourceware.org/gdb/current/onlinedocs/gdb.html
-#. https://opensource.apple.com/source/gdb/gdb-325/doc/gdb.html/gdb_10.html
+#. `100个GDB小技巧 <https://wizardforcel.gitbooks.io/100-gdb-tips/content/index.html>`_
 #. https://hiberabyss.github.io/2018/04/04/gdb-internal/http://note.iawen.com/note/programming/gdb_ptrace
 #. `debugging with gdb <https://sourceware.org/gdb/current/onlinedocs/gdb/>`_
 
