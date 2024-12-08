@@ -1,0 +1,515 @@
+高性能计算
+===============
+
+概述
+------------------------------------------------
+
+常见的并行问题
+------------------------------------------------
+
+Berkely总结的七个并行问题（七个小矮人）：(The Landscape of Parallel Computing Research_A View from Berkeley)
+
+类别	例子
+
++ 稠密线性代数	GEMM
++ 稀疏线性代数	SpMV
++ 谱方法	FFT
++ N-Body	Barnes-Hut,FMM
++ 结构网格	LBM
++ 非结构网格	Abaqus,Fluent
++ 蒙特卡罗	QMC
+
+
+性能分析
+------------------------------------------------
+
+性能的基本评价指标：带宽和时延
+
+
+系统的缓存的带宽可以用cpu-x软件来查看，如下图，数据与上面介绍文档基本相符。
+
+
+BabelStream带宽测试
+源码：https://github.com/UoB-HPC/BabelStream
+编译：
+
+.. code-block:: bash
+
+    mkdir build && cd build
+    #openMP版本
+    cmake -DCMAKE_BUILD_TYPE=Release -DMODEL=omp .. && make
+    #CUDA版本
+    cmake -DCMAKE_BUILD_TYPE=Release -DMODEL=cuda -DCMAKE_CUDA_COMPILER=$(which nvcc) -DCUDA_ARCH=sm_75 .. && make
+    #openCL版本
+    cmake -DCMAKE_BUILD_TYPE=Release -DOpenCL_LIBRARY=/usr/local/cuda/targets/x86_64-linux/lib/libOpenCL.so -DMODEL=ocl .. && make
+    #std-ranges版本
+    cmake -DCMAKE_BUILD_TYPE=Release -DMODEL=std-ranges .. && make
+    #openACC版本
+    cmake -DCMAKE_BUILD_TYPE=Release -DMODEL=acc .. && make
+
+在GPU上进行测试，CUDA和openCL版本带宽是openMP、openAcc和std-ranges的10倍以上。
+
+.. code-block:: bash
+
+    #编译
+    cmake -DCMAKE_BUILD_TYPE=Release -DMODEL=cuda -DCMAKE_CUDA_COMPILER=$(which nvcc) -DCUDA_ARCH=sm_86 .. && make
+    #执行
+    ./cuda-stream --arraysize 52428800
+    BabelStream
+    Version: 4.0
+    Implementation: CUDA
+    Running kernels 100 times
+    Precision: double
+    Array size: 419.4 MB (=0.4 GB)
+    Total size: 1258.3 MB (=1.3 GB)
+    Using CUDA device NVIDIA RTX A4000
+    Driver: 12000
+    Function    MBytes/sec  Min (sec)   Max         Average     
+    Copy        393526.517  0.00213     0.00215     0.00214     
+    Mul         392984.139  0.00213     0.00215     0.00214     
+    Add         394098.781  0.00319     0.00321     0.00320     
+    Triad       393900.772  0.00319     0.00322     0.00320     
+    Dot         403482.745  0.00208     0.00209     0.00209
+
+浮点算力测试：https://github.com/pigirons/cpufp
+
+输出示例：
+
+.. code-block:: bash
+
+    ./cpufp --thread_pool=[0-39]
+    Number Threads: 40
+    Thread Pool Binding: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+    --------------------------------------------------
+    | Instruction Set | Data Type | Peak Performance |
+    | AVX512F         | FP32      | 4088.3 GFLOPS    |
+    | AVX512F         | FP64      | 2043.7 GFLOPS    |
+    | FMA             | FP32      | 2043.2 GFLOPS    |
+    | FMA             | FP64      | 1021.4 GFLOPS    |
+    | AVX             | FP32      | 1021.5 GFLOPS    |
+    | AVX             | FP64      | 511.2 GFLOPS     |
+    | SSE             | FP32      | 255.57 GFLOPS    |
+    | SSE             | FP64      | 127.79 GFLOPS    |
+    --------------------------------------------------
+
+TOPDOWN性能模型：Top-down Microarchitecture Analysis Method
+关于访存时间的介绍https://cvw.cac.cornell.edu/codeopt/memtimes
+
+
+性能优化
+------------------------------------------------
+
+5步法：建立基准->进行测试->确定瓶颈->进行优化->验证确认
+
+概述
+`````````````````````````````````````````````````
+
+性能优化已经逐渐发展成软件工程的一个分支：软件性能工程。
+
+局部性原理：各类优化的基石
+
+基本思路：去掉无用部分，加速低效部分
+
+可优化的层次：硬件（CPU，内存，硬盘，网络）,操作系统，编译器，运行时库，源程序，高性能编程语言，程序架构。
+
++ 性能建模：IPC，带宽，缓存利用率，向量化比例。Top-Down性能模型。
++ 性能分析：IO bound,CPU bound, memory bound
++ 性能优化：memory 访问次数, 顺序访问/随机访问, cpu cache line 大小
+
+编译优化
+`````````````````````````````````````````````````
+
++ 自动向量化
++ gcc openmp/openacc卸载
++ 内联函数
++ 去除无用空指针检查
++ 优化虚函数调用为实际函数调用
++ 对齐函数地址
++ 针对特定硬件平台进行优化-march=native
+
+memory bound型程序
+`````````````````````````````````````````````````
+
+由于目前CPU的速度比内存速度快很多，一大部分程序都是memory bound型。需要进行访存优化，主要思路有：
+
++ 减少内存读写次数：循环展开与合并，减少内存拷贝。
++ 通过调整数据结构，按顺序存储和访问数据：如矩阵乘中交换循环顺序
++ 缓存行对齐等等。改善缓存命中率
++ 指令优化：SIMD
++ 使用了ECC的内存，采用DDR带宽对齐
+
+参考：
+
+`漫谈高性能计算与性能优化：访存 <https://zhuanlan.zhihu.com/p/600489819>`_
+
+SIMD指令
+------------------------------------------------
+
+现代编译器（如gcc和icc）可以在一定程度上对程序自动进行向量化，但对于性能有很高要求的场景，往往还需要进行手工优化，SIMD指令一般有两种使用方式：内联汇编和使用编译器提供的intrinsics函数。
+
+x86_64的AVX2和AVX512指令
+`````````````````````````````````````````````````
+
+查看AVX2和AVX512指令支持情况：
+
+.. code-block:: bash
+
+    cpuid -1|grep AVX2
+    cpuid -1|grep AVX512
+
+AVX512系列指令说明：
+
++ ``AVX512F`` : AVX-512 foundation instructions
++ ``AVX512DQ`` : double & quadword instructions
++ ``AVX512IFMA`` : fused multiply add
++ ``AVX512PF`` : prefetch instructions 
++ ``AVX512ER`` : exponent & reciprocal instrs
++ ``AVX512CD`` : conflict detection instrs 
++ ``AVX512BW`` : byte & word instructions
++ ``AVX512VL`` : vector length 
++ ``AVX512VBMI`` : vector byte manipulation
++ ``AVX512_VBMI2`` : byte VPCOMPRESS, VPEXPAND 
++ ``AVX512_VNNI`` : neural network instructions
++ ``AVX512_BITALG`` : bit count/shiffle
++ ``AVX512`` : VPOPCNTDQ instruction 
++ ``AVX512_4VNNIW`` : neural network instrs
++ ``AVX512_4FMAPS`` : multiply acc single prec 
++ ``AVX512_VP2INTERSECT`` : intersect mask regs
++ ``AVX512_FP16`` : fp16 support
+
+
+AVX指令的封装：intrinsics
+
+
+avx2程序示例：
+
+.. code-block:: c++
+    :linenos:
+
+    #include <immintrin.h> // 包含AVX2 intrinsic函数的头文件
+    #include <iostream>
+    #include <vector>
+    #include <chrono>
+
+    // 定义数组大小，必须是8的倍数以适应__m256寄存器（每个寄存器可以容纳8个float）
+    const size_t N=1024*100000;
+
+    void avx2_add(float* c,float* a,float* b,size_t N) {
+        // AVX2 加法操作
+        for (auto i = 0; i < N; i += 8) { // 每次处理8个元素
+            // 加载8个浮点数到AVX2寄存器中
+            __m256 vec_a = _mm256_loadu_ps(&a[i]);
+            __m256 vec_b = _mm256_loadu_ps(&b[i]);
+
+            // 执行向量加法
+            __m256 vec_c = _mm256_add_ps(vec_a, vec_b);
+
+            // 将结果保存回数组c
+            _mm256_storeu_ps(&c[i], vec_c);
+        }
+    }
+
+    int main() {
+        // 初始化输入数组
+        std::vector<float> a(N), b(N),c(N,0);
+        // 填充数组a和b，这里简单地用索引值填充
+        for (size_t i = 0; i < N; ++i) {
+            a[i] = static_cast<float>(i);
+            b[i] = static_cast<float>(N - i);
+        }
+
+        auto t1=std::chrono::high_resolution_clock::now();
+
+        avx2_add(c.data(),a.data(),b.data(),N);
+        //for(auto i=0;i<N;i++) {
+        //    c[i]=a[i]+b[i];
+        //}
+
+        auto t2=std::chrono::high_resolution_clock::now();
+        auto dt=std::chrono::duration_cast<std::chrono::microseconds>(t2-t1).count();
+        std::cout<<"N="<<N<<"\tdt/us="<<dt<<std::endl;
+
+        // 验证结果正确性
+        bool success = true;
+        for (size_t i = 0; i < N; ++i) {
+            if (std::abs(c[i] - (a[i] + b[i])) > 1e-5f) { // 浮点数比较需要一定的容差
+                std::cout << "Error at index " << i << ": " << c[i] << " != " << a[i] + b[i] << std::endl;
+                success = false;
+                break;
+            }
+        }
+
+        if (success) {
+            std::cout << "All elements were successfully added!" << std::endl;
+        }
+        else {
+            std::cout<<"failed !!"<<std::endl;
+        }
+
+        return 0;
+    }
+
+编译命令：
+
+.. code-block:: bash
+
+    g++ -mavx2 main.cpp -o a.out
+
+
+参考：
+
+https://chryswoods.com/vector_c++/immintrin.html
+
+ARM的NEON/SVE/SVE2指令
+`````````````````````````````````````````````````
+
+OpenMP
+------------------------------------------------
+
+OpenMP是一种基于共享内存的并行编程模型，通过在串行程序中添加制导语句实现并行，一般格式：
+
+注意：OpenMP中变量默认为shared，因此第一个程序中的j是shared；在并行for循环中紧临parallel for 语句的循环变量是私有的，因此i是私有的；并行区域代码块里的声明的变量是私有的，所有通过private，firstprivate，lastprivate和reduction子句声明的变量为私有变量
+
+主要导语
+`````````````````````````````````````````````````
+
++ ``atomic`` 内存位置将会原子更新（Specifies that a memory location that will be updated atomically.）
++ ``barrier`` 线程在此等待，直到所有线程都运行到此barrier。用来同步所有线程。
++ ``critical`` 其后的代码块为临界区，任意时刻只能被一个线程运行。
++ ``flush`` 所有线程对所有共享对象具有相同的内存视图（view of memory）
++ ``for`` 用在for循环之前，把for循环并行化由多个线程执行。循环变量只能是整型
++ ``master`` 指定由主线程来运行接下来的程序。
++ ``ordered`` 指定在接下来的代码块中，被并行化的 for循环将依序运行（sequential loop）
++ ``parallel`` 代表接下来的代码块将被多个线程并行各执行一遍。
++ ``sections`` 将接下来的代码块包含将被并行执行的section块。
++ ``single`` 之后的程序将只会在一个线程（未必是主线程）中被执行，不会被并行执行。
++ ``threadprivate``	指定一个变量是线程局部存储（thread local storage）
+
+主要从句
+`````````````````````````````````````````````````
+
++ ``copyin`` 让threadprivate的变量的值和主线程的值相同。
++ ``copyprivate`` 不同线程中的变量在所有线程中共享。
++ ``default`` Specifies the behavior of unscoped variables in a parallel region.
++ ``firstprivate`` 对于线程局部存储的变量，其初值是进入并行区之前的值。
++ ``if`` 判断条件，可用来决定是否要并行化。
++ ``lastprivate`` 在一个循环并行执行结束后，指定变量的值为循环体在顺序最后一次执行时获取的值，或者#pragma sections在中，按文本顺序最后一个section中执行获取的值。
++ ``nowait`` 忽略barrier的同步等待。
++ ``num_threads`` 设置线程数量的数量。默认值为当前计算机硬件支持的最大并发数。一般就是CPU的核数目。超线程被操作系统视为独立的CPU内核。
++ ``ordered`` 使用于 for，可以在将循环并行化的时候，将程序中有标记 directive ordered 的部分依序运行。
++ ``private`` 指定变量为线程局部存储。
++ ``reduction`` Specifies that one or more variables that are private to each thread are the subject of a  reduction operation at the end of the parallel region.
++ ``shared`` 指定变量为所有线程共享
++ ``schedule`` 设置for循环的并行化方法；有 dynamic、guided、runtime、static 四种方法。
+    schedule(static, chunk_size) 把chunk_size数目的循环体的执行，静态依序指定给各线程。
+    schedule(dynamic, chunk_size) 把循环体的执行按照chunk_size（缺省值为1）分为若干组（即chunk），每个等待的线程获得当前一组去执行，执行完后重新等待分配新的组。
+    schedule(guided, chunk_size) 把循环体的执行分组，分配给等待执行的线程。最初的组中的循环体执行数目较大，然后逐渐按指数方式下降到chunk_size。
+    schedule(runtime) 循环的并行化方式不在编译时静态确定，而是根据环境变量OMP_SCHEDULE 在程序执行时动态决定。
+
+库函数
+`````````````````````````````````````````````````
+
+OpenMP定义了20多个库函数，常用的有：  
+
+``void omp_set_num_threads(int _Num_threads);`` 
+
+在后续并行区域设置线程数，此调用只影响调用线程所遇到的同一级或内部嵌套级别的后续并行区域.说明：此函数只能在串行代码部分调用. 
+
+``int omp_get_num_threads(void);`` 
+
+返回当前线程数目.说明：如果在串行代码中调用此函数，返回值为1. 
+
+``int omp_get_max_threads(void);`` 
+
+如果在程序中此处遇到未使用 num_threads() 子句指定的活动并行区域,则返回程序的最大可用线程数量.说明：可以在串行或并行区域调用，通常这个最大数量由omp_set_num_threads()或OMP_NUM_THREADS环境变量决定. 
+
+``int omp_get_thread_num(void);`` 
+
+返回当前线程id.id从1开始顺序编号,主线程id是0. 
+
+``int omp_get_num_procs(void);`` 
+
+返回程序可用的处理器数. 
+
+``void omp_set_dynamic(int _Dynamic_threads);`` 
+
+启用或禁用可用线程数的动态调整.(缺省情况下启用动态调整.)此调用只影响调用线程所遇到的同一级或内部嵌套级别的后续并行区域.如果 _Dynamic_threads 的值为非零值,启用动态调整;否则,禁用动态调整. 
+
+``int omp_get_dynamic(void);`` 
+
+查询此处是否启用了动态线程调整.启用了动态线程调整时返回非零值;否则,返回零值. 
+
+``int omp_in_parallel(void);`` 
+
+查询线程是否在并行区域的动态范围内执行.如果在活动并行区域的动态范围内调用,则返回非零值;否则,返回零值.活动并行区域是指 IF 子句求值为 TRUE 的并行区域. 
+
+``void omp_set_nested(int _Nested);`` 
+
+启用或禁用嵌套并行操作.此调用只影响调用线程所遇到的同一级或内部嵌套级别的后续并行区域._Nested 的值为非零值时启用嵌套并行操作;否则,禁用嵌套并行操作.缺省情况下,禁用嵌套并行操作. 
+
+``int omp_get_nested(void);`` 
+
+确定在程序中此处是否启用了嵌套并行操作.启用嵌套并行操作时返回非零值;否则,返回零值. 
+互斥锁操作 嵌套锁操作 功能 
+
+``void omp_init_lock(omp_lock_t * _Lock);``  
+
+``void omp_init_nest_lock(omp_nest_lock_t * _Lock);`` 
+
+初始化一个（嵌套）互斥锁. 
+
+``void omp_destroy_lock(omp_lock_t * _Lock);``  
+
+``void omp_destroy_nest_lock(omp_nest_lock_t * _Lock);`` 
+
+结束一个（嵌套）互斥锁的使用并释放内存. 
+
+``void omp_set_lock(omp_lock_t * _Lock);`` 
+
+``void omp_set_nest_lock(omp_nest_lock_t * _Lock);`` 
+
+获得一个（嵌套）互斥锁. 
+
+``void omp_unset_lock(omp_lock_t * _Lock);`` 
+
+``void omp_unset_nest_lock(omp_nest_lock_t * _Lock);`` 
+
+释放一个（嵌套）互斥锁. 
+
+``int omp_test_lock(omp_lock_t * _Lock);`` 
+
+``int omp_test_nest_lock(omp_nest_lock_t * _Lock);`` 
+
+试图获得一个（嵌套）互斥锁,并在成功时放回真（true）,失败是返回假（false）. 
+
+``double omp_get_wtime(void);``
+
+获取wall clock time,返回一个double的数,表示从过去的某一时刻经历的时间,一般用于成对出现,进行时间比较. 此函数得到的时间是相对于线程的,也就是每一个线程都有自己的时间. 
+
+``double omp_get_wtick(void);``
+
+得到clock ticks的秒数。
+
+参考
+`````````````````````````````````````````````````
+
+#. https://gcc.gnu.org/onlinedocs/libgomp/
+#. https://www.cnblogs.com/Chang-LeHung/category/2236649.html
+#. `OpenMP Environment Variables <https://gcc.gnu.org/onlinedocs/libgomp/Environment-Variables.html>`_
+#. `深入理解 OpenMP 线程同步机制 <https://zhuanlan.zhihu.com/p/600324334>`_
+
+MPI
+------------------------------------------------
+
+MPI是一种基于消息传递接口的多进程并行编程标准，典型实现：intel-MPI, MPICH,OpenMPI
+
+#. openMPI文档：https://www.open-mpi.org/doc/current/
+#. MPICH文档：https://www.mpich.org/static/docs/latest/
+#. 调整Intel MPI 2018中的参数提升通信性能
+
+OpenCL、SYCL和OpenACC
+------------------------------------------------
+
+查看opencl设备信息: ``clinfo``
+
+#. https://www.khronos.org/sycl/
+#. https://developer.codeplay.com/products/computecpp/ce/home/
+#. https://gcc.gnu.org/wiki/OpenACC
+
+常用高性能库
+------------------------------------------------
+
+BLAS
+````````````````````````````````````````````````
+
+简介：*"The BLAS (Basic Linear Algebra Subprograms) are routines that provide  standard building blocks for performing basic vector and matrix  operations. The Level 1 BLAS perform scalar, vector and vector-vector  operations, the Level 2 BLAS perform matrix-vector operations, and the  Level 3 BLAS perform matrix-matrix operations."*
+
+几种著名实现：openBLAS/MKL/cuBLAS/GSL-CBLAS
+
+netlib blas的文档https://netlib.org/blas/
+
+GSL cblas文档：https://www.gnu.org/software/gsl/doc/html/cblas.html
+
+KOKKOS
+````````````````````````````````````````````````
+
+介绍：*"Kokkos Core implements a programming model in C++ for writing performance portable applications targeting all major HPC platforms. For that purpose it provides abstractions for both parallel execution of code and data management. Kokkos is designed to target complex node architectures with N-level memory hierarchies and multiple types of execution resources. It currently can use CUDA, HIP, SYCL, HPX, OpenMP and C++ threads as backend programming models with several other backends in development."*
+
+文档：https://kokkos.github.io/kokkos-core-wiki/
+
+源码：https://github.com/kokkos/kokkos
+
+
+常用编译器组件
+------------------------------------------------
+
+
+intel oneAPI
+````````````````````````````````````````````````
+ubuntu安装方法：
+
+添加key
+
+.. code-block:: bash
+
+    wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
+    sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
+    rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
+
+添加软件源：
+
+.. code-block:: bash
+
+    sudo add-apt-repository "deb https://apt.repos.intel.com/oneapi all main"
+
+安装：
+
+.. code-block:: bash
+
+    sudo apt install intel-basekit intel-hpckit
+
+默认安装路径为/opt/intel/oneapi，执行下面命令即可激活环境变量：
+
+.. code-block:: bash
+
+    source /opt/intel/oneapi/setvars.sh
+
+其中包含了icc,intel mpi, vtune, TBB, mkl等等多个组件。
+
+安装oneAPI DNN包：
+
+.. code-block:: bash
+
+    sudo apt install libdnnl-dev libdnnl2
+
+nvidia hpc sdk
+````````````````````````````````````````````````
+
+包含了nvc/nvc++/nvfortran，OpenAcc,OpenMP,NCCL，CUDA，cuBLAS,nsight等等
+
+安装：https://developer.nvidia.com/nvidia-hpc-sdk-downloads
+
+.. code-block:: bash
+
+    echo 'deb [trusted=yes] https://developer.download.nvidia.com/hpc-sdk/ubuntu/amd64 /' | sudo tee /etc/apt/sources.list.d/nvhpc.list 
+    sudo apt update -y $ sudo apt install -y nvhpc-2024
+
+文档：https://docs.nvidia.com/hpc-sdk/index.html
+
+安装的工具包安装到了/opt/nvidia/hpc_sdk文件夹中，需要设置环境变量，编辑文件~/.bashrc
+加入：
+
+NVCC和NVC++的区别：
+
+*"NVCC is split heterogeneous compiler stack that supports CUDA C++.  NVC++ is a unified heterogeneous HPC compiler that supports C++ OpenACC and GPU-accelerated C++17 Parallel Algorithms. NVCC is not deprecated and NVC++ is not a replacement"*.(https://twitter.com/blelbach/status/1261451857949364224)
+
+
+参考
+------------------------------------------------
+
+#. bornstein conditions
+#. calltree
+#. likwid：https://github.com/RRZE-HPC/likwid
+#. 获取cpu微架构：cat /sys/devices/cpu/caps/pmu_name
+#. 计时函数gettimeofday：https://c-for-dummies.com/blog/?p=4236
+#. Algorithms for Modern Hardware https://en.algorithmica.org/hpc/
