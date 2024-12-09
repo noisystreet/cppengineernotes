@@ -9,15 +9,17 @@
 
 Berkely总结的七个并行问题（七个小矮人）：(The Landscape of Parallel Computing Research_A View from Berkeley)
 
-类别	例子
+.. csv-table:: 七个并行问题
+   :header: "类别", "例子"
+   :widths: 20, 20
 
-+ 稠密线性代数	GEMM
-+ 稀疏线性代数	SpMV
-+ 谱方法	FFT
-+ N-Body	Barnes-Hut,FMM
-+ 结构网格	LBM
-+ 非结构网格	Abaqus,Fluent
-+ 蒙特卡罗	QMC
+   稠密线性代数,GEMM
+   稀疏线性代数,SpMV
+   谱方法,FFT
+   N-Body,Barnes-Hut/FMM
+   结构网格,LBM
+   非结构网格,Abaqus/Fluent
+   蒙特卡罗,QMC
 
 
 性能分析
@@ -26,11 +28,10 @@ Berkely总结的七个并行问题（七个小矮人）：(The Landscape of Para
 性能的基本评价指标：带宽和时延
 
 
-系统的缓存的带宽可以用cpu-x软件来查看，如下图，数据与上面介绍文档基本相符。
+系统的缓存的带宽可以用 ``cpu-x`` 软件来查看。
 
+`BabelStream <https://github.com/UoB-HPC/BabelStream>`_ 带宽测试
 
-BabelStream带宽测试
-源码：https://github.com/UoB-HPC/BabelStream
 编译：
 
 .. code-block:: bash
@@ -47,12 +48,13 @@ BabelStream带宽测试
     #openACC版本
     cmake -DCMAKE_BUILD_TYPE=Release -DMODEL=acc .. && make
 
-在GPU上进行测试，CUDA和openCL版本带宽是openMP、openAcc和std-ranges的10倍以上。
+在 ``GPU`` 上进行测试， ``CUDA`` 和 ``openCL`` 版本带宽是 ``openMP`` 、 ``openAcc`` 和 ``std-ranges`` 的10倍以上。
 
 .. code-block:: bash
 
     #编译
     cmake -DCMAKE_BUILD_TYPE=Release -DMODEL=cuda -DCMAKE_CUDA_COMPILER=$(which nvcc) -DCUDA_ARCH=sm_86 .. && make
+
     #执行
     ./cuda-stream --arraysize 52428800
     BabelStream
@@ -71,7 +73,7 @@ BabelStream带宽测试
     Triad       393900.772  0.00319     0.00322     0.00320     
     Dot         403482.745  0.00208     0.00209     0.00209
 
-浮点算力测试：https://github.com/pigirons/cpufp
+`cpufp <https://github.com/pigirons/cpufp>`_ 浮点算力测试：
 
 输出示例：
 
@@ -92,8 +94,9 @@ BabelStream带宽测试
     | SSE             | FP64      | 127.79 GFLOPS    |
     --------------------------------------------------
 
-TOPDOWN性能模型：Top-down Microarchitecture Analysis Method
-关于访存时间的介绍https://cvw.cac.cornell.edu/codeopt/memtimes
+``Top-Down`` 性能模型：Top-down Microarchitecture Analysis Method
+
+关于访存时间的介绍: https://cvw.cac.cornell.edu/codeopt/memtimes
 
 
 性能优化
@@ -112,7 +115,7 @@ TOPDOWN性能模型：Top-down Microarchitecture Analysis Method
 
 可优化的层次：硬件（CPU，内存，硬盘，网络）,操作系统，编译器，运行时库，源程序，高性能编程语言，程序架构。
 
-+ 性能建模：IPC，带宽，缓存利用率，向量化比例。Top-Down性能模型。
++ 性能建模： ``IPC`` ，带宽，缓存利用率，向量化比例。 ``Top-Down`` 性能模型。
 + 性能分析：IO bound,CPU bound, memory bound
 + 性能优化：memory 访问次数, 顺序访问/随机访问, cpu cache line 大小
 
@@ -145,19 +148,19 @@ memory bound型程序
 SIMD指令
 ------------------------------------------------
 
-现代编译器（如gcc和icc）可以在一定程度上对程序自动进行向量化，但对于性能有很高要求的场景，往往还需要进行手工优化，SIMD指令一般有两种使用方式：内联汇编和使用编译器提供的intrinsics函数。
+现代编译器（如 ``gcc`` 和 ``icc`` ）可以在一定程度上对程序自动进行向量化，但对于性能有很高要求的场景，往往还需要进行手工优化，SIMD指令一般有两种使用方式：内联汇编和使用编译器提供的 ``intrinsics`` 函数。
 
-x86_64的AVX2和AVX512指令
+``x86_64`` 的 ``AVX2`` 和 ``AVX512`` 指令
 `````````````````````````````````````````````````
 
-查看AVX2和AVX512指令支持情况：
+查看 ``AVX2`` 和 ``AVX512`` 指令支持情况：
 
 .. code-block:: bash
 
     cpuid -1|grep AVX2
     cpuid -1|grep AVX512
 
-AVX512系列指令说明：
+``AVX512`` 系列指令说明：
 
 + ``AVX512F`` : AVX-512 foundation instructions
 + ``AVX512DQ`` : double & quadword instructions
@@ -181,7 +184,7 @@ AVX512系列指令说明：
 AVX指令的封装：intrinsics
 
 
-avx2程序示例：
+``AVX2`` 程序示例：
 
 .. code-block:: c++
     :linenos:
@@ -260,8 +263,10 @@ avx2程序示例：
 
 https://chryswoods.com/vector_c++/immintrin.html
 
-ARM的NEON/SVE/SVE2指令
+ARM的 ``NEON`` / ``SVE`` / ``SVE2`` 指令
 `````````````````````````````````````````````````
+
+`Arm Neon Intrinsics Reference <https://arm-software.github.io/acle/neon_intrinsics/advsimd.html>`_
 
 OpenMP
 ------------------------------------------------
@@ -296,15 +301,15 @@ OpenMP是一种基于共享内存的并行编程模型，通过在串行程序�
 + ``lastprivate`` 在一个循环并行执行结束后，指定变量的值为循环体在顺序最后一次执行时获取的值，或者#pragma sections在中，按文本顺序最后一个section中执行获取的值。
 + ``nowait`` 忽略barrier的同步等待。
 + ``num_threads`` 设置线程数量的数量。默认值为当前计算机硬件支持的最大并发数。一般就是CPU的核数目。超线程被操作系统视为独立的CPU内核。
-+ ``ordered`` 使用于 for，可以在将循环并行化的时候，将程序中有标记 directive ordered 的部分依序运行。
++ ``ordered`` 使用于for，可以在将循环并行化的时候，将程序中有标记 directive ordered 的部分依序运行。
 + ``private`` 指定变量为线程局部存储。
 + ``reduction`` Specifies that one or more variables that are private to each thread are the subject of a  reduction operation at the end of the parallel region.
 + ``shared`` 指定变量为所有线程共享
-+ ``schedule`` 设置for循环的并行化方法；有 dynamic、guided、runtime、static 四种方法。
-    schedule(static, chunk_size) 把chunk_size数目的循环体的执行，静态依序指定给各线程。
-    schedule(dynamic, chunk_size) 把循环体的执行按照chunk_size（缺省值为1）分为若干组（即chunk），每个等待的线程获得当前一组去执行，执行完后重新等待分配新的组。
-    schedule(guided, chunk_size) 把循环体的执行分组，分配给等待执行的线程。最初的组中的循环体执行数目较大，然后逐渐按指数方式下降到chunk_size。
-    schedule(runtime) 循环的并行化方式不在编译时静态确定，而是根据环境变量OMP_SCHEDULE 在程序执行时动态决定。
++ ``schedule`` 设置for循环的并行化方法；有 ``dynamic`` 、 ``guided`` 、 ``runtime`` 、 ``static`` 四种方法。
+    ``schedule(static, chunk_size)`` 把chunk_size数目的循环体的执行，静态依序指定给各线程。
+    ``schedule(dynamic, chunk_size)`` 把循环体的执行按照chunk_size（缺省值为1）分为若干组（即chunk），每个等待的线程获得当前一组去执行，执行完后重新等待分配新的组。
+    ``schedule(guided, chunk_size)`` 把循环体的执行分组，分配给等待执行的线程。最初的组中的循环体执行数目较大，然后逐渐按指数方式下降到chunk_size。
+    ``schedule(runtime)`` 循环的并行化方式不在编译时静态确定，而是根据环境变量OMP_SCHEDULE 在程序执行时动态决定。
 
 库函数
 `````````````````````````````````````````````````
@@ -430,14 +435,12 @@ netlib blas的文档https://netlib.org/blas/
 
 GSL cblas文档：https://www.gnu.org/software/gsl/doc/html/cblas.html
 
-KOKKOS
+`KOKKOS <https://github.com/kokkos/kokkos>`_
 ````````````````````````````````````````````````
 
 介绍：*"Kokkos Core implements a programming model in C++ for writing performance portable applications targeting all major HPC platforms. For that purpose it provides abstractions for both parallel execution of code and data management. Kokkos is designed to target complex node architectures with N-level memory hierarchies and multiple types of execution resources. It currently can use CUDA, HIP, SYCL, HPX, OpenMP and C++ threads as backend programming models with several other backends in development."*
 
 文档：https://kokkos.github.io/kokkos-core-wiki/
-
-源码：https://github.com/kokkos/kokkos
 
 
 常用编译器组件
@@ -508,8 +511,8 @@ NVCC和NVC++的区别：
 ------------------------------------------------
 
 #. bornstein conditions
-#. calltree
-#. likwid：https://github.com/RRZE-HPC/likwid
+#. `calltree <https://github.com/xunknown/calltree>`_
+#. `likwid <https://github.com/RRZE-HPC/likwid>`_
 #. 获取cpu微架构：cat /sys/devices/cpu/caps/pmu_name
-#. 计时函数gettimeofday：https://c-for-dummies.com/blog/?p=4236
-#. Algorithms for Modern Hardware https://en.algorithmica.org/hpc/
+#. `gettimeofday <https://c-for-dummies.com/blog/?p=4236>`_
+#. `Algorithms for Modern Hardware <https://en.algorithmica.org/hpc>`_ 
