@@ -143,7 +143,10 @@ memory bound型程序
 
 参考：
 
-`漫谈高性能计算与性能优化：访存 <https://zhuanlan.zhihu.com/p/600489819>`_
+#. `漫谈高性能计算与性能优化：访存 <https://zhuanlan.zhihu.com/p/600489819>`_
+#. `局部性原理——各类优化的基石 <https://aijishu.com/a/1060000000003348>`_
+#. `性能之巅：定位和优化程序CPU、内存、IO瓶颈 <https://segmentfault.com/a/1190000038426605>`_
+#. `多图详解！10大高性能开发核心技术 <https://www.cnblogs.com/xuanyuan/p/13524351.html>`_
 
 SIMD指令
 ------------------------------------------------
@@ -259,14 +262,19 @@ AVX指令的封装：intrinsics
     g++ -mavx2 main.cpp -o a.out
 
 
-参考：
-
-https://chryswoods.com/vector_c++/immintrin.html
-
 ARM的 ``NEON`` / ``SVE`` / ``SVE2`` 指令
 `````````````````````````````````````````````````
 
-`Arm Neon Intrinsics Reference <https://arm-software.github.io/acle/neon_intrinsics/advsimd.html>`_
+参考：
+
+#. https://chryswoods.com/vector_c++/immintrin.html
+#. `PC平台主要SIMD扩展发展简史 <https://www.cnblogs.com/TaigaCon/p/7835340.html>`_
+#. `Intel® Intrinsics Guide <https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#>`_
+#. `AVX: Advanced Vector Extensions <https://www.cs.uaf.edu/courses/cs441/notes/avx/index.html>`_
+#. `Gathering Intel on Intel AVX-512 Transitions <https://travisdowns.github.io/blog/2020/01/17/avxfreq1.html>`_
+#. `RISC-V Vector Extension overview <http://0x80.pl/notesen/2024-11-09-riscv-vector-extension.html>`_
+#. `Arm Neon Intrinsics Reference <https://arm-software.github.io/acle/neon_intrinsics/advsimd.html>`_
+#. `Unofficial LoongArch Intrinsics Guide <https://jia.je/unofficial-loongarch-intrinsics-guide/>`_
 
 OpenMP
 ------------------------------------------------
