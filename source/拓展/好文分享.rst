@@ -4,28 +4,27 @@
 技术博客
 ------------------------------------------------
 
-#. https://blog.yossarian.net/archive
-#. https://timdettmers.com/
-#. https://manateelazycat.github.io/
-#. https://blog.codingnow.com/
-#. https://timdettmers.com/
-#. https://pythoncat.top/archive
-#. https://jia.je/
+#. `Tim Dettmers <https://timdettmers.com>`_
+#. `benfrederickson <https://www.benfrederickson.com/blog/>`_
+#. `ManateeLazyCat <https://manateelazycat.github.io/>`_
+#. `云风的 BLOG <https://blog.codingnow.com/>`_
+#. `豌豆花下猫 <https://pythoncat.top/archive>`_
+#. `杰哥的{运维，编程，调板子}小笔记 <https://jia.je>`_
 #. https://wu-kan.cn/archive/
-#. https://www.karlrupp.net/blog/
-#. https://www.changping.me/archives/
-#. https://www.stroustrup.com/index.html
-#. https://face2ai.com/program-blog/#GPU%E7%BC%96%E7%A8%8B%EF%BC%88CUDA%EF%BC%89
-#. https://trendingpapers.com
-#. https://matt-rickard.com/
+#. `Karl Rupp <https://www.karlrupp.net/blog>`_
+#. `常平的笔记 <https://www.changping.me/archives>`_
+#. `Bjarne Stroustrup <https://www.stroustrup.com>`_
+#. `谭升的博客 <https://face2ai.com/program-blog/#GPU%E7%BC%96%E7%A8%8B%EF%BC%88CUDA%EF%BC%89>`_
+#. `Today's top trending papers in Computer Science <https://trendingpapers.com>`_
+#. `Matt Rickard <https://matt-rickard.com/archive>`_
 #. https://qiankunli.github.io/
 #. `苏剑林的博客 <https://spaces.ac.cn/category/Big-Data>`_
 #. `廖雪峰的官方网站 <https://liaoxuefeng.com>`_
-#. https://blog.yossarian.net/archive
-#. https://medium.com/polo-club-of-data-science
-#. https://arthurchiao.art/articles-zh/
+#. `ENOSUCHBLOG Programming, philosophy, pedaling. <https://blog.yossarian.net/archive>`_
+#. `Polo Club of Data Science <https://medium.com/polo-club-of-data-science>`_
+#. `ArthurChiao's Blog <https://arthurchiao.art/articles-zh/>`_
 #. `阮一峰的网络日志 <http://www.ruanyifeng.com/blog/>`_
-#. https://areweloongyet.com/newsletter
+#. `每周一龙 <https://areweloongyet.com/newsletter>`_
 
 编程语言
 ------------------------------------------------
@@ -37,6 +36,11 @@
 
 #. `解析内存中的高性能图结构 <https://www.cnblogs.com/nebulagraph/p/17385501.html>`_
 #. `Bit Twiddling Hacks <https://graphics.stanford.edu/~seander/bithacks.html>`_
+#. `三十张图助你看清红黑树的前世今生 <https://www.cnblogs.com/chaotalk/p/13253104.html>`_
+#. `面试官问你 B 树和 B + 树，就把这篇文章丢给他 <https://my.oschina.net/u/4116286/blog/3107389>`_
+#. `KDtree浅谈 <https://www.cnblogs.com/yangsongyi/p/10000756.html>`_
+#. `弗洛伊德（Floyd）算法求图的最短路径 <https://blog.csdn.net/jeffleo/article/details/53349825>`_
+#. `Graph Data Structures in JavaScript for Beginners <https://adrianmejia.com/data-structures-for-beginners-graphs-time-complexity-tutorial/>`_
 #. `大语言模型 <https://llmbook-zh.github.io>`_
 
 CPU
@@ -45,9 +49,14 @@ CPU
 #. `Intel CPU Brand Letters & Nomenclature Explained <https://www.dignited.com/99881/intel-cpu-brand-letters-nomenclature-explained/>`_
 #. `AArch64 SoC features <https://marcin.juszkiewicz.com.pl/download/tables/arm-socs.html>`_
 #. `Technical Overview Of The 4th Gen Intel® Xeon® Scalable processor family <https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html>`_
-#. `DDR 探密一：从电容鼓到 DDR，内存技术进化史 <https://zhuanlan.zhihu.com/p/663690992>`_
 #. `All SPEC CPU2017 Results Published by SPEC <https://www.spec.org/cpu2017/results/cpu2017.html>`_
 #. `How To Make A CPU - A Simple Picture Based Explanation <https://blog.robertelder.org/how-to-make-a-cpu/>`_
+
+内存
+------------------------------------------------
+
+#. `DDR 探密一：从电容鼓到 DDR，内存技术进化史 <https://zhuanlan.zhihu.com/p/663690992>`_
+#. `Memory Banking in Microprocessor <https://www.geeksforgeeks.org/memory-banking-in-microprocessor/>`_
 
 GPU
 ------------------------------------------------

@@ -410,6 +410,7 @@ OpenMP定义了20多个库函数，常用的有：
 #. https://www.cnblogs.com/Chang-LeHung/category/2236649.html
 #. `OpenMP Environment Variables <https://gcc.gnu.org/onlinedocs/libgomp/Environment-Variables.html>`_
 #. `深入理解 OpenMP 线程同步机制 <https://zhuanlan.zhihu.com/p/600324334>`_
+#. `OpenMP Little Book <https://nanxiao.gitbooks.io/openmp-little-book/content/>`_
 
 MPI
 ------------------------------------------------
@@ -419,6 +420,8 @@ MPI是一种基于消息传递接口的多进程并行编程标准，典型实�
 #. openMPI文档：https://www.open-mpi.org/doc/current/
 #. MPICH文档：https://www.mpich.org/static/docs/latest/
 #. 调整Intel MPI 2018中的参数提升通信性能
+#. https://www.open-mpi.org/faq/?category=perftools
+#. https://mpi4py.readthedocs.io/en/stable/
 
 OpenCL、SYCL和OpenACC
 ------------------------------------------------
@@ -439,7 +442,7 @@ BLAS
 
 几种著名实现：openBLAS/MKL/cuBLAS/GSL-CBLAS
 
-netlib blas的文档https://netlib.org/blas/
+netlib blas的文档: https://netlib.org/blas/
 
 GSL cblas文档：https://www.gnu.org/software/gsl/doc/html/cblas.html
 
@@ -521,6 +524,6 @@ NVCC和NVC++的区别：
 #. bornstein conditions
 #. `calltree <https://github.com/xunknown/calltree>`_
 #. `likwid <https://github.com/RRZE-HPC/likwid>`_
-#. 获取cpu微架构：cat /sys/devices/cpu/caps/pmu_name
 #. `gettimeofday <https://c-for-dummies.com/blog/?p=4236>`_
-#. `Algorithms for Modern Hardware <https://en.algorithmica.org/hpc>`_ 
+#. `Algorithms for Modern Hardware <https://en.algorithmica.org/hpc>`_
+#. `Technical Resources <https://www.openhackathons.org/s/technical-resources>`_

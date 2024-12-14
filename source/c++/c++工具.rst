@@ -335,6 +335,7 @@ https://zhuanlan.zhihu.com/p/336922639
 #. `100个GDB小技巧 <https://wizardforcel.gitbooks.io/100-gdb-tips/content/index.html>`_
 #. https://hiberabyss.github.io/2018/04/04/gdb-internal/http://note.iawen.com/note/programming/gdb_ptrace
 #. `debugging with gdb <https://sourceware.org/gdb/current/onlinedocs/gdb/>`_
+#. https://sourceware.org/gdb/current/onlinedocs/gdb.html/Process-Record-and-Replay.html
 
 
 程序执行流程分析：uftrace
@@ -515,6 +516,7 @@ systemtap
 #. https://sourceware.org/systemtap/wiki
 #. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/5/html/systemtap_beginners_guide/index
 #. https://www.codedump.info/post/20200128-systemtap-by-example/
+#. https://github.com/gperftools/gperftools
 
 内存分析：valgrind
 ------------------------------------------------
