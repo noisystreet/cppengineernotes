@@ -12,6 +12,22 @@
 
     cat /sys/devices/cpu/caps/pmu_name
 
+系统编程
+------------------------------------------------
+
+参考：
+
+#. `X64 system call <https://x64.syscall.sh/>`_
+#. `Evolution of the ELF object file format <https://maskray.me/blog/2024-05-26-evolution-of-elf-object-file-format>`_
+#. `The ELF format - how programs look from the inside <https://www.caichinger.com/elf.html>`_
+#. `How programs get run: ELF binaries <https://lwn.net/Articles/631631/>`_
+#. `Load and execute an ELF in user mode in Linux <https://www.mgaillard.fr/2021/04/15/load-elf-user-mode.html>`_
+#. `The 101 of ELF files on Linux: Understanding and Analysis <https://linux-audit.com/elf-binaries-on-linux-understanding-and-analysis/>`_
+#. `What is the Difference Between System Call and Function Call <https://pediaa.com/what-is-the-difference-between-system-call-and-function-call/>`_
+#. `PatchELF 修改linux下elf文件library搜索路径 <https://blog.csdn.net/force_eagle/article/details/48263365>`_
+#. `动态链接与rpath <http://shibing.github.io/2016/08/20/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E4%B8%8Erpath/>`_
+#. `深入理解 Linux 物理内存分配全链路实现 <https://www.cnblogs.com/binlovetech/p/17019710.html>`_
+
 
 参考资料
 ------------------------------------------------

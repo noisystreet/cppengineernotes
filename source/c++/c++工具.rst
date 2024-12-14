@@ -124,7 +124,8 @@ profile相关选项：
 参考资料
 ````````````````````````````````````````````````
 
-#. cmake文档 https://cmake.org/cmake/help/latest/guide/tutorial/index.html
+#. `CMake Tutorial <https://cmake.org/cmake/help/latest/guide/tutorial/index.html>`_
+#. `Mastering CMake <https://cmake.org/cmake/help/book/mastering-cmake/>`_
 
 调试：gdb
 ------------------------------------------------

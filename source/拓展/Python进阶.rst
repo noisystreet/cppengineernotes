@@ -209,8 +209,8 @@ ast的可视化：https://ucb-sejits.github.io/ctree-docs/ipythontips.html
 Python 扩展编程
 ------------------------------------------------
 
-#. https://docs.python.org/3/extending/index.html
-#. https://pythonextensionpatterns.readthedocs.io/en/latest/index.html
+#. `Extending and Embedding the Python Interpreter <https://docs.python.org/3/extending/index.html>`_
+#. `Coding Patterns for Python Extensions <https://pythonextensionpatterns.readthedocs.io/en/latest>`_
 
 参考资料
 ------------------------------------------------

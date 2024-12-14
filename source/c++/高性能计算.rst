@@ -96,7 +96,14 @@ Berkely总结的七个并行问题（七个小矮人）：(The Landscape of Para
 
 ``Top-Down`` 性能模型：Top-down Microarchitecture Analysis Method
 
-关于访存时间的介绍: https://cvw.cac.cornell.edu/codeopt/memtimes
+参考：
+
+#. 关于访存时间的介绍: https://cvw.cac.cornell.edu/codeopt/memtimes
+#. `性能优化的正确方向 <https://cloud.tencent.com/developer/article/1005448>`_
+#. `系统性能分析从入门到进阶 <https://my.oschina.net/u/3996014/blog/5510480>`_
+#. `C/C++ 性能优化背后的方法论：TMAM <https://zhuanlan.zhihu.com/p/357699203>`_
+#. `三种Linux性能分析工具的比较 <https://blog.51cto.com/xiamachao/1857696>`_
+#. `COMP 528 Computer Systems Performance Analysis <https://www.cs.rice.edu/~johnmc/comp528/lecture-notes/>`_
 
 
 性能优化
@@ -147,6 +154,8 @@ memory bound型程序
 #. `局部性原理——各类优化的基石 <https://aijishu.com/a/1060000000003348>`_
 #. `性能之巅：定位和优化程序CPU、内存、IO瓶颈 <https://segmentfault.com/a/1190000038426605>`_
 #. `多图详解！10大高性能开发核心技术 <https://www.cnblogs.com/xuanyuan/p/13524351.html>`_
+#. `性能优化篇（1）：几种简单的访存优化手段 <https://blog.csdn.net/wohenfanjian/article/details/103031337>`_
+#. `程序性能优化指南 <https://www.zhihu.com/column/c_1363952443898875904>`_
 
 SIMD指令
 ------------------------------------------------

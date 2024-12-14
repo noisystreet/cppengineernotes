@@ -331,7 +331,8 @@ C++11
 + ``auto_ptr``：c++14已弃用
 
 参考：
-https://iamsorush.com/posts/weak-pointer-cpp/
+#. https://iamsorush.com/posts/weak-pointer-cpp/
+#. `泛化之美--C++11可变模版参数的妙用 <https://www.cnblogs.com/qicosmos/p/4325949.html>`_
 
 
 线程库
@@ -545,6 +546,7 @@ c++设计模式
 参考阅读
 ------------------------------------------------
 #. `C++ FAQ <https://isocpp.org/wiki/faq>`_
+#. `Learn C++ <https://www.learncpp.com/>`_
 #. `cppreference <https://en.cppreference.com/w/>`_
 #. `cplusplus <https://cplusplus.com/reference/>`_
 #. `GCC文档 <https://gcc.gnu.org/onlinedocs/>`_

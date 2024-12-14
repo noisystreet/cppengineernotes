@@ -120,6 +120,11 @@ linux的目录结构
 + ``bg/fg`` 将程序切换到后台/前台执行
 + ``nice`` 调整进程优先级
 
+参考：
+
+#. `Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识 <https://www.cnblogs.com/Chang-LeHung/p/16756461.html>`_
+#. `理解 virt、res、shr 之间的关系（linux 系统篇） <https://my.oschina.net/u/4090830/blog/5577445>`_
+
 用户管理
 ------------------------------------------------
 
