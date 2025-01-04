@@ -677,31 +677,34 @@ Thrust是一个基于CUDA的类似c++STL的库，封装了各种常用的容器�
 空
 
 
-参考文档
+CUDA编程参考文档
 ------------------------------------------------
 
-+ CUDA python https://nvidia.github.io/cuda-python/index.html
-+ https://docs.nvidia.com/deeplearning/performance/
-+ https://docs.nvidia.com/cuda/
-+ https://developer.nvidia.com/blog/?tags=accelerated-computing
-+ https://developer.nvidia.com/cuda-faq
-+ https://developer.nvidia.com/cuda-education-training
-+ https://developer.nvidia.com/gpu-accelerated-libraries
-+ Compiling CUDA with clang https://llvm.org/docs/CompileCudaWithLLVM.html
-+ Rocm https://sep5.readthedocs.io/en/latest/index.html
-+ https://developer.nvidia.com/zh-cn/blog/nvidia-ampere-architecture-in-depth/
-+ GPU 兼容性的那些事 http://wsfdl.com/kubernetes/2019/05/08/versions_in_gpu.html
-+ CUDATutorial https://cuda-tutorial.github.io/index.html
-+ Matching CUDA arch and CUDA gencode for various NVIDIA architectures https://arnon.dk/matching-sm-architectures-arch-and-gencode-for-various-nvidia-cards/
++ `CUDA FAQ <https://developer.nvidia.com/cuda-faq>`_
++ `CUDA Toolkit Documentation <https://docs.nvidia.com/cuda/>`_
++ `CUDA python <https://nvidia.github.io/cuda-python/index.html>`_
++ `NVIDIA Deep Learning Performance <https://docs.nvidia.com/deeplearning/performance/>`_
++ `CUDA Education & Training <https://developer.nvidia.com/cuda-education-training>`_
++ `NVIDIA CUDA-X Libraries <https://developer.nvidia.com/gpu-accelerated-libraries>`_
++ `Compiling CUDA with clang <https://llvm.org/docs/CompileCudaWithLLVM.html>`_
++ `NVIDIA Ampere Architecture In-Depth <https://developer.nvidia.com/zh-cn/blog/nvidia-ampere-architecture-in-depth/>`_
++ `GPU 兼容性的那些事 <http://wsfdl.com/kubernetes/2019/05/08/versions_in_gpu.html>`_
++ `CUDATutorial <https://cuda-tutorial.github.io/index.html>`_
++ `Matching CUDA arch and CUDA gencode for various NVIDIA architectures <https://arnon.dk/matching-sm-architectures-arch-and-gencode-for-various-nvidia-cards/>`_
 + https://carpentries-incubator.github.io/lesson-gpu-programming/
-+ CUDA — Memory Model https://medium.com/analytics-vidhya/cuda-memory-model-823f02cef0bf
-+ GPU Programming http://courses.cms.caltech.edu/cs179/
-+ https://developer.nvidia.com/blog/efficient-matrix-transpose-cuda-cc
++ `CUDA — Memory Model <https://medium.com/analytics-vidhya/cuda-memory-model-823f02cef0bf>`_
++ `GPU Programming <http://courses.cms.caltech.edu/cs179/>`_
++ `An Efficient Matrix Transpose in CUDA C/C++ <https://developer.nvidia.com/blog/efficient-matrix-transpose-cuda-cc>`_
 
 硬件规格说明
 ````````````````````````````````````````````````
-#. H100 https://resources.nvidia.com/en-us-tensor-core/nvidia-tensor-core-gpu-datasheet
-#. A100	https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-us-nvidia-1758950-r4-web.pdf
-#. RTX A4000 https://www.nvidia.com/content/dam/en-zz/Solutions/gtcs21/rtx-a4000/nvidia-rtx-a4000-datasheet.pdf
-#. RTX 3090	https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3090-3090ti/
-#. https://www.techpowerup.com/gpu-specs/geforce-rtx-3090.c3622
+#. `H100 <https://resources.nvidia.com/en-us-tensor-core/nvidia-tensor-core-gpu-datasheet>`_
+#. `A100 <https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-us-nvidia-1758950-r4-web.pdf>`_
+#. `RTX A4000 <https://www.nvidia.com/content/dam/en-zz/Solutions/gtcs21/rtx-a4000/nvidia-rtx-a4000-datasheet.pdf>`_
+#. `RTX 3090 <https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3090-3090ti/>`_
+
+其他
+````````````````````````````````````````````````
+
+#. `Enabling GPUs in the Container Runtime Ecosystem <https://developer.nvidia.com/blog/gpu-containers-runtime/>`_
+#. `Rocm <https://sep5.readthedocs.io/en/latest/index.html>`_

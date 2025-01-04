@@ -553,6 +553,7 @@ c++设计模式
 #. `MSVC C++ Language Reference <https://learn.microsoft.com/en-us/cpp/cpp/cpp-language-reference?view=msvc-170>`_
 #. `SGI-STL实现 <http://www.sgi.com/tech/stl/index.html>`_
 #. `C++重载底层原理 <https://www.cnblogs.com/whiteBear/p/17180339.html>`_
+#. `Barry's C++ blog <https://brevzin.github.io/>`_
 #. `All About Lambda Function in C++(From C++11 to C++20) <http://www.vishalchovatiya.com/learn-lambda-function-in-cpp-with-example/>`_
 #. `CppCoreGuidelines <https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines>`_
 #. `C++ Stories <https://www.cppstories.com/p/start-here/>`_
