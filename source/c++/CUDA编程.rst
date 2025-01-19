@@ -235,7 +235,7 @@ https://pypi.org/search/?q=nvidia
 入门例子
 ------------------------------------------------
 
-从 `https://github.com/NVIDIA/cuda-samples <https://github.com/NVIDIA/cuda-samples>`_ 可以下载cuda的一些例子:
+从 `cuda-samples <https://github.com/NVIDIA/cuda-samples>`_ 可以下载cuda的一些例子:
 
 .. code-block:: bash
 
@@ -244,7 +244,7 @@ https://pypi.org/search/?q=nvidia
     version=v11.8
     git checkout $version && git switch -c $version
     #安装依赖项
-    sudo apt install libopenmpi-dev -y
+    sudo apt install libopenmpi-dev libegl-dev libfreeimage-dev -y
     #编译
     make -j
 
@@ -350,6 +350,28 @@ kernel在调用时必须通过 ``<<<grid, block>>>`` 来指定kernel所使用的
 + `CUDA 深入理解threadIdx <https://www.cnblogs.com/zzzsj/p/14866103.html>`_
 
 CUDA程序和编译
+````````````````````````````````````````````````
+
+编译CUDA程序的cmake文件
+````````````````````````````````````````````````
+假设CUDA程序只包含了头文件和.cu文件，那么可以使用下面的CMakeLists.txt进行构建：
+
+.. code-block:: cmake
+
+    cmake_minimum_required(VERSION 3.20)
+
+    project(cuda_test)
+    enable_language(CXX CUDA)
+
+    # https://cmake.org/cmake/help/latest/module/FindCUDAToolkit.html
+    find_package(CUDAToolkit REQUIRED)
+
+    file(GLOB SRC *.cu *.h)
+
+    add_executable(a.out ${SRC})
+    target_link_libraries(a.out CUDA::cublas) #如果需要使用cublas库的话加上这一行
+
+CUDA函数修饰符
 ````````````````````````````````````````````````
 
 编译时一定要根据硬件的 ``compute capability`` 设置匹配的编译选项，否则可能计算结果错误。
@@ -490,7 +512,30 @@ kernel函数内可以使用一些c++11语法，如 ``auto``
 NVCC
 ------------------------------------------------
 
+列出支持的代码生成选项
+
+.. code-block:: bash
+
     nvcc -arch-ls -code-ls
+
+典型输出如下：
+
+.. code-block:: bash
+
+    arch=compute_50,code=sm_50
+    arch=compute_52,code=sm_52
+    arch=compute_53,code=sm_53
+    arch=compute_60,code=sm_60
+    arch=compute_61,code=sm_61
+    arch=compute_62,code=sm_62
+    arch=compute_70,code=sm_70
+    arch=compute_72,code=sm_72
+    arch=compute_75,code=sm_75
+    arch=compute_80,code=sm_80
+    arch=compute_86,code=sm_86
+    arch=compute_87,code=sm_87
+    arch=compute_89,code=sm_89
+    arch=compute_90,code=sm_90
 
 更多例子
 ------------------------------------------------
