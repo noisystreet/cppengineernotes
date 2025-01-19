@@ -58,7 +58,7 @@ CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
     #安装
     sudo apt update
     sudo apt install -y linux-headers-$(uname -r)
-    sudo apt install -y nvidia-kernel-open-dkmssudo cuda-drivers
+    sudo apt install -y nvidia-kernel-open-dkms
     sudo apt -y install cuda  #安装软件源中最新版本的CUDA软件栈
 
 #. 软件源中也包含了cudnn，可以同时安装
@@ -206,6 +206,7 @@ https://pypi.org/search/?q=nvidia
     nvidia-smi topo -m          #查看GPU和CPU和拓扑连接方式
     nvidia-smi -L               #列出所有GPU设备
     nvidia-smi --help-query-gpu #查看--query-gpu的所有可选参数
+    nvidia-smi -q -d CLOCK -i 0 #查看时钟频率
 
 多个查询：
 

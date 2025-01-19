@@ -346,8 +346,10 @@ https://zhuanlan.zhihu.com/p/336922639
 
 .. code-block:: bash
 
-    sudo apt install libelf-dev libdw-dev libcapstone-dev libtraceevent-dev libunwind-dev libluajit-5.1-dev
     git clone -b master https://github.com/namhyung/uftrace.git
+    cd uftrace/misc && sudo ./install-deps.sh && cd ..
+    ./confugre && make && sudo make install
+
 
 直接安装：
 
