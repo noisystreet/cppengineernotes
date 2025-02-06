@@ -121,6 +121,17 @@ CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
 
 注意CUDA需要和特定版本的驱动、编译器结合使用，版本不匹配可能会出问题，CUDA的兼容性请参考 `CUDA Compatibility <https://docs.nvidia.com/deploy/cuda-compatibility/index.html>`_ 和 `cuDNN Support Matrix <https://docs.nvidia.com/deeplearning/cudnn/archives/index.html>`_，以安装正确的gcc/CUDA/cuDNN版本组合。
 
+CLion配置CUDA编译
+````````````````````````````````````````````````
+
+文件->设置->构建、执行、部署->cmake
+
+然后点击环境，假设cuda安装在/usr/local/cuda目录下，将以下环境变量添加到环境里即可：
+
+.. code-block:: bash
+
+    PATH=/usr/local/cuda/bin:/usr/bin
+
 Windows下CUDA环境配置
 ````````````````````````````````````````````````
 
@@ -343,7 +354,7 @@ CUDA API可以分为 ``driver API`` 和 ``runtime API`` ，对应的函数分别
 
 grid、block和thread都是软件逻辑层面的概念。CUDA的设备在实际执行过程中，会以block为单位。把一个个block分配给SM进行运算；而block中的thread又会以warp（线程束）为单位，对thread进行分组计算。目前CUDA的warp大小都是32，也就是说32个thread会被组成一个warp来一起执行。同一个warp中的thread执行的指令是相同的，只是处理的数据不同。
 
-基本上warp 分组的动作是由SM自动进行的，会以连续的方式来做分组。比如说如果有一个block 里有128 个thread 的话，就会被分成四组warp，实际上，warp 也是CUDA 中每一个SM 执行的最小单位；
+基本上warp分组的动作是由SM自动进行的，会以连续的方式来做分组。比如说如果有一个block 里有128 个thread 的话，就会被分成四组warp，实际上，warp 也是CUDA 中每一个SM 执行的最小单位；
 kernel在调用时必须通过 ``<<<grid, block>>>`` 来指定kernel所使用的线程数及结构。
 可以使用nvprof分析CUDA程序中的函数的执行开销
 

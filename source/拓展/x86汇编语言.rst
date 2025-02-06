@@ -31,6 +31,10 @@ https://www.tutorialspoint.com/assembly_programming/index.htm
 + rax：存放syscall调用号和函数返回值
 + xor: 将寄存器清零
 
+参考
+
+#. `EAX x86 Register Meaning and History <https://keleshev.com/eax-x86-register-meaning-and-history/>`_
+
 Hello World
 ------------------------------------------------
 

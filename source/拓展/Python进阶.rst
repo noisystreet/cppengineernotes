@@ -30,15 +30,17 @@ Python深入理解
 python源码的编译：
 
 .. code-block:: bash
-    :linenos:
 
+    #安装依赖包
     sudo apt install gdb lcov pkg-config libbz2-dev libffi-dev \
     libgdbm-dev libgdbm-compat-dev liblzma-dev libncurses5-dev libreadline-dev libsqlite3-dev \
-    libssl-dev lzma lzma-dev tk-dev uuid-dev zlib1g-dev
+    libssl-dev lzma liblzma-dev tk-dev uuid-dev zlib1g-dev
 
     mkdir build && cd build
 
-    ../configure --enable-optimizations --prefix=$HOME/soft/python
+    ../configure --enable-optimizations --prefix=$HOME/soft/python #release版本
+
+    ../configure CFLAGS='-DPy_TRACE_REFS -pg' --with-pydebug --prefix=$HOME/soft/python_dbg #debug版本
 
     make -j16 && make install
 
