@@ -186,6 +186,7 @@ cuDNN离线安装
     sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
 
 pip安装cuda-python相关包
+````````````````````````````````````````````````
 
 https://pypi.org/search/?q=nvidia
 
@@ -255,9 +256,9 @@ https://pypi.org/search/?q=nvidia
     version=v11.8
     git checkout $version && git switch -c $version
     #安装依赖项
-    sudo apt install libopenmpi-dev libegl-dev libfreeimage-dev -y
+    sudo apt install libopenmpi-dev libglut-dev libegl-dev libfreeimage-dev -y
     #编译
-    make -j
+    make -j4
 
 编译之后，可以先运行两个demo程序来检查一下CUDA是否可用。
 生成的可执行文件在 ``bin/x86_64/linux/release`` 目录下
@@ -381,6 +382,17 @@ CUDA程序和编译
 
     add_executable(a.out ${SRC})
     target_link_libraries(a.out CUDA::cublas) #如果需要使用cublas库的话加上这一行
+
+CUDA数据类型扩展
+````````````````````````````````````````````````
+
+除了常见的float/double/int等数据类型之外，CUDA还支持一些扩展数据类型，如：
+
++ half：定义在cuda_fp16.h头文件中
++ nv_bfloat16：定义在cuda_bf16.h头文件中
+
+参考：https://docs.nvidia.com/cuda/cuda-math-api/
+
 
 CUDA函数修饰符
 ````````````````````````````````````````````````
@@ -652,9 +664,112 @@ CUDA instrinsics
 + https://ion-thruster.medium.com/an-introduction-to-writing-fp16-code-for-nvidias-gpus-da8ac000c17f
 + https://docs.nvidia.com/cuda/cuda-math-api/index.html
 
-Tensor core编程
+Tensor core相关接口
 ````````````````````````````````````````````````
-空
+
+tensor core对外的接口是wmma，文档：https://developer.nvidia.com/blog/programming-tensor-cores-cuda-9/
+
+例子：
+
+.. code-block:: CUDA
+
+    #include <iostream>
+    #include <vector>
+    #include <random>
+    #include <algorithm>
+
+    //cuda headers
+    #include <cuda_runtime.h>
+    #include <cuda_fp16.h>
+    #include <mma.h>
+
+    using namespace nvcuda;
+
+    const int WARP_SIZE=32;
+    const int M = 16;
+    const int N = 16;
+    const int K = 16;
+
+    __global__ void gemm_kernel(half *a, half *b, float *c, int m, int n, int k) {
+        // 声明片段
+        wmma::fragment<wmma::matrix_a, M, N, K, half, wmma::row_major> a_frag;
+        wmma::fragment<wmma::matrix_b, M, N, K, half, wmma::row_major> b_frag;
+        wmma::fragment<wmma::accumulator, M, N, K, float> c_frag;
+
+        // 初始化累加器片段为0
+        wmma::fill_fragment(c_frag, 0.0f);
+
+        // 加载矩阵A和B的片段
+        wmma::load_matrix_sync(a_frag, a, K);
+        wmma::load_matrix_sync(b_frag, b, K);
+
+        // 执行矩阵乘法累加操作
+        wmma::mma_sync(c_frag, a_frag, b_frag, c_frag);
+
+        // 将结果存储到矩阵C
+        wmma::store_matrix_sync(c, c_frag, N, wmma::mem_row_major);
+    }
+
+    //初始化
+    void random_init_half(std::vector<half> &hv) {
+        std::mt19937 engine;
+        std::normal_distribution<float> dist;
+        std::vector<float> v(hv.size());
+        std::generate(v.begin(), v.end(), [&]() { return __float2half(dist(engine)); });
+        for(auto i=0;i<hv.size();i++) {
+            hv[i] = __float2half(v[i]);
+        }
+    }
+
+    int main() {
+        // 分配主机内存
+        std::vector<half> h_a(M*K);
+        std::vector<half> h_b(K*N);
+        std::vector<float> h_c(M*N);
+
+        // 初始化矩阵A和B
+        random_init_half(h_a);
+        random_init_half(h_b);
+
+        // 分配设备内存
+        half *d_a, *d_b;
+        float *d_c;
+        cudaMalloc(&d_a, M * K * sizeof(half));
+        cudaMalloc(&d_b, K * N * sizeof(half));
+        cudaMalloc(&d_c, M * N * sizeof(float));
+
+        // 将数据从主机拷贝到设备
+        cudaMemcpyAsync(d_a, h_a.data(), h_a.size() * sizeof(half), cudaMemcpyHostToDevice);
+        cudaMemcpyAsync(d_b, h_b.data(), h_b.size() * sizeof(half), cudaMemcpyHostToDevice);
+
+        gemm_kernel<<<1, WARP_SIZE>>>(d_a, d_b, d_c, M, N, K);
+
+        // 将结果从设备拷贝回主机
+        cudaMemcpyAsync(h_c.data(), d_c, h_c.size() * sizeof(float), cudaMemcpyDeviceToHost);
+
+        // 打印结果
+        std::cout << "check Result matrix C:" << std::endl;
+        for (auto i = 0; i < M; i++) {
+            for (auto j = 0; j < N; j++) {
+                float sum = 0;
+                for (auto k = 0; k < K; k++) {
+                    sum += __half2float(h_a.at(i * K + k)) * __half2float(h_b.at(k*N + j));
+                }
+                const float eps=1e-4;
+                if(fabs(sum-h_c.at(i*N+j))>eps) {
+                    std::cout<<"C["<<i<<"]["<<j<<"]="<<h_c.at(i*N+j)<<std::endl;
+                    std::cout<<"Ref="<<sum<<std::endl;
+                    std::cout<<"error"<<std::endl;
+                    exit(EXIT_FAILURE);
+                }
+            }
+        }
+
+        // 释放内存
+        cudaFree(d_a);
+        cudaFree(d_b);
+        cudaFree(d_c);
+    }
 
 其他常用库
 ------------------------------------------------
@@ -713,6 +828,25 @@ cuDNN文档
 
 cuBLAS
 ````````````````````````````````````````````````
+文档：https://docs.nvidia.com/cuda/cublas
+
+
+常用接口
+
+cublasSgemm：
+
+.. code-block:: CUDA
+
+    cublasStatus_t cublasSgemm(cublasHandle_t handle,
+                            cublasOperation_t transa, cublasOperation_t transb,
+                            int m, int n, int k,
+                            const float *alpha,
+                            const float *A, int lda,
+                            const float *B, int ldb,
+                            const float *beta,
+                            float *C, int ldc)
+
+说明：cuBLAS中存储矩阵时用的是列主序(Column-major)格式，如果从c++调用此接口时，存储矩阵的数组是行主序，那么按常规m,n,k传入参数时，计算出来的是C的转置。
 
 cuSparse
 ````````````````````````````````````````````````
