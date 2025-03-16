@@ -560,6 +560,12 @@ NVCC
     arch=compute_89,code=sm_89
     arch=compute_90,code=sm_90
 
+生成PTX文件：
+
+.. code-block:: bash
+
+    nvcc -ptx -arch=sm_86 main.cu -o main.ptx
+
 更多例子
 ------------------------------------------------
 
