@@ -335,6 +335,44 @@ GPU的内存层次:
 + L2 cache
 + Global memory
 
+Compute Capabilities
+````````````````````````````````````````````````
+
+介绍 [#compute_capability]_：
+
+`"The compute capability of a device is represented by a version number, also sometimes called its “SM version”. This version number identifies the features supported by the GPU hardware and is used by applications at runtime to determine which hardware features and/or instructions are available on the present GPU."`
+
+`"The compute capability comprises a major revision number X and a minor revision number Y and is denoted by X.Y."`
+
+对于8.x（8 for devices based on the NVIDIA Ampere GPU architecture） [#cc_example]_：
+
+.. code-block:: bash
+
+    A Streaming Multiprocessor (SM) consists of:
+
+    64 FP32 cores for single-precision arithmetic operations in devices of compute capability 8.0 and 128 FP32 cores in devices of compute capability 8.6, 8.7 and 8.9,
+
+    32 FP64 cores for double-precision arithmetic operations in devices of compute capability 8.0 and 2 FP64 cores in devices of compute capability 8.6, 8.7 and 8.9
+
+    64 INT32 cores for integer math,
+
+    4 mixed-precision Third-Generation Tensor Cores supporting half-precision (fp16), __nv_bfloat16, tf32, sub-byte and double precision (fp64) matrix arithmetic for compute capabilities 8.0, 8.6 and 8.7 (see Warp Matrix Functions for details),
+
+    4 mixed-precision Fourth-Generation Tensor Cores supporting fp8, fp16, __nv_bfloat16, tf32, sub-byte and fp64 for compute capability 8.9 (see Warp Matrix Functions for details),
+
+    16 special function units for single-precision floating-point transcendental functions,
+
+    4 warp schedulers.
+
+
+
+参考：
+
+.. [#compute_capability] https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capability
+.. [#cc_example] https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capabilities
+
++ https://www.myzhar.com/blog/tutorials/tutorial-nvidia-gpu-cuda-compute-capability/
+
 参考
 
 + `warp深度解析 <https://blog.51cto.com/u_15127500/3641722>`_
@@ -776,6 +814,32 @@ tensor core对外的接口是wmma，文档：https://developer.nvidia.com/blog/p
         cudaFree(d_b);
         cudaFree(d_c);
     }
+
+CUDA程序性能分析和优化
+------------------------------------------------
+
+程序耗时统计
+````````````````````````````````````````````````
+
+使用shared memory
+````````````````````````````````````````````````
+
+``CUDA shared memory is a type of memory accessible to all threads within the same block. It resides on the GPU chip itself, making it significantly faster to access compared to off-chip global memory.``
+
+``Shared Memory shares on-chip storage with the L1 cache. But Shared memory is explicitly controlled by the programmer and used for inter-thread communication and data sharing, while the L1 cache is managed by the GPU hardware and helps improve memory access latency and bandwidth by caching data and instructions fetched from global memory.``
+
+可以通过打印cudaDeviceProp结构体的sharedMemPerBlock成员来获取每个block可用的shared memory容量，如对于NVIDIA GeForce RTX 4060其大小为48KB。
+
+
+参考：
+
+#. https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#shared-memory-8-x
+#. https://developer.nvidia.com/blog/using-shared-memory-cuda-cc/
+#. https://medium.com/@fatlip/cuda-shared-memory-23cd1a0d4e39
+
+性能分析工具:nsys
+````````````````````````````````````````````````
+
 
 其他常用库
 ------------------------------------------------
