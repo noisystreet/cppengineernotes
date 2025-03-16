@@ -359,35 +359,40 @@ https://zhuanlan.zhihu.com/p/336922639
 程序执行流程分析：uftrace
 ------------------------------------------------
 
-编译安装：
-
-.. code-block:: bash
-
-    git clone -b master https://github.com/namhyung/uftrace.git
-    cd uftrace/misc && sudo ./install-deps.sh && cd ..
-    ./confugre && make && sudo make install
-
-
 直接安装：
 
 .. code-block:: bash
 
     sudo apt install uftrace
 
-使用过程：
+编译安装：
 
-1.编译源码时使用-pg参数
-2.执行程序uftrace record ./xx，如果程序编译时未使用-pg，运行时可以加上--force选项，加上-a可以记录函数返回值，最终数据会记录在uftrace.data文件中
+.. code-block:: bash
 
-使用-F func指定只跟踪某个函数，使用-D设置跟踪函数调用的深度
-使用-t过滤掉执行时间较短的函数，如：
+    git clone -b master https://github.com/namhyung/uftrace.git
+    #安装编译依赖项
+    cd uftrace/misc && sudo ./install-deps.sh && cd ..
+    ./confugre
+    make && sudo make install
+
+使用流程（ ``record`` 和 ``dump``）：
+
++ 编译源码时使用 ``-pg`` 参数
++ 执行程序 ``uftrace record <program>`` ，如果程序编译时未使用 ``-pg``，运行时可以加上 ``--force`` 选项，加上 ``-a`` 可以记录函数返回值，最终数据会记录在 ``uftrace.data`` 文件中
++ 使用 ``uftrace dump --chrome`` 来dump出chrome trace格式的调用栈文件
+
+其他常用选项：
+
+#. 使用 ``-F <func_name>`` 指定只跟踪某个函数
+#. 使用 ``-D`` 设置跟踪函数调用的深度
+#. 使用 ``-t`` 过滤掉执行时间较短的函数，如：
 
 .. code-block:: bash
     :linenos:
 
     uftrace -t 5us hello
 
-常用命令：
+其他常用命令：
 
 + ``uftrace report`` 查看执行时间统计
 + ``uftrace replay`` 查看执行过程
