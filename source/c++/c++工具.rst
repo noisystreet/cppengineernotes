@@ -80,6 +80,23 @@ git配置和仓库管理
 
     sudo apt install cppcheck cppcheck-gui
 
+代码格式化：clang-format
+------------------------------------------------
+
+安装：
+
+.. code-block:: bash
+
+    sudo apt install clang-format
+
+生成 ``.clang-format`` 文件：
+
+.. code-block:: bash
+
+    clang-format -style=llvm -dump-config >.clang-format
+
+常用 ``stytle`` ：LLVM, GNU, Google, Chromium, Microsoft
+
 代码文档：doxygen
 ------------------------------------------------
 空
