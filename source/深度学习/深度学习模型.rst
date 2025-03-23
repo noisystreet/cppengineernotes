@@ -331,6 +331,39 @@ torchhub使用例子：
     #查找库中可用的模型
     torch.hub.list("pytorch/vision")
 
+ultralytics
+------------------------------------------------
+
+源码：https://github.com/ultralytics/ultralytics
+
+文档：https://docs.ultralytics.com
+
+安装：
+
+.. code-block:: bash
+
+    pip install ultralytics
+
+配置文件路径： ``~/.config/Ultralytics/settings.json``
+
+简单例子：
+
+.. code-block:: python
+
+    from ultralytics import YOLO
+
+    model = YOLO("yolo11n.pt")
+
+    # Run inference
+    model.predict("1.mp4", save=True, imgsz=320, conf=0.5)
+
+导出模型为其他格式：
+
+.. code-block:: python
+
+    model.export(format="onnx")
+
+
 diffusion model
 ------------------------------------------------
 
