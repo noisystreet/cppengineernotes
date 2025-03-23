@@ -7,13 +7,13 @@ CUDA编程
 
 CUDA的软件栈：https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
 
-基础环境配置
+CUDA开发环境配置
 ------------------------------------------------
 
 CUDA基础软件栈由 ``CUDA driver`` （包括GPU kernel mode driver和CUDA usermode driver）、 ``CUDA Toolkit`` 和 ``runtime`` 组成。
 要运行CUDA程序，至少要有 ``CUDA driver`` 和 ``CUDA runtime`` ，要开发CUDA程序，还要有 ``CUDA Toolkit``
 
-Linux下CUDA环境配置
+Linux下CUDA开发环境配置
 ````````````````````````````````````````````````
 
 **首先查看是否有NVIDIA显卡**：
@@ -140,10 +140,10 @@ CLion配置CUDA编译：
 
     PATH=/usr/local/cuda/bin:/usr/bin
 
-Windows下CUDA环境配置
+Windows下CUDA开发环境配置
 ````````````````````````````````````````````````
 
-Windows：使用vs2017和cuda10
+Windows：使用Visual Studio和cuda10
 安装完成后，在系统的环境变量里可以看到，CUDA自动添加了以下环境变量：
 
 .. code-block:: powershell
@@ -269,7 +269,7 @@ https://pypi.org/search/?q=nvidia
 编译之后，可以先运行两个demo程序来检查一下CUDA是否可用。
 生成的可执行文件在 ``bin/x86_64/linux/release`` 目录下
 
-#. 查询设备信息 ``deviceQuery``
+**查询设备信息** ``deviceQuery``
 
 进入 ``bin/x86_64/linux/release`` 目录，执行 ``deviceQuery`` 程序，运行之后，典型输出如下：
   
@@ -298,7 +298,7 @@ https://pypi.org/search/?q=nvidia
 
 可以看出该GPU有14个SM，896个 ``CUDA core`` ，最后的 ``Result=PASS`` 表明运行没有问题。
 
-#. 带宽测试 ``bandwidthTest``
+**带宽测试** ``bandwidthTest``
 
 进入 ``bin/x86_64/linux/release`` 目录，执行 ``bandwidthTest`` 程序，输出如下：
 
@@ -332,13 +332,15 @@ https://pypi.org/search/?q=nvidia
 NVIDIA GPU硬件和执行模型
 ------------------------------------------------
 
-NVIDIA GPU的计算单元
+GPU与CPU相比，具有更强的计算能力，但是GPU只是一种协处理器，需要在CPU的作用下才能完成计算任务。将CPU侧称为host，GPU侧称为device，数据通常是从CPU拷贝到GPU后，在GPU上进行计算，完成后再拷贝回CPU。
+
+**NVIDIA GPU的计算单元**
 
 + SM [#sm]_
 + CUDA core
 + Tensor core: 用来完成矩阵乘加运算
 
-NVIDIA GPU的内存层次:
+**NVIDIA GPU的内存层次**
 
 + Register
 + L1/Shared memory (SMEM)
@@ -380,6 +382,32 @@ Compute Capabilities
 + `Warp Scheduling and Divergence <https://cse.iitkgp.ac.in/~soumya/hp3/slides/warp-divr.pdf>`_
 + `CUDA Refresher <https://developer.nvidia.com/blog/tag/cuda-refresher>`_
 
+kernel函数 [#cuda_kernel]_
+````````````````````````````````````````````````
+
+CUDA对c++语言进行了拓展，使用kernel函数来定义在NVIDIA GPU上执行的代码。
+
+示例代码：
+
+.. code-block:: cuda
+
+    // Kernel definition
+    __global__ void VecAdd(float* A, float* B, float* C)
+    {
+        int i = threadIdx.x;
+        C[i] = A[i] + B[i];
+    }
+
+    int main()
+    {
+        ...
+        // Kernel invocation with N threads
+        VecAdd<<<1, N>>>(A, B, C);
+        ...
+    }
+
+.. [#cuda_kernel] https://docs.nvidia.com/cuda/cuda-c-programming-guide/#kernels
+
 CUDA API
 ------------------------------------------------
 
@@ -402,6 +430,16 @@ kernel在调用时必须通过 ``<<<grid, block>>>`` 来指定kernel所使用的
 
 CUDA程序和编译
 ````````````````````````````````````````````````
+
+CUDA程序使用 CUDA toolkit中的 ``nvcc`` 编译器进行编译，流程如下 [#compile_workflow]_：
+
+CUDA源文件中可以同时包含host代码和device代码，nvcc首先将device代码和host代码分开，然后：
+
+#. 将device代码编译成汇编格式(``PTX`` 代码)或二进制目标文件(``cubin``)。
+#. 将host代码中调用kernel函数的地方（即 ``<<<...>>>``）替换为相应的CUDA runtime接口，以从 ``PTX`` 或者 ``cubin`` 中加载和执行各个编译后的kernel函数。
+
+.. [#compile_workflow] https://docs.nvidia.com/cuda/cuda-c-programming-guide/#compilation-workflow
+
 
 编译CUDA程序的cmake文件
 ````````````````````````````````````````````````
@@ -453,14 +491,16 @@ CUDA函数和变量修饰符
 + ``__device__`` 从device调用，在device上执行，不可以和 ``__global__`` 同时用。
 + ``__host__`` 从host上调用，在host上执行，一般省略不写，不可以和 ``__global__`` 同时用，但可和 ``__device__`` 同时用，此时函数会在device和host都编译。
 
+由 ``__global__`` 或者 ``__device__`` 修饰的函数称为kernel函数
+
+kernel函数中对C++语言标准的支持见：https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-language-support
+
 变量类型修饰符：
 
 + ``__device__`` ：用来定义设备内存变量
 + ``__shared__`` ：用来定义共享内存变量
 + ``__constant__`` ：用来定义常量内存
 + ``thread_local`` 变量，定义在kernel函数内，被线程私有。
-  
-kernel函数内可以使用一些c++11语法，如 ``auto``
 
 常用内置变量
 ````````````````````````````````````````````````
@@ -498,7 +538,7 @@ kernel函数内可以使用一些c++11语法，如 ``auto``
     #endif /* __cplusplus */
     };
 
-设备管理
+设备管理API
 ````````````````````````````````````````````````
 
 .. code-block:: c++
@@ -510,7 +550,7 @@ kernel函数内可以使用一些c++11语法，如 ``auto``
     __host__ __device__ cudaError_t cudaDeviceSynchronize(void)
     __host__            cudaError_t cudaDeviceReset(void)
 
-内存管理
+内存管理API
 ````````````````````````````````````````````````
 
 .. code-block:: c++
@@ -533,7 +573,7 @@ kernel函数内可以使用一些c++11语法，如 ``auto``
     __host__ __device__ cudaError_t cudaFree(void* devPtr) 
     __host__            cudaError_t cudaFreeHost(void* ptr)
 
-事件管理
+事件（Event）管理API
 ````````````````````````````````````````````````
 
 .. code-block:: c++
@@ -547,7 +587,7 @@ kernel函数内可以使用一些c++11语法，如 ``auto``
     __host__            cudaError_t cudaEventRecordWithFlags(cudaEvent_t event, cudaStream_t stream = 0, unsigned int  flags = 0)
     __host__            cudaError_t cudaEventSynchronize(cudaEvent_t event) 
 
-流管理
+流（Stream）管理API
 ````````````````````````````````````````````````
 
 .. code-block:: c++
@@ -560,13 +600,25 @@ kernel函数内可以使用一些c++11语法，如 ``auto``
     __host__            cudaError_t cudaStreamSynchronize(cudaStream_t stream) 
     __host__ __device__ cudaError_t cudaStreamWaitEvent(cudaStream_t stream, cudaEvent_t event, unsigned int  flags = 0) 
 
-错误处理
+错误处理API
 ````````````````````````````````````````````````
 .. code-block:: c++
 
     cudaError_t 枚举
     cudaGetLastError()
     cudaGetErrorString()
+
+CUDA环境变量
+````````````````````````````````````````````````
+
+常用的环境变量：
+
++ ``CUDA_VISIBLE_DEVICES``：用于设置环境中可用的CUDA设备
++ ``CUDA_LAUNCH_BLOCKING``：用于设置CUDA程序同步执行
+
+其他环境变量参考相应文档 [#cuda_env]_。
+
+.. [#cuda_env] https://docs.nvidia.com/cuda/cuda-c-programming-guide/#env-vars
 
 NVCC
 ------------------------------------------------
@@ -650,6 +702,7 @@ stream
 CUDA streams用来管理执行单元的并发操作，在一个流中，操作是串行的按序执行的，但是在不同的流中操作就可以同时执行。前面的block和thread用于kernel内的并行，
 
 由于异构计算的硬件特性，CUDA中以下操作是相互独立的：
+
 + 主机端上的计算
 + 设备端的计算（核函数）
 + 数据从主机和设备间相互拷贝
@@ -822,11 +875,11 @@ CUDA程序性能分析和优化
 使用shared memory
 ````````````````````````````````````````````````
 
-``CUDA shared memory is a type of memory accessible to all threads within the same block. It resides on the GPU chip itself, making it significantly faster to access compared to off-chip global memory.``
+`CUDA shared memory is a type of memory accessible to all threads within the same block. It resides on the GPU chip itself, making it significantly faster to access compared to off-chip global memory.`
 
-``Shared Memory shares on-chip storage with the L1 cache. But Shared memory is explicitly controlled by the programmer and used for inter-thread communication and data sharing, while the L1 cache is managed by the GPU hardware and helps improve memory access latency and bandwidth by caching data and instructions fetched from global memory.``
+`Shared Memory shares on-chip storage with the L1 cache. But Shared memory is explicitly controlled by the programmer and used for inter-thread communication and data sharing, while the L1 cache is managed by the GPU hardware and helps improve memory access latency and bandwidth by caching data and instructions fetched from global memory.`
 
-可以通过打印cudaDeviceProp结构体的sharedMemPerBlock成员来获取每个block可用的shared memory容量，如对于NVIDIA GeForce RTX 4060其大小为48KB。
+可以通过打印 ``cudaDeviceProp`` 结构体的 ``sharedMemPerBlock`` 成员来获取每个block可用的shared memory容量，如对于NVIDIA GeForce RTX 4060其大小为48KB。
 
 
 参考：
