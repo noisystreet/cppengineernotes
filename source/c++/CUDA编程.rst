@@ -5,8 +5,6 @@ CUDA编程
 简介
 ------------------------------------------------
 
-支持CUDA的GPU： https://developer.nvidia.com/cuda-gpus
-
 CUDA的软件栈：https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
 
 基础环境配置
@@ -18,9 +16,7 @@ CUDA基础软件栈由 ``CUDA driver`` （包括GPU kernel mode driver和CUDA us
 Linux下CUDA环境配置
 ````````````````````````````````````````````````
 
-CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
-
-首先查看是否有NVIDIA显卡：
+**首先查看是否有NVIDIA显卡**：
 
 .. code-block:: bash
 
@@ -31,20 +27,21 @@ CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
 .. code-block:: bash
 
     00:02.0 VGA compatible controller: Intel Corporation CometLake-S GT2 [UHD Graphics 630] (rev 03)
-    01:00.0 VGA compatible controller: NVIDIA Corporation TU117M [GeForce GTX 1650 Mobile / Max-Q] (rev a1
+    01:00.0 VGA compatible controller: NVIDIA Corporation TU117M [GeForce GTX 1650 Mobile / Max-Q] (rev a1)
 
+然后查看对应的型号是否支持CUDA [#cuda_gpus]_，
 不同Linux环境的下CUDA的安装可以参考：https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html
 
-在 ``ubuntu/debian`` 环境中，可以使用下面的步骤安装CUDA:
+**Ubuntu/Debian环境安装CUDA**:
 
-#. 添加contrib源（只有debian需要执行这一步）
+添加contrib源：（只有debian需要执行这一步）
 
 .. code-block:: bash
 
     sudo apt install software-properties-common
     sudo add-apt-repository contrib
 
-#. 添加GPG key
+添加GPG key：
 
 .. code-block:: bash
 
@@ -55,19 +52,16 @@ CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
     wget https://developer.download.nvidia.com/compute/cuda/repos/$distro/$arch/cuda-keyring_${version}_all.deb
     sudo dpkg -i cuda-keyring_${version}_all.deb
 
-    #安装
+安装：
+
+.. code-block:: bash
+
     sudo apt update
     sudo apt install -y linux-headers-$(uname -r)
     sudo apt install -y nvidia-kernel-open-dkms
     sudo apt -y install cuda  #安装软件源中最新版本的CUDA软件栈
 
-#. 软件源中也包含了cudnn，可以同时安装
-
-#. 设置环境变量：
-
-.. code-block:: bash
-
-    export CUDA_PATH=/usr
+软件源中也包含了 ``cuDNN``，可以同时安装
 
 也可以下载独立安装包进行安装，以CUDA11.4为例：
 
@@ -76,12 +70,15 @@ CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
     wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/cuda_11.4.0_470.42.01_linux.run
     sudo <CudaInstaller>.run 
 
-安装好了之后设置 ``CUDA_HOME`` 环境变量，指向cuda安装目录，并设置 ``PATH`` 和 ``LD_LIBRARY_PATH`` 环境变量：
+**设置环境变量**
+
+安装完成之后设置 ``CUDA_HOME`` 环境变量，指向cuda安装目录，并设置 ``PATH`` 和 ``LD_LIBRARY_PATH`` 环境变量：
 
 .. code-block:: bash
 
+    export CUDA_HOME=/usr/local/cuda
     export PATH=$CUDA_HOME/bin:$PATH
-    export LD_LIBRARY_PATH=$CUDA_HOME/bin:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64:$LD_LIBRARY_PATH
 
 执行 ``nvcc --version`` 查看是否安装成功，典型输出如下：
 
@@ -117,16 +114,27 @@ CUDA下载：https://developer.nvidia.com/cuda-toolkit-archive
     |    0   N/A  N/A      1818      G   /usr/lib/xorg/Xorg                              4MiB |
     +-----------------------------------------------------------------------------------------+
 
-在linux开发CUDA程序可以使用eclipse+nvidia nsight，后者可从CUDA安装目录下找到。
+注意CUDA需要和特定版本的驱动、编译器结合使用，版本不匹配可能会出问题, 参考CUDA Compatibility [#CUDA_Compatibility]_ 和 Support Matrix [#cudnn_support]_，以安装正确的gcc/CUDA/cuDNN版本组合。
 
-注意CUDA需要和特定版本的驱动、编译器结合使用，版本不匹配可能会出问题，CUDA的兼容性请参考 `CUDA Compatibility <https://docs.nvidia.com/deploy/cuda-compatibility/index.html>`_ 和 `cuDNN Support Matrix <https://docs.nvidia.com/deeplearning/cudnn/archives/index.html>`_，以安装正确的gcc/CUDA/cuDNN版本组合。
+参考：
 
-CLion配置CUDA编译
+.. [#cuda_gpus] https://developer.nvidia.com/cuda-gpus
+.. [#CUDA_Compatibility] https://docs.nvidia.com/deploy/cuda-compatibility/index.html
+.. [#cudnn_support] https://docs.nvidia.com/deeplearning/cudnn/backend/latest/reference/support-matrix.html
+
+CUDA IDE环境
 ````````````````````````````````````````````````
+
+Linux下的CUDA IDE环境：
+
+#. eclipse+nvidia nsight插件，后者可从CUDA安装目录下找到。
+#. CLion（推荐）
+
+CLion配置CUDA编译：
 
 文件->设置->构建、执行、部署->cmake
 
-然后点击环境，假设cuda安装在/usr/local/cuda目录下，将以下环境变量添加到环境里即可：
+然后点击环境，假设cuda安装在 `/usr/local/cuda` 目录下，将以下环境变量添加到环境里即可：
 
 .. code-block:: bash
 
@@ -169,8 +177,6 @@ Windows：使用vs2017和cuda10
 .. code-block:: bash
 
     -Xcompiler "/wd 4819"
-
-从编译过程的命令行输出可以看出，编译CUDA程序时，使用的是 ``nvcc`` 来进行编译，而非vs内置的编译程序。
 
 cuDNN离线安装
 ````````````````````````````````````````````````
@@ -290,7 +296,7 @@ https://pypi.org/search/?q=nvidia
     deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 12.1, CUDA Runtime Version = 11.8, NumDevs = 1
     Result = PASS
 
-可以看出该GPU有896个 ``CUDA core`` ，最后的 ``Result=PASS`` 表明运行没有问题。
+可以看出该GPU有14个SM，896个 ``CUDA core`` ，最后的 ``Result=PASS`` 表明运行没有问题。
 
 #. 带宽测试 ``bandwidthTest``
 
@@ -323,17 +329,24 @@ https://pypi.org/search/?q=nvidia
 
 可以看到H2D、D2H和D2D的带宽数据。
 
-GPU硬件和执行模型
+NVIDIA GPU硬件和执行模型
 ------------------------------------------------
 
+NVIDIA GPU的计算单元
 
-GPU的内存层次:
++ SM [#sm]_
++ CUDA core
++ Tensor core: 用来完成矩阵乘加运算
+
+NVIDIA GPU的内存层次:
 
 + Register
 + L1/Shared memory (SMEM)
 + Read-only memory
 + L2 cache
 + Global memory
+
+.. [#sm] https://stevengong.co/notes/Streaming-Multiprocessor
 
 Compute Capabilities
 ````````````````````````````````````````````````
@@ -349,22 +362,13 @@ Compute Capabilities
 .. code-block:: bash
 
     A Streaming Multiprocessor (SM) consists of:
-
     64 FP32 cores for single-precision arithmetic operations in devices of compute capability 8.0 and 128 FP32 cores in devices of compute capability 8.6, 8.7 and 8.9,
-
     32 FP64 cores for double-precision arithmetic operations in devices of compute capability 8.0 and 2 FP64 cores in devices of compute capability 8.6, 8.7 and 8.9
-
     64 INT32 cores for integer math,
-
     4 mixed-precision Third-Generation Tensor Cores supporting half-precision (fp16), __nv_bfloat16, tf32, sub-byte and double precision (fp64) matrix arithmetic for compute capabilities 8.0, 8.6 and 8.7 (see Warp Matrix Functions for details),
-
     4 mixed-precision Fourth-Generation Tensor Cores supporting fp8, fp16, __nv_bfloat16, tf32, sub-byte and fp64 for compute capability 8.9 (see Warp Matrix Functions for details),
-
     16 special function units for single-precision floating-point transcendental functions,
-
     4 warp schedulers.
-
-
 
 参考：
 
@@ -372,9 +376,6 @@ Compute Capabilities
 .. [#cc_example] https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capabilities
 
 + https://www.myzhar.com/blog/tutorials/tutorial-nvidia-gpu-cuda-compute-capability/
-
-参考
-
 + `warp深度解析 <https://blog.51cto.com/u_15127500/3641722>`_
 + `Warp Scheduling and Divergence <https://cse.iitkgp.ac.in/~soumya/hp3/slides/warp-divr.pdf>`_
 + `CUDA Refresher <https://developer.nvidia.com/blog/tag/cuda-refresher>`_
@@ -421,35 +422,57 @@ CUDA程序和编译
     add_executable(a.out ${SRC})
     target_link_libraries(a.out CUDA::cublas) #如果需要使用cublas库的话加上这一行
 
+常用头文件：
+
+.. code-block:: c++
+
+    #include <cuda_runtime.h>
+    #include <device_launch_parameters.h>
+
+注意：在编译CUDA程序时一定要根据 ``compute capability`` 设置匹配的编译选项，否则可能计算结果错误。
+
 CUDA数据类型扩展
 ````````````````````````````````````````````````
 
-除了常见的float/double/int等数据类型之外，CUDA还支持一些扩展数据类型，如：
+除了常见的 ``float/double/int`` 等数据类型之外，CUDA还支持一些扩展数据类型，如：
 
-+ half：定义在cuda_fp16.h头文件中
-+ nv_bfloat16：定义在cuda_bf16.h头文件中
++ ``half`` ：定义在 ``cuda_fp16.h`` 头文件中
++ ``nv_bfloat16`` ：定义在 ``cuda_bf16.h`` 头文件中
 
 参考：https://docs.nvidia.com/cuda/cuda-math-api/
 
 
-CUDA函数修饰符
+CUDA函数和变量修饰符
 ````````````````````````````````````````````````
 
-编译时一定要根据硬件的 ``compute capability`` 设置匹配的编译选项，否则可能计算结果错误。
+由于GPU是异构模型，需要区分host和device上的代码，在CUDA中对C语言进行的扩展，通过修饰符来区分host和device上的函数和变量。
 
-由于GPU是异构模型，需要区分host和device上的代码，在CUDA中对C语言进行的扩展，通过函数类型修饰符开区别host和device上的函数，主要的三个函数类型修饰符如下：
+函数类型修饰符：
 
 + ``__global__`` 从host调用，在device上执行，（一些特定的GPU也可以从device上调用），返回类型必须是 ``void`` ，不支持可变参数参数，不能是类的成员函数。用 ``__global__`` 定义的kernel函数是异步的，这意味着host不会等待kernel执行完就执行下一步。
-+ ``__device__`` 从device调用，在device上执行，且只能，不可以和 ``__global__`` 同时用。
++ ``__device__`` 从device调用，在device上执行，不可以和 ``__global__`` 同时用。
 + ``__host__`` 从host上调用，在host上执行，一般省略不写，不可以和 ``__global__`` 同时用，但可和 ``__device__`` 同时用，此时函数会在device和host都编译。
 
-变量定义：
+变量类型修饰符：
 
++ ``__device__`` ：用来定义设备内存变量
 + ``__shared__`` ：用来定义共享内存变量
 + ``__constant__`` ：用来定义常量内存
-+ thread_local变量，定义在kernel函数内，被线程私有。
++ ``thread_local`` 变量，定义在kernel函数内，被线程私有。
   
 kernel函数内可以使用一些c++11语法，如 ``auto``
+
+常用内置变量
+````````````````````````````````````````````````
+
++ ``gridDim``
++ ``blockDim``
++ ``blockIdx`` 线程块的索引
++ ``threadIdx`` 线程块内线程的索引
++ ``warpSize``
+
+这些内置变量常用于在kernel函数中获取线程和blockID。
+
 内置 ``dim3`` 结构体和 ``uint3`` 结构体：
 
 .. code-block:: c++
@@ -474,26 +497,6 @@ kernel函数内可以使用一些c++11语法，如 ``auto``
     #endif
     #endif /* __cplusplus */
     };
-
-一些内置变量
-````````````````````````````````````````````````
-
-+ ``gridDim``
-+ ``blockDim``
-+ ``blockIdx`` 线程块的索引
-+ ``threadIdx`` 线程块内线程的索引
-+ ``warpSize``
-
-这些内置变量常用于在kernel函数中获取线程和blockID。
-
-
-常用头文件：
-
-.. code-block:: c++
-
-    #include <cuda_runtime.h>
-    #include <device_launch_parameters.h>
-
 
 设备管理
 ````````````````````````````````````````````````
@@ -528,12 +531,7 @@ kernel函数内可以使用一些c++11语法，如 ``auto``
     __host__            cudaError_t cudaMemcpyToSymbol(const void* symbol, const void* src, size_t count, size_t offset = 0, cudaMemcpyKind kind = cudaMemcpyHostToDevice) 
     //free
     __host__ __device__ cudaError_t cudaFree(void* devPtr) 
-    __host__            cudaError_t cudaFreeHost(void* ptr) 
-
-
-共享内存 ``__shared__``
-
-常量内存 ``__constant__``
+    __host__            cudaError_t cudaFreeHost(void* ptr)
 
 事件管理
 ````````````````````````````````````````````````
