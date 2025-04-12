@@ -331,12 +331,8 @@ torchhub使用例子：
     #查找库中可用的模型
     torch.hub.list("pytorch/vision")
 
-ultralytics
-------------------------------------------------
-
-源码：https://github.com/ultralytics/ultralytics
-
-文档：https://docs.ultralytics.com
+ultralytics [#ultralytics_source]_ [#ultralytics_doc]_
+---------------------------------------------------------
 
 安装：
 
@@ -363,6 +359,57 @@ ultralytics
 
     model.export(format="onnx")
 
+.. [#ultralytics_source] https://github.com/ultralytics/ultralytics
+.. [#ultralytics_doc] https://docs.ultralytics.com
+
+ollama [#ollama_home]_ [#ollama_github]_
+------------------------------------------------
+
+安装： ``curl -fsSL https://ollama.com/install.sh | sh``
+
+运行： ``ollama run gemma3:1b`` （以gemma3:1b为例）
+
+.. [#ollama_home] https://ollama.com/
+.. [#ollama_github] https://github.com/ollama/ollama
+
+deepseek
+------------------------------------------------
+
+网页版：https://chat.deepseek.com/
+API使用：https://api-docs.deepseek.com/zh-cn/
+
+简单示例：
+
+.. code-block:: python
+
+    from openai import OpenAI
+    import sys
+
+    api_key="你的API key" #通过https://platform.deepseek.com/api_keys申请
+    base_url="https://api.deepseek.com"
+    client = OpenAI(api_key=api_key, base_url=base_url)
+
+    print("please input your problem.")
+    print("type exit if you want to exit")
+
+    while True:
+        print(">>>",end="")
+        question=input()
+        if question=="exit":
+            sys.exit(0)
+        response = client.chat.completions.create(
+            model="deepseek-chat",
+            messages=[
+                {"role": "system", "content": f"{question}"},
+                {"role": "user", "content": "Hello"},
+            ],
+            stream=True
+        )
+        print("Answer:",end="")
+        for chunk in response:
+            if content := chunk.choices[0].delta.content:
+                print(content, end="", flush=True)
+        print("")
 
 diffusion model
 ------------------------------------------------
