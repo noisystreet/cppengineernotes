@@ -56,6 +56,8 @@ html_css_files = [
 
 html_static_path = ['_static']
 
+suppress_warnings = ["config.cache"]
+
 # At the bottom of conf.py
 def setup(app):
     app.add_config_value('recommonmark_config', {
