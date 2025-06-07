@@ -633,6 +633,7 @@ viztracer
 + ``patchelf`` 修改已有的二进制可执行文件
 + ``hexdump`` 查看二进制文件 
 + ``cloc`` 统计代码行数
++ ``tokei`` 统计代码行数
 + ``autodia`` 生成dia图表
 + ``ccache`` 编译缓存
 + ``ccbuild`` 自动编译工具

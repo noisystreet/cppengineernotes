@@ -209,11 +209,20 @@ https://pypi.org/search/?q=nvidia
 常用工具命令
 ````````````````````````````````````````````````
 
+编译器和二进制分析工具：
+
 #. nvcc
 #. cuda-gdb
 #. cuc++filt
 #. nvdisasm
+
+性能分析：
+
 #. nsys
+#. ncu
+
+GPU查看和设置：
+
 #. nvidia-smi
 #. nvidia-settings
 
@@ -240,6 +249,7 @@ https://pypi.org/search/?q=nvidia
 + `Explained Output of Nvidia-smi Utility <https://medium.com/analytics-vidhya/explained-output-of-nvidia-smi-utility-fc4fbee3b124>`_
 + `nvidia-smi Cheat Sheet <https://www.seimaxim.com/kb/gpu/nvidia-smi-cheat-sheet>`_
 + `GPU Management and Monitoring <https://xcat-docs.readthedocs.io/en/2.16.2/advanced/gpu/nvidia/management.html>`_
++ https://docs.nvidia.com/nsight-compute/ProfilingGuide/#
 
 ``nvidia-settings`` 命令：
 
@@ -666,6 +676,7 @@ NVCC
 + https://bluewaters.ncsa.illinois.edu/liferay-content/image-gallery/content/BLA-final
 + https://www.quantstart.com/articles/Matrix-Matrix-Multiplication-on-the-GPU-with-Nvidia-CUDA/
 + 矩阵乘法的 CUDA 实现、优化及性能分析
++ https://developer.nvidia.com/blog/programming-tensor-cores-cuda-9/
  
 event
 ````````````````````````````````````````````````
