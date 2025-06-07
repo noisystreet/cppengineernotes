@@ -225,3 +225,14 @@ Python 扩展编程
 #. https://realpython.com/
 #. https://pythoncat.top
 #. https://python-course.eu/
+
+Python常用三方包
+------------------------------------------------
+
++ 管理：uv venv
++ 爬虫：requests beautifulsoup4
++ 绘图：matplotlib wordcloud networkx
++ 图像处理：pillow scikit-image opencv
++ 科学计算：numpy scipy sympy mpi4py
++ 语法分析：lark pyyaml
++ 格式化: autopep8 ruff jedi
